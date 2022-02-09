@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import { IniciarSesionRoutes } from '@/modules/iniciar-sesion/routes.js'
+import { CrearUsuarioRoutes } from '@/modules/crear-usuario/routes.js'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,11 @@ const routes = [
     redirect: {name: 'IniciarSesion'}
   },
   ...IniciarSesionRoutes,
+  {
+    path: '/',
+    redirect: {name: 'CrearUsuario'}
+  },
+  ...CrearUsuarioRoutes,
 ]
 
 const router = new VueRouter({
