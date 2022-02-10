@@ -20,6 +20,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
+axios.defaults.baseURL = 'http://localhost:5001';
 //SweetAlert2
 import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);

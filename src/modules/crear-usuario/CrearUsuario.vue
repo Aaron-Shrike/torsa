@@ -1,125 +1,154 @@
 <template>
-<form action="#" v-on:submit.prevent="procesar()" class="contenedor">
-    <h2 classs="clsTitulo">Registrar Usuario</h2>
-
-    <div class="contenido">
-      <div class="datos-personales">
-        <div class="contenedor-DP">
-          <h3>Datos Personales</h3>
-          <div class="form-group">
-            <label>Nombre</label>
-            <b-form-input type="text" class="form-control" placeholder="Nombre" v-model="usuario.nombre"></b-form-input>
-            <div v-if="submited && !$v.usuario.nombre.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.nombre.maxLength" class="valid">Este campo debe tener maximo 40 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Paterno</label>
-            <b-form-input type="text" class="form-control" placeholder="Apellido Paterno" v-model="usuario.apPaterno"></b-form-input>
-            <div v-if="submited && !$v.usuario.apPaterno.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.apPaterno.maxLength" class="valid">Este campo debe tener maximo 40 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Materno</label>
-            <b-form-input type="text" class="form-control" placeholder="Apellido Materno" v-model="usuario.apMaterno"></b-form-input>
-            <div v-if="submited && !$v.usuario.apMaterno.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.apMaterno.maxLength" class="valid">Este campo debe tener maximo 40 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
-            <b-form-input type="number" class="form-control" placeholder="DNI" v-model="usuario.dni"></b-form-input>
-            <div v-if="submited && !$v.usuario.dni.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.dni.maxLength" class="valid">Este campo debe tener 8 caracteres</div>
-            <div v-if="submited && !$v.usuario.dni.minLength" class="valid">Este campo debe tener 8 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Fecha de Nacimiento</label>
-            <b-form-input type="date" class="form-control" id="datetime"  v-model="usuario.fechNacimiento"></b-form-input>
-            <div v-if="submited && !$v.usuario.fechNacimiento.required" class="valid">Este campo es obligatorio</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Teléfono</label>
-            <b-form-input type="number" class="form-control" placeholder="Teléfono" v-model="usuario.telefono"></b-form-input>
-            <div v-if="submited && !$v.usuario.telefono.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.telefono.maxLength" class="valid">Este campo debe tener 9 caracteres</div>
-            <div v-if="submited && !$v.usuario.telefono.minLength" class="valid">Este campo debe tener 9 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Dirección</label>
-            <b-form-input type="text" class="form-control" placeholder="Dirección" v-model="usuario.direccion"></b-form-input>
-            <div v-if="submited && !$v.usuario.direccion.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.direccion.maxLength" class="valid">Este campo debe tener maximo 50 caracteres</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="columna">
-        <div class="datos-usuario">
-          <h3>Datos del Usuario</h3>
-          <div class="form-group">
-            <label for="inputEmail4">Correo electrónico</label>
-            <b-form-input type="email" class="form-control" id="inputEmail4" placeholder="Correo electrónico" v-model="usuario.correo"></b-form-input>
-            <div v-if="submited && !$v.usuario.correo.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.correo.email" class="valid">Este campo debe tener el formato correcto</div>
-          </div>
-          <div class="form-group">
-            <label for="inputState">Cargo</label>
-            <b-form-select class="form-select" v-model="usuario.cargo">
-              <option value="">Seleccione una opción</option>
-              <option>Promotor</option>
-              <option>Recepcionista</option>
-              <option>Encargado de Registro de Crédito</option>
-              <option>Encargado de Control</option>
-              <option>Cobrador</option>
-              <option>Cajero</option>
-            </b-form-select>
-            <div v-if="submited && !$v.usuario.cargo.required" class="valid">Debe seleccionar una opción válida</div>
-          </div>
-        </div>
-
-        <div class="datos-emergencia">
-          <h3>Contacto de Emergencia</h3>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Nombre</label>
-            <b-form-input type="text" class="form-control" placeholder="Nombres completos" v-model="usuario.nombreEmerg"></b-form-input>
-            <div v-if="submited && !$v.usuario.nombreEmerg.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.nombreEmerg.maxLength" class="valid">Este campo debe tener maximo 60 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Dirección</label>
-            <b-form-input type="text" class="form-control" placeholder="Dirección" v-model="usuario.direccionEmerg"></b-form-input>
-            <div v-if="submited && !$v.usuario.direccionEmerg.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.direccionEmerg.maxLength" class="valid">Este campo debe tener maximo 50 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Teléfono</label>
-            <b-form-input type="number" class="form-control" placeholder="Teléfono" v-model="usuario.telefonoEmerg"></b-form-input>
-            <div v-if="submited && !$v.usuario.telefonoEmerg.required" class="valid">Este campo es obligatorio</div>
-            <div v-if="submited && !$v.usuario.telefonoEmerg.maxLength" class="valid">Este campo debe tener 9 caracteres</div>
-            <div v-if="submited && !$v.usuario.telefonoEmerg.minLength" class="valid">Este campo debe tener 9 caracteres</div>
-          </div>
-          <div class="form-group">
-            <label for="inputState">Parentesco</label>
-            <b-form-select class="form-select" v-model="usuario.parentescoEmerg">
-              <option value="">Seleccione una opción</option>
-              <option>Padre</option>
-              <option>Madre</option>
-              <option>Hermano</option>
-              <option>Hermana</option>
-              <option>Tío</option>
-              <option>Tía</option>
-            </b-form-select>
-            <div v-if="submited && !$v.usuario.parentescoEmerg.required" class="valid">Debe seleccionar una opción válida</div>
-          </div>
-        </div>
-        <b-button variant="primary" type="submit" class="btnRegistrar">Registrar</b-button>
-      </div>
-    </div>
+  <form action="#" v-on:submit.prevent="procesar()" style="margin-top: 20px;margin-bottom: 20px">
+    <b-container>
+      <b-card title="Registrar Usuario" style="text-align: center">
+        <b-row>
+          <b-col>
+            <b-card title="Datos Personales">
+              <div class="form-group">
+                <label>Nombre</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('nombre')" placeholder="Ingrese Nombre" v-model="$v.usuario.nombre.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.nombre.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.nombre.maxLength" class="valid">Maximo 40 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Apellido Paterno</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('apPaterno')" placeholder="Ingrese Apellido Paterno" v-model="$v.usuario.apPaterno.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.apPaterno.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.apPaterno.maxLength" class="valid">Maximo 40 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Apellido Materno</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('apMaterno')" placeholder="Ingrese Apellido Materno" v-model="$v.usuario.apMaterno.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.apMaterno.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.apMaterno.maxLength" class="valid">Maximo 40 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>DNI</label>
+                <b-form-input type="number" class="form-control" :state="estadoValidacion('dni')" placeholder="Ingrese DNI" v-model="$v.usuario.dni.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.dni.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.dni.maxLength" class="valid">Maximo 8 Digitos</small>
+                  <small v-if="!$v.usuario.dni.minLength" class="valid">Minimo 8 Digitos</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Fecha de Nacimiento</label>
+                <b-form-input type="date" class="form-control" id="datetime" :state="estadoValidacion('fechNacimiento')" v-model="$v.usuario.fechNacimiento.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.fechNacimiento.required" class="valid">Campo Obligatorio</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Teléfono</label>
+                <b-form-input type="number" class="form-control" :state="estadoValidacion('telefono')" placeholder="Ingrese Teléfono" v-model="$v.usuario.telefono.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.telefono.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.telefono.maxLength" class="valid">Maximo 9 Digitos</small>
+                  <small v-if="!$v.usuario.telefono.minLength" class="valid">MInimo 9 Digitos</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Dirección</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('direccion')" placeholder="Ingrese Dirección" v-model="$v.usuario.direccion.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.direccion.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.direccion.maxLength" class="valid">Maximo 50 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+            </b-card>
+          </b-col>
+          <hr>
+          <b-col>
+            <b-card title="Datos Usuario">
+              <div class="form-group">
+                <label>Correo electrónico</label>
+                <b-form-input type="email" class="form-control" id="inputEmail4" :state="estadoValidacion('correo')" placeholder="Ingrese Correo electrónico" v-model="$v.usuario.correo.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.correo.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.correo.email" class="valid">Formato Incorrecto</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Cargo</label>
+                <b-form-select class="form-select" :state="estadoValidacion('cargo')" v-model="$v.usuario.cargo.$model">
+                  <option value="">Seleccione una opción</option>
+                  <option>Promotor</option>
+                  <option>Recepcionista</option>
+                  <option>Encargado de Registro de Crédito</option>
+                  <option>Encargado de Control</option>
+                  <option>Cobrador</option>
+                  <option>Cajero</option>
+                </b-form-select>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.cargo.required" class="valid">Opcion Invalida</small>
+                </b-form-invalid-feedback>
+              </div>
+            </b-card>
+            <hr>
+            <b-card title="Datos Contacto Emergencia">
+              <div class="form-group">
+                <label>Nombre</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('nombreEmerg')" placeholder="Ingrese Nombres completos" v-model="$v.usuario.nombreEmerg.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.nombreEmerg.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.nombreEmerg.maxLength" class="valid">Maximo 60 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Dirección</label>
+                <b-form-input type="text" class="form-control" :state="estadoValidacion('direccionEmerg')" placeholder="Ingrese Dirección" v-model="$v.usuario.direccionEmerg.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.direccionEmerg.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.direccionEmerg.maxLength" class="valid">Maximo 50 Caracteres</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Teléfono</label>
+                <b-form-input type="number" class="form-control" :state="estadoValidacion('telefonoEmerg')" placeholder="Ingrese Teléfono" v-model="$v.usuario.telefonoEmerg.$model"></b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.telefonoEmerg.required" class="valid">Campo Obligatorio</small>
+                  <small v-if="!$v.usuario.telefonoEmerg.maxLength" class="valid">Maximo 9 Digitos</small>
+                  <small v-if="!$v.usuario.telefonoEmerg.minLength" class="valid">Minimo 9 Digitos</small>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Parentesco</label>
+                <b-form-select class="form-select" :state="estadoValidacion('parentescoEmerg')" v-model="$v.usuario.parentescoEmerg.$model">
+                  <option value="">Seleccione una opción</option>
+                  <option>Padre</option>
+                  <option>Madre</option>
+                  <option>Hermano</option>
+                  <option>Hermana</option>
+                  <option>Tío</option>
+                  <option>Tía</option>
+                </b-form-select>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <small v-if="!$v.usuario.parentescoEmerg.required" class="valid">Opcion Invalida</small>
+                </b-form-invalid-feedback>
+              </div>
+            </b-card>
+            <hr>
+            <div>
+              <b-button variant="outline-primary" type="submit" pill block>Registrar</b-button>
+            </div>
+          </b-col>
+        </b-row>
+      </b-card>
+    </b-container>
   </form>
-
 
 </template>
 
 <script>
+
+
 import {required,email,maxLength,minLength} from 'vuelidate/lib/validators';
 export default {
   name: "registrarUsuario",
@@ -151,13 +180,46 @@ export default {
   },
 
   methods: {
-    procesar(){
+    async procesar(){
       this.submited=true;
+      console.log(this.usuario)
       this.$v.$touch();
       if(this.$v.$invalid){
         return false;
       }
-      alert('correcto xd');
+        /*await this.axios.post('/Registrar',this.usuario)
+        .then(response => {
+          let data = response.data
+
+          if(response.status === 200)
+          {
+            //Registra al usuario, muestra un mensaje y limpia los campos
+          }
+          else
+          {
+            this.mensajeDeError(data.mensaje)
+          }
+        }).catch(() => {
+              this.mensajeDeError()
+        });*/
+        this.$swal(
+            'Usuario Registrado',
+            'Para inciar sesion porfavor verique su correo electronico',
+            'success'
+        );
+        console.log(this.usuario);
+
+    },
+    estadoValidacion(aux) {
+      const { $dirty, $error } = this.$v.usuario[aux];
+      return $dirty ? !$error : null;
+    },
+    mensajeDeError(mensaje = 'Error al conectar al servidor.'){
+      this.$swal(
+          'Error!',
+          mensaje,
+          'error'
+      )
     }
   },
   validations:{
@@ -219,7 +281,7 @@ export default {
 }
 </script>
 
-<style>  
+<!--style>
  :root{
     --background-contenedor:rgb(229, 221, 240);
     --color-titulo:rgb(95, 43, 148);
@@ -299,4 +361,4 @@ export default {
     .btnRegistrar {width: 20%;}
 }
 
-</style>
+</style-->
