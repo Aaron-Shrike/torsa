@@ -12,10 +12,6 @@ const routes = [
     redirect: {name: 'IniciarSesion'}
   },
   ...IniciarSesionRoutes,
-  {
-    path: '/',
-    redirect: {name: 'CrearUsuario'}
-  },
   ...CrearUsuarioRoutes,
 ]
 

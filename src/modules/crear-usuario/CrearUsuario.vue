@@ -220,11 +220,6 @@ export default {
 </script>
 
 <style>  
- :root{
-    --background-contenedor:rgb(229, 221, 240);
-    --color-titulo:rgb(95, 43, 148);
-    --borde-contenedor:rgb(40, 125, 130);
-}
 .contenedor{
     width: 90vw;
     background-color: var(--background-contenedor);
