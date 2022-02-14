@@ -55,20 +55,6 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
-            <b-form-input
-              type="number"
-              class="form-control input-formulario"
-              placeholder="DNI"
-              v-model="datosPersonales.dni"
-              :state="ValidarDatosPersonales('dni')">
-            </b-form-input>
-            <b-form-invalid-feedback id="input-1-live-feedback">
-              <div v-if="!$v.datosPersonales.dni.required">El DNI es requerido</div>
-              <div v-if="!$v.datosPersonales.dni.maxLength || !$v.datosPersonales.dni.minLength">El DNI no es válido</div>
-            </b-form-invalid-feedback>
-          </div>
-          <div class="form-group">
             <label for="formGroupExampleInput">Fecha de Nacimiento</label>
             <b-form-input
               type="date"
@@ -113,6 +99,20 @@
 
         <div class="card-body" v-if="card2">
           <h3 class="card-title subTitle">Datos del Usuario</h3>
+          <div class="form-group">
+            <label for="formGroupExampleInput">DNI</label>
+            <b-form-input
+              type="number"
+              class="form-control input-formulario"
+              placeholder="DNI"
+              v-model="datosUsuario.dni"
+              :state="ValidarDatosUsuario('dni')">
+            </b-form-input>
+            <b-form-invalid-feedback id="input-1-live-feedback">
+              <div v-if="!$v.datosUsuario.dni.required">El DNI es requerido</div>
+              <div v-if="!$v.datosUsuario.dni.maxLength || !$v.datosUsuario.dni.minLength">El DNI no es válido</div>
+            </b-form-invalid-feedback>
+          </div>
           <div class="form-group">
             <label for="formGroupExampleInput">Correo electrónico</label>
             <b-form-input
@@ -180,20 +180,6 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Dirección</label>
-            <b-form-input
-              type="text"
-              class="form-control input-formulario"
-              placeholder="Dirección"
-              v-model="contactoEmergencia.direccionEmergencia"
-              :state="ValidarContactoEmergencia('direccionEmergencia')">
-            </b-form-input>
-            <b-form-invalid-feedback id="input-1-live-feedback">
-              <div v-if="!$v.contactoEmergencia.direccionEmergencia.required">La Dirección es requerido</div>
-              <div v-if="!$v.contactoEmergencia.direccionEmergencia.maxLength">La Dirección no es válida</div>
-            </b-form-invalid-feedback>
-          </div>
-          <div class="form-group">
             <label for="formGroupExampleInput">Teléfono</label>
             <b-form-input
               type="number"
@@ -253,19 +239,18 @@ export default {
         nombre: "",
         apellidoPaterno: "",
         apellidoMaterno: "",
-        dni: "",
         fechaNacimiento: "",
         telefono: "",
         direccion: "",
       },
       datosUsuario: {
+        dni: "",
         correo: "",
         correoRepetido: "",
         cargo: "",
       },
       contactoEmergencia: {
         nombreEmergencia: "",
-        direccionEmergencia: "",
         telefonoEmergencia: "",
         parentescoEmergencia: "",
       },
@@ -355,11 +340,6 @@ export default {
         required,
         maxLength: maxLength(40),
       },
-      dni: {
-        required,
-        maxLength: maxLength(8),
-        minLength: minLength(8),
-      },
       fechaNacimiento: {
         required,
       },
@@ -374,6 +354,11 @@ export default {
       },
     },
     datosUsuario: {
+      dni: {
+        required,
+        maxLength: maxLength(8),
+        minLength: minLength(8),
+      },
       correo: {
         required,
         email,
@@ -389,10 +374,6 @@ export default {
     },
     contactoEmergencia: {
       nombreEmergencia: {
-        required,
-        maxLength: maxLength(50),
-      },
-      direccionEmergencia: {
         required,
         maxLength: maxLength(50),
       },
