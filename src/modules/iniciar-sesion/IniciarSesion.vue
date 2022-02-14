@@ -91,8 +91,6 @@
 <script>
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
-axios.defaults.withCredentials = true;
-axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 export default {
 	data: () =>  ({
@@ -116,8 +114,6 @@ export default {
 	methods: {
 		estadoValidacion(name) {
 			const { $dirty, $error } = this.$v.form[name];
-
-			console.log(this.$v.form[name])
 			return $dirty ? !$error : null;
 		},
 		enviarDatosFormulario(){
@@ -126,7 +122,7 @@ export default {
 			if(!this.$v.form.$anyError){ 
 				axios.get('/sanctum/csrf-cookie')
 					.then(() => {
-						axios.post('/iniciar-sesion', this.form)
+						axios.post('/api/iniciar-sesion', this.form)
 							.then((respuesta) => {
 								let data = respuesta.data
 
@@ -134,6 +130,7 @@ export default {
 								{
 									//obtener los datos del usuario
 									//Redirigirme segun su rol
+									console.log("Inicio de sision correcto")
 								}
 								else
 								{

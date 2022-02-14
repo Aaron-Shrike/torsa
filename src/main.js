@@ -21,7 +21,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://localhost:5001';
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = 'http://localhost:8000';
 
 //SweetAlert2
 import VueSweetalert2 from 'vue-sweetalert2';
