@@ -13,7 +13,7 @@
 						<b-card-text>
 							<h2 class="titulo-formulario">Bienvenido</h2>
 							<p class="subtitulo-formulario">Ingresa tus datos</p>
-							<b-form @submit.prevent="enviarDatosFormulario">
+							<b-form @submit.prevent="EnviarDatosIniciarSesion">
 								<b-input-group
 									id="input-group-1"
 								>
@@ -31,7 +31,7 @@
 										v-model="$v.form.dni.$model"
 										class="input-formulario"
 										type="number"
-										:state="estadoValidacion('dni')"
+										:state="EstadoValidacion('dni')"
 										placeholder="DNI"
 										required
 									></b-form-input>
@@ -64,7 +64,7 @@
 										v-model="$v.form.contrasenia.$model"
 										class="input-formulario"
 										type="password"
-										:state="estadoValidacion('contrasenia')"
+										:state="EstadoValidacion('contrasenia')"
 										placeholder="Contraseña"
 										required
 									></b-form-input>
@@ -112,11 +112,11 @@ export default {
 		},
 	},
 	methods: {
-		estadoValidacion(name) {
+		EstadoValidacion(name) {
 			const { $dirty, $error } = this.$v.form[name];
 			return $dirty ? !$error : null;
 		},
-		enviarDatosFormulario(){
+		EnviarDatosIniciarSesion(){
 			this.$v.form.$touch();
 
 			if(!this.$v.form.$anyError){ 
@@ -134,21 +134,21 @@ export default {
 								}
 								else
 								{
-									this.mensajeDeError(data.mensaje)
+									this.MensajeDeError(data.mensaje)
 								}
 							}).catch(() => {
-								this.mensajeDeError()
+								this.MensajeDeError()
 							});
 					}).catch(() => {
-						this.mensajeDeError()
+						this.MensajeDeError()
 					})
 			}
 		},
-		resetearFormulario(){
+		ResetearFormulario(){
 			this.form.dni = ''
 			this.form.contrasenia = ''
 		},
-		mensajeDeError(mensaje = 'Error al conectar al servidor.'){
+		MensajeDeError(mensaje = 'Error al conectar al servidor.'){
 			this.$swal(
 				'Error!',
 				mensaje,
@@ -163,7 +163,6 @@ export default {
 	.seccion-iniciar-sesion{
 		height: 100vh;
 		min-height: 100vh;
-		background-color: var(--color-bg-principal);
 		padding: 0 0 20px 0;
 	}
 
@@ -176,7 +175,8 @@ export default {
 		margin: 0 auto;
 	}
 
-	.card.card-formulario{
+	.card.card-formulario,
+	.card-formulario{
 		background-color: var(--color-blanco);
 		box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.1);
 		border-radius: var(--redondeado-1);

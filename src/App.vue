@@ -1,25 +1,5 @@
 <template>
     <div id="app">
-        <b-navbar toggleable type="dark" variant="primary">
-            <b-navbar-brand href="#">Torsa Peru</b-navbar-brand>
-
-            <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-            <b-collapse id="nav-collapse" is-nav>
-                <b-navbar-nav>
-                    <b-nav-item>
-                        <div>
-                        <b-button variant="info" type="submit" block style="background-color: white"><router-link to="/iniciar-sesion" style="text-decoration: none">Iniciar Sesion</router-link></b-button>
-                        </div>
-                    </b-nav-item>
-                    <b-nav-item>
-                        <div>
-                        <b-button variant="info" type="submit" block style="background-color: white"><router-link to="/crear-usuario" style="text-decoration: none">Registrar</router-link></b-button>
-                        </div>
-                    </b-nav-item>
-                </b-navbar-nav>
-            </b-collapse>
-        </b-navbar>
         <router-view/>
     </div>
 </template>
@@ -52,6 +32,7 @@
     }
     body { 
         font-size: 1.6rem;
+        background-color: var(--color-bg-principal) !important;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -90,13 +71,16 @@
         height: 100%;
     }
 
-    .btn.boton-principal{
-        background-color: var(--color-principal);
+    .btn.boton{
         border-radius: var(--redondeado-1);
         border: 0;
-        height: 54px;
+        min-height: 54px;
         font-weight: 700;
         font-size: 24px;
+    }
+    .btn.boton-principal{
+        background-color: var(--color-principal);
+        
     }
     .btn.boton-principal:hover{
         opacity: .92;
@@ -112,6 +96,25 @@
     }
     .btn.boton-principal:not(:disabled):not(.disabled):active:focus{
         box-shadow: 0 0 0 0.2rem rgba(87,60,183, .5);
+    }
+
+    .btn.boton-transparente{
+        color: var(--color-principal);
+    }
+    .btn.boton-transparente:hover{
+        opacity: .92;
+        color: var(--color-principal);
+    }
+    .btn.boton-transparente:focus{
+        color: var(--color-principal);
+        box-shadow: none;
+    }
+    .btn.boton-transparente:not(:disabled):not(.disabled):active{
+        color: var(--color-principal);
+        box-shadow: none;
+    }
+    .btn.boton-transparente:not(:disabled):not(.disabled):active:focus{
+        box-shadow: none;
     }
 
     .input-group{

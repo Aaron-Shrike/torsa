@@ -1,8 +1,8 @@
-import CrearUsuario from '@/modules/crear-usuario/CrearUsuario.vue'
+import CrearUsuario from '@/modules/sistema/crear-usuario/CrearUsuario.vue'
 
 export const CrearUsuarioRoutes = [
     {
-        path: '/crear-usuario',
+        path: 'crear-usuario',
         name: 'CrearUsuario',
         component: CrearUsuario,
     },

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import { IniciarSesionRoutes } from '@/modules/iniciar-sesion/routes.js'
-import { CrearUsuarioRoutes } from '@/modules/crear-usuario/routes.js'
+import { SistemaRoutes } from '../modules/sistema/routes'
 
 Vue.use(VueRouter)
 
@@ -12,7 +12,7 @@ const routes = [
     redirect: {name: 'IniciarSesion'}
   },
   ...IniciarSesionRoutes,
-  ...CrearUsuarioRoutes,
+  ...SistemaRoutes,
 ]
 
 const router = new VueRouter({

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Solicitud de credito</h1>
+        <h1>Bienvenido al Sistema</h1>
     </div>
 </template>
 <script>
