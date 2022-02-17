@@ -159,11 +159,11 @@ export default {
 		},
 		MensajeDeError(mensaje = 'Error al conectar al servidor.')
 		{
-			this.$swal(
-				'Error!',
-				mensaje,
-				'error'
-			)
+			this.$swal({
+				title: mensaje,
+				icon: 'error',
+				confirmButtonText: 'Aceptar',
+			})
 		}
 	}
 }

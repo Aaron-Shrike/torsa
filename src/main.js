@@ -27,10 +27,9 @@ axios.defaults.baseURL = 'http://localhost:8000';
 //SweetAlert2
 import VueSweetalert2 from 'vue-sweetalert2';
 Vue.use(VueSweetalert2);
-// import '@/scss/style.scss';
 
-// If you don't need the styles, do not connect
 import 'sweetalert2/dist/sweetalert2.min.css';
+// import '@/scss/style.scss';
 
 //Vuelidate
 Vue.use(Vuelidate)

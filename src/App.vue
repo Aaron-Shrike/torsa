@@ -21,6 +21,10 @@
         --background-contenedor:rgb(229, 221, 240);
         --color-titulo:rgb(95, 43, 148);
         --borde-contenedor:rgb(40, 125, 130);
+
+        --color-error: #D9251B;
+        --color-informacion: #2F86EB;
+        --color-correcto: #47D764;
     }
 
     html {
@@ -151,5 +155,62 @@
     }
     .form-control.input-formulario::placeholder{
         color: var(--color-inputs);
+    }
+
+    .swal2-popup{
+        width: 375px !important;
+        /* min-height: 425px !important; */
+        border-radius: var(--redondeado-1) !important;
+    }
+    .swal2-icon-error.swal2-popup{
+        border-top: 16px  solid var(--color-error);
+    }
+    .swal2-icon-success.swal2-popup{
+        border-top: 16px  solid var(--color-correcto);
+    }
+    .swal2-icon-info.swal2-popup{
+        border-top: 16px  solid var(--color-informacion);
+    }
+
+    .swal2-popup .swal2-actions{
+        width: 100%;
+    }
+    .swal2-popup .swal2-styled.swal2-confirm {
+        border-radius: var(--redondeado-1);
+        font-size: 24px;
+        font-weight: 700;
+        min-height: 54px;
+        padding: 0;
+        width: 295px;
+        max-width: 100%;
+    }
+    .swal2-icon-error .swal2-styled.swal2-confirm {
+        background-color: var(--color-error);
+    }
+    .swal2-icon-error .swal2-styled.swal2-confirm:focus {
+        box-shadow: 0 0 0 3px rgba(var(--color-error),.5);
+    }
+    .swal2-icon-success .swal2-styled.swal2-confirm {
+        background-color: var(--color-correcto);
+    }
+    .swal2-icon-success .swal2-styled.swal2-confirm:focus {
+        box-shadow: 0 0 0 3px rgba(var(--color-correcto),.5);
+    }
+    .swal2-icon-info .swal2-styled.swal2-confirm {
+        background-color: var(--color-informacion);
+    }
+    .swal2-icon-info .swal2-styled.swal2-confirm:focus {
+        box-shadow: 0 0 0 3px rgba(var(--color-informacion),.5);
+    }
+
+    .swal2-popup .swal2-title{
+        font-size: 21px;
+        font-weight: 900;
+        color: var(--color-titulo-principal);
+    }
+    .swal2-popup .swal2-html-container{
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--color-subtitulo);
     }
 </style>
