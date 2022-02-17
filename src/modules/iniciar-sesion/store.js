@@ -6,11 +6,13 @@ export const IniciarSesionStore = {
         usuario: {},
     },
     mutations: {
-        EditarIniciarSesion(state, payload){
+        EditarIniciarSesion(state, payload)
+        {
             state.autenticado = true
             state.usuario = payload
         },
-        EditarCerrarSesion(state){
+        EditarCerrarSesion(state)
+        {
             state.autenticado = false
             state.usuario = null
         }

@@ -23,13 +23,18 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiereAutenticacion)) {
-        if (store.state.iniciarSesion.autenticado) {
+    if (to.matched.some(record => record.meta.requiereAutenticacion)) 
+    {
+        if (store.state.iniciarSesion.autenticado) 
+        {
             next();
-        } else {
+        } 
+        else 
+        {
             next({ name: "IniciarSesion" });
         }
-    } else {
+    } else 
+    {
         next();
     }
 });

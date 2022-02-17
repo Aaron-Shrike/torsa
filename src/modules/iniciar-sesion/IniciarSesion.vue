@@ -117,18 +117,23 @@ export default {
     },
 	methods: {
 		...mapMutations('iniciarSesion', ['EditarIniciarSesion']),
-		EstadoValidacion(name) {
+		EstadoValidacion(name) 
+		{
 			const { $dirty, $error } = this.$v.form[name];
 			return $dirty ? !$error : null;
 		},
-		EnviarDatosIniciarSesion(){
+		EnviarDatosIniciarSesion()
+		{
 			this.$v.form.$touch();
 
-			if(!this.$v.form.$anyError){ 
+			if(!this.$v.form.$anyError)
+			{ 
 				axios.get('/sanctum/csrf-cookie')
-					.then(() => {
+					.then(() => 
+					{
 						axios.post('/api/iniciar-sesion', this.form)
-							.then((respuesta) => {
+							.then((respuesta) => 
+							{
 								let data = respuesta.data
 
 								if(respuesta.status == 200 && typeof data.error === 'undefined')
@@ -140,15 +145,20 @@ export default {
 								{
 									this.MensajeDeError(data.mensaje)
 								}
-							}).catch(() => {
+							})
+							.catch(() => 
+							{
 								this.MensajeDeError()
 							});
-					}).catch(() => {
+					})
+					.catch(() => 
+					{
 						this.MensajeDeError()
 					})
 			}
 		},
-		MensajeDeError(mensaje = 'Error al conectar al servidor.'){
+		MensajeDeError(mensaje = 'Error al conectar al servidor.')
+		{
 			this.$swal(
 				'Error!',
 				mensaje,
