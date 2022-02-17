@@ -92,6 +92,7 @@
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
 
+import { mapMutations, mapState } from 'vuex'
 export default {
 	data: () =>  ({
 		form: {
@@ -111,7 +112,11 @@ export default {
 			},
 		},
 	},
+	computed:{
+        ...mapState('iniciarSesion', ['autenticado']),
+    },
 	methods: {
+		...mapMutations('iniciarSesion', ['EditarIniciarSesion']),
 		EstadoValidacion(name) {
 			const { $dirty, $error } = this.$v.form[name];
 			return $dirty ? !$error : null;
@@ -128,9 +133,8 @@ export default {
 
 								if(respuesta.status == 200 && typeof data.error === 'undefined')
 								{
-									//obtener los datos del usuario
-									//Redirigirme segun su rol
-									console.log("Inicio de sision correcto")
+									this.EditarIniciarSesion(data.consulta)
+									this.$router.push({ name: "Sistema"})	
 								}
 								else
 								{
@@ -143,10 +147,6 @@ export default {
 						this.MensajeDeError()
 					})
 			}
-		},
-		ResetearFormulario(){
-			this.form.dni = ''
-			this.form.contrasenia = ''
 		},
 		MensajeDeError(mensaje = 'Error al conectar al servidor.'){
 			this.$swal(

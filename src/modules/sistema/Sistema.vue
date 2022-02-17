@@ -44,13 +44,13 @@
         >
             <div class="px-3 py-2">
                 <b-list-group>
-                    <b-list-group-item :to="{name: 'RegistrarSolicitudCredito'}">
+                    <b-list-group-item :to="{name: 'RegistrarSolicitudCredito'}" v-if="usuario.descripcion == 'Promotor'">
                         Registrar Solicitud de Crédito
                     </b-list-group-item>
-                    <!-- <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item> -->
-                    <b-list-group-item :to="{name: 'CrearUsuario'}">
+                    <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.descripcion == 'Administrador'">
                         Crear Usuario
                     </b-list-group-item>
+                    <!-- <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item> -->
                 </b-list-group>
             </div>
         </b-sidebar>
@@ -58,8 +58,14 @@
     </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
-    
+    data: () =>  ({
+		
+	}),
+    computed:{
+        ...mapState('iniciarSesion', ['usuario']),
+    },
 }
 </script>
 <style>
