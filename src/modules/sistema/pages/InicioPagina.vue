@@ -2,7 +2,7 @@
     <div>
         <b-container>
             <h1>Bienvenido al Sistema</h1>
-            <p>{{usuario.dni}}</p>
+            <p>{{usuario.nombre}} {{usuario.apePaterno}} {{usuario.apeMaterno}} - DNI: {{usuario.dni}}</p>
         </b-container>
     </div>
 </template>

@@ -138,7 +138,7 @@ export default {
 
 								if(respuesta.status == 200 && typeof data.error === 'undefined')
 								{
-									this.EditarIniciarSesion(data.consulta)
+									this.EditarIniciarSesion(data)
 									this.$router.push({ name: "Sistema"})	
 								}
 								else

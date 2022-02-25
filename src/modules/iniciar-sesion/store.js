@@ -4,6 +4,13 @@ export const IniciarSesionStore = {
     state: {
         autenticado: false,
         usuario: {},
+        // usuario: {
+        //     dni: '73976711',
+        //     nombre: 'Aarón',
+        //     apePaterno: 'Rojas',
+        //     apeMaterno: 'Vera',
+        //     tipoUsuario: 'Promotor'
+        // },
     },
     mutations: {
         EditarIniciarSesion(state, payload)

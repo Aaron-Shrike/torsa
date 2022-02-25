@@ -44,10 +44,10 @@
         >
             <div class="px-3 py-2">
                 <b-list-group>
-                    <b-list-group-item :to="{name: 'RegistrarSolicitudCredito'}" v-if="usuario.descripcion == 'Promotor'">
+                    <b-list-group-item :to="{name: 'RegistrarSolicitudCredito'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Registrar Solicitud de Crédito
                     </b-list-group-item>
-                    <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.descripcion == 'Administrador'">
+                    <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.tipoUsuario == 'Administrador'">
                         Crear Usuario
                     </b-list-group-item>
                     <!-- <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item> -->
