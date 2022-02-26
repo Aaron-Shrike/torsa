@@ -3,6 +3,7 @@ import InicioPagina from '@/modules/sistema/pages/InicioPagina.vue'
 
 import { CrearUsuarioRoutes } from '@/modules/sistema/crear-usuario/routes.js'
 import { SolicitudCreditoRoutes } from '@/modules/sistema/solicitud-credito/routes.js'
+import { BuscarSocioHabilitadoRoutes } from '@/modules/sistema/buscar-socio-habilitado/routes.js'
 
 export const SistemaRoutes = [
     {
@@ -16,6 +17,7 @@ export const SistemaRoutes = [
             },
             ...CrearUsuarioRoutes,
             ...SolicitudCreditoRoutes,
+            ...BuscarSocioHabilitadoRoutes,
         ],
         meta: {
             requiereAutenticacion: true
