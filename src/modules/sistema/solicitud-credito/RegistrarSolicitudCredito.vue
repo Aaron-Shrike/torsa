@@ -1,437 +1,659 @@
 <template>
     <div>
-		<section class="seccion-garante seccion-garante-1">
-            <b-container class="contenedor-garante">
-                <b-row class="contenedor-iniciar-sesion" align-v="center" align-h="center">
+        <!-- Buscar Socio ------------------------------------------------------------- -->
+        <section class="seccion-buscar-socio">
+            <b-container class="contenedor-socio">
+                <b-row class="">
                     <b-col cols="12">
-                        <div class="boton-regresar">
-                            <b-button variant="link" class="boton boton-transparente">
-                                <b-icon icon="arrow-left" aria-hidden="true"></b-icon> Regresar
-                            </b-button>
+                        <div class="card card-formulario-buscar">
+                            <h2 class="card-title titulo">Buscar Socio Habilitado</h2>
+                            <div class="card-body">
+                                <h3 class="card-title subTitle">Ingrese el DNI del Socio</h3>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">DNI</label>
+                                    <b-form-input
+                                        type="number"
+                                        class="form-control input-formulario"
+                                        placeholder="DNI"
+                                        v-model="dniBuscar"
+                                        :state="ValidarDNIBuscar()">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                        <div v-if="!$v.dniBuscar.required">El DNI es requerido</div>
+                                        <div v-if="!$v.dniBuscar.maxLength || !$v.dniBuscar.minLength">El DNI no es válido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <b-button block class="boton boton-principal" @click="BuscarSocio">Buscar</b-button>
+                            </div>
                         </div>
-                        <b-card
-                            tag="div"
-                            class="mb-2 card-formulario"
-                        >
-                            <b-card-text>
-                                <h2 class="titulo-formulario">Ingresar Garante</h2>
-                                <p class="subtitulo-formulario">Datos del primer garante</p>
-                                <b-form @submit.prevent="ValidarDatosGarante1">
-                                    <b-form-group
-                                        id="input-group-1"
-                                    >
-                                        <b-form-input
-                                            id="input-1"
-                                            v-model="$v.datosGarante1.apePaterno.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante1('apePaterno')"
-                                            placeholder="Apellido Paterno"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-1-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.apePaterno.required">
-                                                El Apellido Paterno es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-form-group
-                                        id="input-group-2"
-                                    >
-                                        <b-form-input
-                                            id="input-2"
-                                            v-model="$v.datosGarante1.apeMaterno.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante1('apeMaterno')"
-                                            placeholder="Apellido Materno"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-2-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.apeMaterno.required">
-                                                El Apellido Materno es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-form-group
-                                        id="input-group-3"
-                                    >
-                                        <b-form-input
-                                            id="input-3"
-                                            v-model="$v.datosGarante1.nombres.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante1('nombres')"
-                                            placeholder="Nombres"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-3-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.nombres.required">
-                                                El Nombre(s) es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-form-group
-                                        id="input-group-4"
-                                    >
-                                        <b-form-input
-                                            id="input-4"
-                                            v-model="$v.datosGarante1.dni.$model"
-                                            class="input-formulario"
-                                            type="number"
-                                            :state="EstadoValidacionGarante1('dni')"
-                                            placeholder="DNI"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-4-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.dni.required">
-                                                El número de DNI es requerido
-                                            </div>
-                                            <div v-if="!$v.datosGarante1.dni.minLength || !$v.datosGarante1.dni.maxLength">
-                                                El número de DNI no es válido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-form-group
-                                        id="input-group-5"
-                                    >
-                                        <b-form-input
-                                            id="input-5"
-                                            v-model="$v.datosGarante1.telefono.$model"
-                                            class="input-formulario"
-                                            type="tel"
-                                            :state="EstadoValidacionGarante1('telefono')"
-                                            placeholder="Teléfono/Celular"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-5-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.telefono.required">
-                                                El número de Teléfono es requerido
-                                            </div>
-                                            <div v-if="!$v.datosGarante1.telefono.minLength || !$v.datosGarante1.telefono.maxLength || !$v.datosGarante1.telefono.numeric">
-                                                El número de Teléfono no es válido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-form-group
-                                        id="input-group-6"
-                                    >
-                                        <b-form-input
-                                            id="input-6"
-                                            v-model="$v.datosGarante1.domicilio.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante1('domicilio')"
-                                            placeholder="Domicilio"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-6-live-feedback"
-                                        >
-                                            <div v-if="!$v.datosGarante1.domicilio.required">
-                                                El Domicilio es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-
-                                    <b-overlay
-                                        :show="efectoCargando"
-                                        rounded
-                                        opacity="0.6"
-                                        class="d-block"
-                                    >
-                                        <b-button 
-                                            :disabled="efectoCargando"
-                                            block 
-                                            type="submit" 
-                                            class="boton boton-principal mt-2 boton-block-icon"
-                                        >
-                                            Continuar 
-                                            <b-icon 
-                                                icon="chevron-right" 
-                                                aria-hidden="true" 
-                                                class="icon-derecha-boton"
-                                            ></b-icon>
-                                        </b-button>
-                                    </b-overlay>
-                                </b-form>
-                            </b-card-text>
-                        </b-card>
                     </b-col>
                 </b-row>
             </b-container>
         </section>
+        <!-- Socio ------------------------------------------------------------- -->
+        <section class="seccion-socio ocultar-informacion">
+            <b-container class="contenedor-socio">
+                <b-row class="">
+                    <b-col cols="12">
+                        <div class="boton-regresar">
+                            <b-button @click.prevent="RegresarBuscarSocio" variant="link" class="boton boton-transparente">
+                                <b-icon icon="arrow-left" aria-hidden="true"></b-icon> Regresar
+                            </b-button>
+                        </div>
+                        <div class="card card-formulario">
+                            <h1 class="card-title titulo">{{ titulo }}</h1>
+                            <div class="card-body">
+                                <h3 class="card-title subTitle">Datos del Socio</h3>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">DNI</label>
+                                    <b-form-input
+                                    type="number"
+                                    class="form-control input-formulario"
+                                    placeholder="DNI"
+                                    v-model="datosSocio.dni"
+                                    :state="ValidarDatosSocio('dni')"
+                                    disabled>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                        <div v-if="!$v.datosSocio.dni.required">El DNI es requerido</div>
+                                        <div v-if="!$v.datosSocio.dni.maxLength || !$v.datosSocio.dni.minLength">El DNI no es válido</div>
+                                    </b-form-invalid-feedback>
+                                    </b-form-input>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Apellido Paterno</label>
+                                    <b-form-input
+                                    type="text"
+                                    class="form-control input-formulario"
+                                    placeholder="Apellido Paterno"
+                                    v-model="datosSocio.apePaterno"
+                                    :state="ValidarDatosSocio('apePaterno')"
+                                    :disabled="disabled_input == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.apePaterno.required">El Apellido Paterno es requerido</div>
+                                    <div v-if="!$v.datosSocio.apePaterno.maxLength">El Apellido Paterno no es válido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Apellido Materno</label>
+                                    <b-form-input
+                                    type="text"
+                                    class="form-control input-formulario"
+                                    placeholder="Apellido Materno"
+                                    v-model="datosSocio.apeMaterno"
+                                    :state="ValidarDatosSocio('apeMaterno')"
+                                    :disabled="disabled_input == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.apeMaterno.required">El Apellido Materno es requerido</div>
+                                    <div v-if="!$v.datosSocio.apeMaterno.maxLength">El Apellido Materno no es válido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Nombre</label>
+                                    <b-form-input
+                                    type="text"
+                                    class="form-control input-formulario"
+                                    placeholder="Nombre"
+                                    v-model="datosSocio.nombre"
+                                    :state="ValidarDatosSocio('nombre')"
+                                    :disabled="disabled_input == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.nombre.required">El Nombre es requerido</div>
+                                    <div v-if="!$v.datosSocio.nombre.maxLength">El Nombre no es válido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Fecha de Nacimiento</label>
+                                    <b-form-input
+                                    type="date"
+                                    class="form-control input-formulario"
+                                    v-model="datosSocio.fecNacimiento"
+                                    :state="ValidarDatosSocio('fecNacimiento')"
+                                    :disabled="disabled_input == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.fecNacimiento.required">La Fecha de Nacimiento es requerido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Teléfono</label>
+                                    <b-form-input
+                                    type="number"
+                                    class="form-control input-formulario"
+                                    placeholder="Teléfono"
+                                    v-model="datosSocio.telefono"
+                                    :state="ValidarDatosSocio('telefono')"
+                                    :disabled="disabled_input_NoHabilitado == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.telefono.required">El Teléfono es requerido</div>
+                                    <div v-if="!$v.datosSocio.telefono.maxLength || !$v.datosSocio.telefono.minLength">El Teléfono no es válido</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                                <div class="form-group">
+                                    <label for="formGroupExampleInput">Domicilio</label>
+                                    <b-form-input
+                                    type="text"
+                                    class="form-control input-formulario"
+                                    placeholder="Domicilio"
+                                    v-model="datosSocio.domicilio"
+                                    :state="ValidarDatosSocio('domicilio')"
+                                    :disabled="disabled_input_NoHabilitado == 1">
+                                    </b-form-input>
+                                    <b-form-invalid-feedback id="input-1-live-feedback">
+                                    <div v-if="!$v.datosSocio.domicilio.required">La Dirección es requerida</div>
+                                    <div v-if="!$v.datosSocio.domicilio.maxLength">La Dirección no es válida</div>
+                                    </b-form-invalid-feedback>
+                                </div>
+                            
+                                <b-button 
+                                    block 
+                                    class="boton boton-principal mt-2 boton-block-icon"
+                                    @click="ValidarSocio" 
+                                    v-if="socioHabilitado"
+                                >
+                                    Continuar 
+                                    <b-icon 
+                                        icon="chevron-right" 
+                                        aria-hidden="true" 
+                                        class="icon-derecha-boton"
+                                    ></b-icon>
+                                </b-button>
+                                <b-button block class="boton boton-principal noHabilitado" v-if="!socioHabilitado">Socio no habilitado</b-button>
+                            </div>
+                        </div>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </section>
+        <!-- Garante 01 -------------------------------------------------------- -->
+		<section class="seccion-garante seccion-garante-1 ocultar-informacion">
+            <b-container class="contenedor-garante">
+                <b-row align-v="center" align-h="center">
+                    <b-col cols="12">
+                        <div class="boton-regresar">
+                            <b-button @click.prevent="RegresarSocio" variant="link" class="boton boton-transparente">
+                                <b-icon icon="arrow-left" aria-hidden="true"></b-icon> Regresar
+                            </b-button>
+                        </div>
+                        <b-overlay
+                            :show="efectoCargandoFormulario"
+                            rounded="lg"
+                            class="overlay-formulario"
+                        >
+                            <b-card
+                                tag="div"
+                                class="mb-2 card-formulario"
+                            >
+                                <b-card-text>
+                                    <h2 class="titulo-formulario">Ingresar Garante</h2>
+                                    <p class="subtitulo-formulario">Datos del primer garante</p>
+                                    <b-form @submit.prevent="ValidarDatosGarante1">
+                                        <b-form-group
+                                            id="input-group-4"
+                                        >
+                                            <b-form-input
+                                                id="input-4"
+                                                v-model="datosGarante1.dni"
+                                                class="input-formulario"
+                                                type="number"
+                                                :state="EstadoValidacionGarante1('dni')"
+                                                placeholder="DNI"
+                                                @blur="VerificarDniGarante1"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-4-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.dni.required">
+                                                    Debe ingresar el número de DNI
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.dni.minLength">
+                                                    Número de DNI muy corto
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.dni.maxLength">
+                                                    Número de DNI muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                        
+                                        <b-form-group
+                                            id="input-group-1"
+                                        >
+                                            <b-form-input
+                                                id="input-1"
+                                                v-model="datosGarante1.apePaterno"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante1('apePaterno')"
+                                                placeholder="Apellido Paterno"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-1-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.apePaterno.required">
+                                                    Debe ingresar el Apellido Paterno
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.apePaterno.maxLength">
+                                                    Apellido Paterno muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-2"
+                                        >
+                                            <b-form-input
+                                                id="input-2"
+                                                v-model="datosGarante1.apeMaterno"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante1('apeMaterno')"
+                                                placeholder="Apellido Materno"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-2-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.apeMaterno.required">
+                                                    Debe ingresar el Apellido Materno
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.apeMaterno.maxLength">
+                                                    Apellido Materno muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-3"
+                                        >
+                                            <b-form-input
+                                                id="input-3"
+                                                v-model="datosGarante1.nombres"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante1('nombres')"
+                                                placeholder="Nombres"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-3-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.nombres.required">
+                                                    Debe ingresar el(los) Nombre(s)
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.nombres.maxLength">
+                                                    Nombre(s) muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-5"
+                                        >
+                                            <b-form-input
+                                                id="input-5"
+                                                v-model="datosGarante1.telefono"
+                                                class="input-formulario"
+                                                type="tel"
+                                                :state="EstadoValidacionGarante1('telefono')"
+                                                placeholder="Teléfono/Celular"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-5-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.telefono.required">
+                                                    Debe ingresar el número de Teléfono
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.telefono.numeric">
+                                                    Número de Teléfono no válido
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.telefono.minLength">
+                                                    Número de Teléfono muy corto
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.telefono.maxLength">
+                                                    Número de Teléfono muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-6"
+                                        >
+                                            <b-form-input
+                                                id="input-6"
+                                                v-model="datosGarante1.domicilio"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante1('domicilio')"
+                                                placeholder="Domicilio"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-6-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.domicilio.required">
+                                                    Debe ingresar el Domicilio
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.domicilio.maxLength">
+                                                    Domicilio muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-overlay
+                                            :show="efectoCargandoBoton"
+                                            rounded
+                                            opacity="0.6"
+                                            class="d-block"
+                                        >
+                                            <b-button 
+                                                :disabled="efectoCargandoBoton"
+                                                block 
+                                                type="submit" 
+                                                class="boton boton-principal mt-2 boton-block-icon"
+                                            >
+                                                Continuar 
+                                                <b-icon 
+                                                    icon="chevron-right" 
+                                                    aria-hidden="true" 
+                                                    class="icon-derecha-boton"
+                                                ></b-icon>
+                                            </b-button>
+                                        </b-overlay>
+                                    </b-form>
+                                </b-card-text>
+                            </b-card>
+                        </b-overlay>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </section>
+        <!-- Garante 02 -------------------------------------------------------- -->
         <section class="seccion-garante seccion-garante-2 ocultar-informacion">
             <b-container class="contenedor-garante">
-                <b-row class="contenedor-iniciar-sesion" align-v="center" align-h="center">
+                <b-row align-v="center" align-h="center">
                     <b-col cols="12">
                         <div class="boton-regresar">
                             <b-button @click.prevent="RegresarGarante1" variant="link" class="boton boton-transparente">
                                 <b-icon icon="arrow-left" aria-hidden="true"></b-icon> Regresar
                             </b-button>
                         </div>
-                        <b-card
-                            tag="div"
-                            class="mb-2 card-formulario"
+                        <b-overlay
+                            :show="efectoCargandoFormulario"
+                            rounded="lg"
+                            class="overlay-formulario"
                         >
-                            <b-card-text>
-                                <h2 class="titulo-formulario">Ingresar Garante</h2>
-                                <p class="subtitulo-formulario">Datos del segundo garante</p>
-                                <b-form @submit.prevent="ValidarDatosGarante2">
-                                    <b-form-group
-                                        id="input-group-1"
-                                    >
-                                        <b-form-input
-                                            id="input-1"
-                                            v-model="$v.datosGarante2.apePaterno.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante2('apePaterno')"
-                                            placeholder="Apellido Paterno"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-1-live-feedback"
+                            <b-card
+                                tag="div"
+                                class="mb-2 card-formulario"
+                            >
+                                <b-card-text>
+                                    <h2 class="titulo-formulario">Ingresar Garante</h2>
+                                    <p class="subtitulo-formulario">Datos del segundo garante</p>
+                                    <b-form @submit.prevent="ValidarDatosGarante2">
+                                        <b-form-group
+                                            id="input-group-4"
                                         >
-                                            <div v-if="!$v.datosGarante2.apePaterno.required">
-                                                El Apellido Paterno es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-4"
+                                                v-model="datosGarante2.dni"
+                                                class="input-formulario"
+                                                type="number"
+                                                :state="EstadoValidacionGarante2('dni')"
+                                                placeholder="DNI"
+                                                @blur="VerificarDniGarante2"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-4-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.dni.required">
+                                                    Debe ingresar el número de DNI
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.dni.minLength">
+                                                    Número de DNI muy corto
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.dni.maxLength">
+                                                    Número de DNI muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-2"
-                                    >
-                                        <b-form-input
-                                            id="input-2"
-                                            v-model="$v.datosGarante2.apeMaterno.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante2('apeMaterno')"
-                                            placeholder="Apellido Materno"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-2-live-feedback"
+                                        <b-form-group
+                                            id="input-group-1"
                                         >
-                                            <div v-if="!$v.datosGarante2.apeMaterno.required">
-                                                El Apellido Materno es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-1"
+                                                v-model="datosGarante2.apePaterno"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante2('apePaterno')"
+                                                placeholder="Apellido Paterno"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-1-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.apePaterno.required">
+                                                    Debe ingresar el Apellido Paterno
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.apePaterno.maxLength">
+                                                    Apellido Paterno muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-3"
-                                    >
-                                        <b-form-input
-                                            id="input-3"
-                                            v-model="$v.datosGarante2.nombres.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante2('nombres')"
-                                            placeholder="Nombres"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-3-live-feedback"
+                                        <b-form-group
+                                            id="input-group-2"
                                         >
-                                            <div v-if="!$v.datosGarante2.nombres.required">
-                                                El Nombre(s) es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-2"
+                                                v-model="datosGarante2.apeMaterno"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante2('apeMaterno')"
+                                                placeholder="Apellido Materno"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-2-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.apeMaterno.required">
+                                                    Debe ingresar el Apellido Materno
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.apeMaterno.maxLength">
+                                                    Apellido Materno muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-4"
-                                    >
-                                        <b-form-input
-                                            id="input-4"
-                                            v-model="$v.datosGarante2.dni.$model"
-                                            class="input-formulario"
-                                            type="number"
-                                            :state="EstadoValidacionGarante2('dni')"
-                                            placeholder="DNI"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-4-live-feedback"
+                                        <b-form-group
+                                            id="input-group-3"
                                         >
-                                            <div v-if="!$v.datosGarante2.dni.required">
-                                                El número de DNI es requerido
-                                            </div>
-                                            <div v-if="!$v.datosGarante2.dni.minLength || !$v.datosGarante2.dni.maxLength">
-                                                El número de DNI no es válido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-3"
+                                                v-model="datosGarante2.nombres"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante2('nombres')"
+                                                placeholder="Nombres"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-3-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.nombres.required">
+                                                    Debe ingresar el(los) Nombre(s)
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.nombres.maxLength">
+                                                    Nombre(s) muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-5"
-                                    >
-                                        <b-form-input
-                                            id="input-5"
-                                            v-model="$v.datosGarante2.telefono.$model"
-                                            class="input-formulario"
-                                            type="tel"
-                                            :state="EstadoValidacionGarante2('telefono')"
-                                            placeholder="Teléfono/Celular"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-5-live-feedback"
+                                        <b-form-group
+                                            id="input-group-5"
                                         >
-                                            <div v-if="!$v.datosGarante2.telefono.required">
-                                                El número de Teléfono es requerido
-                                            </div>
-                                            <div v-if="!$v.datosGarante2.telefono.minLength || !$v.datosGarante2.telefono.maxLength || !$v.datosGarante1.telefono.numeric">
-                                                El número de Teléfono no es válido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-5"
+                                                v-model="datosGarante2.telefono"
+                                                class="input-formulario"
+                                                type="tel"
+                                                :state="EstadoValidacionGarante2('telefono')"
+                                                placeholder="Teléfono/Celular"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-5-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.telefono.required">
+                                                    Debe ingresar el número de Teléfono
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.telefono.numeric">
+                                                    Número de Teléfono no válido
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.telefono.minLength">
+                                                    Número de Teléfono muy corto
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.telefono.maxLength">
+                                                    Número de Teléfono muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-6"
-                                    >
-                                        <b-form-input
-                                            id="input-6"
-                                            v-model="$v.datosGarante2.domicilio.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionGarante2('domicilio')"
-                                            placeholder="Domicilio"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-6-live-feedback"
+                                        <b-form-group
+                                            id="input-group-6"
                                         >
-                                            <div v-if="!$v.datosGarante2.domicilio.required">
-                                                El Domicilio es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-6"
+                                                v-model="datosGarante2.domicilio"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionGarante2('domicilio')"
+                                                placeholder="Domicilio"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-6-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.domicilio.required">
+                                                    Debe ingresar el Domicilio
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.domicilio.maxLength">
+                                                    Domicilio muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-overlay
-                                        :show="efectoCargando"
-                                        rounded
-                                        opacity="0.6"
-                                        class="d-block"
-                                    >
-                                        <b-button 
-                                            :disabled="efectoCargando"
-                                            block 
-                                            type="submit" 
-                                            class="boton boton-principal mt-2 boton-block-icon"
+                                        <b-overlay
+                                            :show="efectoCargandoBoton"
+                                            rounded
+                                            opacity="0.6"
+                                            class="d-block"
                                         >
-                                            Continuar 
-                                            <b-icon 
-                                                icon="chevron-right" 
-                                                aria-hidden="true" 
-                                                class="icon-derecha-boton"
-                                            ></b-icon>
-                                        </b-button>
-                                    </b-overlay>
-                                </b-form>
-                            </b-card-text>
-                        </b-card>
+                                            <b-button 
+                                                :disabled="efectoCargandoBoton"
+                                                block 
+                                                type="submit" 
+                                                class="boton boton-principal mt-2 boton-block-icon"
+                                            >
+                                                Continuar 
+                                                <b-icon 
+                                                    icon="chevron-right" 
+                                                    aria-hidden="true" 
+                                                    class="icon-derecha-boton"
+                                                ></b-icon>
+                                            </b-button>
+                                        </b-overlay>
+                                    </b-form>
+                                </b-card-text>
+                            </b-card>
+                        </b-overlay>
                     </b-col>
                 </b-row>
             </b-container>
         </section>
+        <!-- Solicitud de Credito ---------------------------------------------- -->
         <section class="seccion-solicitud ocultar-informacion">
             <b-container class="contenedor-iniciar-sesion">
-                <b-row class="contenedor-iniciar-sesion" align-v="center" align-h="center">
+                <b-row align-v="center" align-h="center">
                     <b-col cols="12">
                         <div class="boton-regresar">
                             <b-button @click.prevent="RegresarGrante2" variant="link" class="boton boton-transparente">
                                 <b-icon icon="arrow-left" aria-hidden="true"></b-icon> Regresar
                             </b-button>
                         </div>
-                        <b-card
-                            tag="div"
-                            class="mb-2 card-formulario"
+                        <b-overlay
+                            :show="efectoCargandoFormulario"
+                            rounded="lg"
+                            class="overlay-formulario"
                         >
-                            <b-card-text>
-                                <div class="logo-torsa logo-iniciar-sesion">
-                                    <img src="@/assets/logo-torsa.png" alt="Torsa Perú">
-                                </div>
-                                <h2 class="titulo-formulario">Datos de crédito</h2>
-                                <p class="subtitulo-formulario">Ingresa los datos</p>
-                                <b-form @submit.prevent="ValidarDatosSolicitud">
-                                    <b-form-group
-                                        id="input-group-1"
-                                    >
-                                        <b-form-input
-                                            id="input-1"
-                                            v-model="$v.datosSolicitud.monto.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionSolicitud('monto')"
-                                            placeholder="Monto"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-1-live-feedback"
+                            <b-card
+                                tag="div"
+                                class="mb-2 card-formulario"
+                            >
+                                <b-card-text>
+                                    <div class="logo-torsa logo-iniciar-sesion">
+                                        <img src="@/assets/logo-torsa.png" alt="Torsa Perú">
+                                    </div>
+                                    <h2 class="titulo-formulario">Datos de crédito</h2>
+                                    <p class="subtitulo-formulario">Ingresa los datos</p>
+                                    <b-form @submit.prevent="ValidarDatosSolicitud">
+                                        <b-form-group
+                                            id="input-group-1"
                                         >
-                                            <div v-if="!$v.datosSolicitud.monto.required">
-                                                El monto es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                            <b-form-input
+                                                id="input-1"
+                                                v-model="datosSolicitud.monto"
+                                                class="input-formulario"
+                                                type="number"
+                                                :state="EstadoValidacionSolicitud('monto')"
+                                                placeholder="Monto"
+                                            ></b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-1-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosSolicitud.monto.required">
+                                                    Debe ingresar el Monto
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
 
-                                    <b-form-group
-                                        id="input-group-2"
-                                    >
-                                        <b-form-input
-                                            id="input-2"
-                                            v-model="$v.datosSolicitud.motivo.$model"
-                                            class="input-formulario"
-                                            type="text"
-                                            :state="EstadoValidacionSolicitud('motivo')"
-                                            placeholder="Motivo"
-                                            required
-                                        ></b-form-input>
-                                        <b-form-invalid-feedback
-                                            id="input-2-live-feedback"
+                                        <b-form-group
+                                            id="input-group-2"
                                         >
-                                            <div v-if="!$v.datosSolicitud.motivo.required">
-                                                El motivo es requerido
-                                            </div>
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
-                                
-                                    <b-overlay
-                                        :show="efectoCargando"
-                                        rounded
-                                        opacity="0.6"
-                                        class="d-block"
-                                    >
-                                        <b-button 
-                                            :disabled="efectoCargando"
-                                            block 
-                                            type="submit" 
-                                            class="boton boton-principal mt-2 boton-block-icon"
+                                            <b-form-textarea
+                                                id="input-2"
+                                                v-model="datosSolicitud.motivo"
+                                                class="input-formulario"
+                                                type="text"
+                                                :state="EstadoValidacionSolicitud('motivo')"
+                                                placeholder="Motivo"
+                                            ></b-form-textarea>
+                                            <b-form-invalid-feedback
+                                                id="input-2-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosSolicitud.motivo.required">
+                                                    Debe ingresar el Motivo
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.telefono.maxLength">
+                                                    Motivo muy largo
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+                                    
+                                        <b-overlay
+                                            :show="efectoCargandoBoton"
+                                            rounded
+                                            opacity="0.6"
+                                            class="d-block"
                                         >
-                                            Registrar Solicitud 
-                                        </b-button>
-                                    </b-overlay>
-                                </b-form>
-                            </b-card-text>
-                        </b-card>
+                                            <b-button 
+                                                :disabled="efectoCargandoBoton"
+                                                block 
+                                                type="submit" 
+                                                class="boton boton-principal mt-2 boton-block-icon"
+                                            >
+                                                Registrar Solicitud de Crédito
+                                            </b-button>
+                                        </b-overlay>
+                                    </b-form>
+                                </b-card-text>
+                            </b-card>
+                        </b-overlay>
                     </b-col>
                 </b-row>
             </b-container>
@@ -441,11 +663,39 @@
 <script>
 import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
 import axios from 'axios'
+
+import { mapState } from 'vuex'
 export default {
     data: () =>  ({
-        efectoCargando: false,
+        socioHabilitado: false,
+        disabled_input: 0,
+        disabled_input_NoHabilitado: 0,
+        dniBuscar: "",
+        titulo: "",
+        usuarioPrueba: { //Se creó este Usuario para poder verificar si se cumplen las condiciones
+            codigo: "1",
+            dni: "12345678",
+            apePaterno: "Rios",
+            apeMaterno: "Tapia",
+            nombre: "Carlos",
+            fecNacimiento: "1990-05-15",
+            telefono: "979875512",
+            domicilio: "Amarantos 123",
+            activo: "1",
+        },
+
+        efectoCargandoBoton: false,
+        efectoCargandoFormulario: false,
         datosSocio: {
+            codigo: '1',
             dni: '87654321',
+            apePaterno: "",
+            apeMaterno: "",
+            nombre: "",
+            fecNacimiento: "",
+            telefono: "",
+            domicilio: "",
+            activo: ""
         },
 		datosGarante1: {
 			apePaterno: '',
@@ -470,130 +720,178 @@ export default {
 			motivo: '',
 		},
 	}),
-	validations: {
-		datosGarante1: {
-			apePaterno: {
-				required,
-			},
-			apeMaterno: {
-				required,
-			},
-			nombres: {
-				required,
-			},
-			dni: {
-				required,
-				minLength: minLength(8),
-				maxLength: maxLength(8)
-			},
-			telefono: {
-				required,
-                numeric,
-				minLength: minLength(6),
-				maxLength: maxLength(9)
-			},
-			domicilio: {
-				required,
-			},
-		},
-		datosGarante2: {
-			apePaterno: {
-				required,
-			},
-			apeMaterno: {
-				required,
-			},
-			nombres: {
-				required,
-			},
-			dni: {
-				required,
-				minLength: minLength(8),
-				maxLength: maxLength(8)
-			},
-			telefono: {
-				required,
-                numeric,
-				minLength: minLength(6),
-				maxLength: maxLength(9)
-			},
-			domicilio: {
-				required,
-			},
-		},
-        datosSolicitud: {
-			monto: {
-                numeric,
-				required,
-			},
-			motivo: {
-				required,
-			},
-		},
-	},
+    computed: {
+        ...mapState('iniciarSesion', ['usuario']),
+    },
 	methods: {
-		EstadoValidacionGarante1(name) 
+        ValidarDNIBuscar() 
         {
-			const { $dirty, $error } = this.$v.datosGarante1[name];
-			return $dirty ? !$error : null;
-		},
-		EstadoValidacionGarante2(name) 
-        {
-			const { $dirty, $error } = this.$v.datosGarante2[name];
-			return $dirty ? !$error : null;
-		},
-		EstadoValidacionSolicitud(name) 
-        {
-			const { $dirty, $error } = this.$v.datosSolicitud[name];
-			return $dirty ? !$error : null;
-		},
-        ActivarFormularioGarante1()
-        {
-            document.querySelector('.seccion-garante-1').classList.add('mostrar-informacion')
-            document.querySelector('.seccion-garante-1').classList.remove('ocultar-informacion')
-        },
-        ActivarFormularioGarante2()
-        {
-            document.querySelector('.seccion-garante-2').classList.add('mostrar-informacion')
-            document.querySelector('.seccion-garante-2').classList.remove('ocultar-informacion')
-        },
-        ActivarFormularioSolicitud()
-        {
-            document.querySelector('.seccion-solicitud').classList.add('mostrar-informacion')
-            document.querySelector('.seccion-solicitud').classList.remove('ocultar-informacion')
-        },
-        OcultarFormularioGarante1()
-        {
-            document.querySelector('.seccion-garante-1').classList.add('ocultar-informacion')
-            document.querySelector('.seccion-garante-1').classList.remove('mostrar-informacion')
-        },
-        OcultarFormularioGarante2()
-        {
-            document.querySelector('.seccion-garante-2').classList.add('ocultar-informacion')
-            document.querySelector('.seccion-garante-2').classList.remove('mostrar-informacion')
-        },
-        OcultarFormularioSolicitud()
-        {
-            document.querySelector('.seccion-solicitud').classList.add('ocultar-informacion')
-            document.querySelector('.seccion-solicitud').classList.remove('mostrar-informacion')
+            const { $dirty, $error } = this.$v.dniBuscar;
+            return $dirty ? !$error : null;
         },
         RegresarBuscarSocio()
         {
-            this.efectoCargando = false
-            //activar busca socio
+            this.efectoCargandoBoton = false
+            this.ActivarFormularioBuscarSocio()
+            this.OcultarFormularioSocio()
+            this.disabled_input = 0
+            this.disabled_input_NoHabilitado = 0
+        },
+        RegresarSocio()
+        {
+            this.efectoCargandoBoton = false
+            this.ActivarFormularioSocio()
             this.OcultarFormularioGarante1()
         },
         RegresarGarante1()
         {
-            this.efectoCargando = false
+            this.efectoCargandoBoton = false
             this.ActivarFormularioGarante1()
             this.OcultarFormularioGarante2()
         },
         RegresarGrante2()
         {
-            this.efectoCargando = false
+            this.efectoCargandoBoton = false
             this.ActivarFormularioGarante2()
             this.OcultarFormularioSolicitud()
+        },
+        NextCardSocio() 
+        {
+            this.datosSocio.dni = this.dniBuscar;
+            document.querySelector(".seccion-buscar-socio").classList.add("ocultar-informacion");
+            this.ActivarFormularioSocio();
+        },
+        AgregarDatosSocio() 
+        {
+            this.datosSocio.apePaterno = this.usuarioPrueba.apePaterno;
+            this.datosSocio.apeMaterno = this.usuarioPrueba.apeMaterno;
+            this.datosSocio.nombre = this.usuarioPrueba.nombre;
+            this.datosSocio.fecNacimiento = this.usuarioPrueba.fecNacimiento;
+            this.datosSocio.telefono = this.usuarioPrueba.telefono;
+            this.datosSocio.domicilio = this.usuarioPrueba.domicilio;
+        },
+        BuscarSocio() 
+        {
+            this.$v.dniBuscar.$touch();
+            if (!this.$v.dniBuscar.$anyError) 
+            {
+                //Hacer un buscar y que retorne los datos del usuario (en caso exista), sino que retorne un null
+
+                if (this.dniBuscar == this.usuarioPrueba.dni)    //Se debe reemplazar el (usuario.dni)por el dni real del socio, (dniBuscar es del input)
+                {
+                    //Socio encontrado 
+
+                    this.NextCardSocio(); //Pasa al card Socio
+
+                    this.$swal("Usuario encontrado", "", "success");
+                    this.titulo = "Socio encontrado";
+                    
+                    this.socioHabilitado = true; //El socio está o no habilitado para crédito
+
+                    if (this.socioHabilitado) 
+                    {
+                        //Socio habilitado
+                        this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs necesarios
+                        this.AgregarDatosSocio(); //Se agrega los datos a los inputs
+                    } 
+                    else 
+                    {
+                        //Socio no habilitado
+                        this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs
+                        this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
+                        this.AgregarDatosSocio();
+                    }
+                } 
+                else 
+                {
+                    this.datosSocio.apePaterno = ""
+                    this.datosSocio.apeMaterno = ""
+                    this.datosSocio.nombre = ""
+                    this.datosSocio.fecNacimiento = ""
+                    this.datosSocio.telefono = ""
+                    this.datosSocio.domicilio = ""
+                    this.$swal("Usuario No encontrado", "", "error");
+                    (this.titulo = "Ingresar nuevo socio"), this.NextCardSocio();
+                }
+            }
+        },
+        ValidarSocio() 
+        {
+            this.$v.datosSocio.$touch();
+            if (!this.$v.datosSocio.$anyError) {  //Si es todo correcto se pasa al siguiente card
+                this.OcultarFormularioSocio();
+                this.ActivarFormularioGarante1();
+            }
+        },
+        VerificarDniGarante1()
+        {
+            this.efectoCargandoFormulario = true
+
+            axios.post('/api/varificar-garante', this.datosGarante1.dni)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        this.datosGarante1.apePaterno = data.apePaterno
+                        this.datosGarante1.apeMaterno = data.apeMaterno
+                        this.datosGarante1.nombres = data.nombres
+                        this.datosGarante1.telefono = data.telefono
+                        this.datosGarante1.domicilio = data.domicilio
+                    }
+                    else
+                    {
+                        this.datosGarante1.apePaterno = ""
+                        this.datosGarante1.apeMaterno = ""
+                        this.datosGarante1.nombres = ""
+                        this.datosGarante1.telefono = ""
+                        this.datosGarante1.domicilio = ""
+                    }
+                })
+                .catch(() => 
+                {
+                    this.MensajeDeError()
+                })
+                .finally(()=>
+                {
+                    this.efectoCargandoFormulario = false
+                });
+        },
+        VerificarDniGarante2()
+        {
+            this.efectoCargandoFormulario = true
+            
+            axios.post('/api/varificar-garante', this.datosGarante2.dni)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        this.datosGarante2.apePaterno = data.apePaterno
+                        this.datosGarante2.apeMaterno = data.apeMaterno
+                        this.datosGarante2.nombres = data.nombres
+                        this.datosGarante2.telefono = data.telefono
+                        this.datosGarante2.domicilio = data.domicilio
+                    }
+                    else
+                    {
+                        this.datosGarante2.apePaterno = ""
+                        this.datosGarante2.apeMaterno = ""
+                        this.datosGarante2.nombres = ""
+                        this.datosGarante2.telefono = ""
+                        this.datosGarante2.domicilio = ""
+                    }
+                })
+                .catch(() => 
+                {
+                    this.MensajeDeError()
+                })
+                .finally(()=>
+                {
+                    this.efectoCargandoFormulario = false
+                });
         },
 		ValidarDatosGarante1()
         {
@@ -603,12 +901,8 @@ export default {
             { 
                 if(this.datosSocio.dni != this.datosGarante1.dni)
                 {
-                    this.efectoCargando = true
-                    setTimeout(()=>{
-                        this.ActivarFormularioGarante2()
-                        this.OcultarFormularioGarante1()
-                        this.efectoCargando = false
-                    }, 1000)
+                    this.ActivarFormularioGarante2()
+                    this.OcultarFormularioGarante1()
                     // axios.post('/api/varificar-garante', this.datosGarante1.dni)
                     //     .then((respuesta) => 
                     //     {
@@ -628,14 +922,10 @@ export default {
                         // {
                         //     this.MensajeDeError()
                         // })
-                        // .finally(()=>
-                        // {
-                        //     this.efectoCargando = false
-                        // });
                 }
 				else
                 {
-                    this.MensajeDeError("El dni del primer garante coincide con el dni del socio")
+                    this.MensajeDeError("El socio no puede ser garante de su solicitud.")
                 }
 			}
 		},
@@ -649,6 +939,8 @@ export default {
                 {
                     if(this.datosSocio.dni != this.datosGarante2.dni)
                     {
+                        this.ActivarFormularioSolicitud()
+                        this.OcultarFormularioGarante2()
                         // axios.post('/api/varificar-garante', this.datosGarante2.dni)
                         //     .then((respuesta) => 
                         //     {
@@ -656,8 +948,8 @@ export default {
 
                         //         if(respuesta.status == 200 && typeof data.error === 'undefined')
                         //         {
-                                    this.ActivarFormularioSolicitud()
-                                    this.OcultarFormularioGarante2()
+                                    // this.ActivarFormularioSolicitud()
+                                    // this.OcultarFormularioGarante2()
                             //     }
                             //     else
                             //     {
@@ -668,19 +960,15 @@ export default {
                             // {
                             //     this.MensajeDeError()
                             // });
-                            // .finally(()=>
-                            // {
-                            //     this.efectoCargando = false
-                            // });
                     }
                     else
                     {
-                        this.MensajeDeError("El dni del segundo garante coincide con el dni del socio")
+                        this.MensajeDeError("El socio no puede ser garante de su solicitud.")
                     }
                 }
 				else
                 {
-                    this.MensajeDeError("El dni del segundo garante coincide con el dni del primer garante")
+                    this.MensajeDeError("El garante ya ha sido registrado para esta solicitud.")
                 }
 			}
 		},
@@ -690,7 +978,18 @@ export default {
 
 			if(!this.$v.datosSolicitud.$anyError)
             { 
-                axios.post('/api/registrar-solicitud', this.datosSolicitud)
+                this.efectoCargandoBoton = true
+
+                this.datosSolicitud.codSocio = this.datosSocio.codigo
+                this.datosSolicitud.codUsuario = this.usuario.codigo
+                let datos = {
+                    socio: this.datosSocio,
+                    garante1: this.datosGarante1,
+                    garante2: this.datosGarante2,
+                    solicitud: this.datosSolicitud,
+                }
+                console.log(datos)
+                axios.post('/api/registrar-solicitud', datos)
                     .then((respuesta) => 
                     {
                         let data = respuesta.data
@@ -710,22 +1009,203 @@ export default {
                     })
                     .finally(() =>
                     {
-                        this.efectoCargando = false
+                        this.efectoCargandoBoton = false
                     });
 			}
         },
-		MensajeDeError(mensaje = 'Error al conectar al servidor.')
+        MensajeDeError(mensaje = 'Error al conectar al servidor.')
         {
 			this.$swal({
 				title: mensaje,
 				icon: 'error',
 				confirmButtonText: 'Aceptar',
 			})
+		},
+        ValidarDatosSocio(name) 
+        {
+            const { $dirty, $error } = this.$v.datosSocio[name];
+            return $dirty ? !$error : null;
+        },
+		EstadoValidacionGarante1(name) 
+        {
+			const { $dirty, $error } = this.$v.datosGarante1[name];
+			return $dirty ? !$error : null;
+		},
+		EstadoValidacionGarante2(name) 
+        {
+			const { $dirty, $error } = this.$v.datosGarante2[name];
+			return $dirty ? !$error : null;
+		},
+		EstadoValidacionSolicitud(name) 
+        {
+			const { $dirty, $error } = this.$v.datosSolicitud[name];
+			return $dirty ? !$error : null;
+		},
+        ActivarFormularioBuscarSocio() {
+            document.querySelector(".seccion-buscar-socio").classList.add("mostrar-informacion");
+            document.querySelector(".seccion-buscar-socio").classList.remove("ocultar-informacion");
+        },
+        ActivarFormularioSocio() {
+            document.querySelector(".seccion-socio").classList.add("mostrar-informacion");
+            document.querySelector(".seccion-socio").classList.remove("ocultar-informacion");
+        },
+        ActivarFormularioGarante1()
+        {
+            document.querySelector('.seccion-garante-1').classList.add('mostrar-informacion')
+            document.querySelector('.seccion-garante-1').classList.remove('ocultar-informacion')
+        },
+        ActivarFormularioGarante2()
+        {
+            document.querySelector('.seccion-garante-2').classList.add('mostrar-informacion')
+            document.querySelector('.seccion-garante-2').classList.remove('ocultar-informacion')
+        },
+        ActivarFormularioSolicitud()
+        {
+            document.querySelector('.seccion-solicitud').classList.add('mostrar-informacion')
+            document.querySelector('.seccion-solicitud').classList.remove('ocultar-informacion')
+        },
+        OcultarFormularioBuscarSocio() {
+            document.querySelector(".seccion-buscar-socio").classList.remove("mostrar-informacion");
+            document.querySelector(".seccion-buscar-socio").classList.add("ocultar-informacion");
+        },
+        OcultarFormularioSocio() {
+            document.querySelector(".seccion-socio").classList.remove("mostrar-informacion");
+            document.querySelector(".seccion-socio").classList.add("ocultar-informacion");
+        },
+        OcultarFormularioGarante1()
+        {
+            document.querySelector('.seccion-garante-1').classList.add('ocultar-informacion')
+            document.querySelector('.seccion-garante-1').classList.remove('mostrar-informacion')
+        },
+        OcultarFormularioGarante2()
+        {
+            document.querySelector('.seccion-garante-2').classList.add('ocultar-informacion')
+            document.querySelector('.seccion-garante-2').classList.remove('mostrar-informacion')
+        },
+        OcultarFormularioSolicitud()
+        {
+            document.querySelector('.seccion-solicitud').classList.add('ocultar-informacion')
+            document.querySelector('.seccion-solicitud').classList.remove('mostrar-informacion')
+        },
+	},
+    validations: {
+        dniBuscar: {
+            required,
+            maxLength: maxLength(8),
+            minLength: minLength(8),
+        },
+        datosSocio: {
+            dni: {
+                required,
+                maxLength: maxLength(8),
+                minLength: minLength(8),
+            },
+            apePaterno: {
+                required,
+                maxLength: maxLength(40),
+            },
+            apeMaterno: {
+                required,
+                maxLength: maxLength(40),
+            },
+            nombre: {
+                required,
+                maxLength: maxLength(40),
+            },
+            fecNacimiento: {
+                required,
+            },
+            telefono: {
+                required,
+                maxLength: maxLength(9),
+                minLength: minLength(9),
+            },
+            domicilio: {
+                required,
+                maxLength: maxLength(50),
+            },
+        },
+		datosGarante1: {
+			apePaterno: {
+				required,
+                maxLength: maxLength(50)
+			},
+			apeMaterno: {
+				required,
+                maxLength: maxLength(50)
+			},
+			nombres: {
+				required,
+                maxLength: maxLength(50)
+			},
+			dni: {
+				required,
+				minLength: minLength(8),
+				maxLength: maxLength(8)
+			},
+			telefono: {
+				required,
+                numeric,
+				minLength: minLength(6),
+				maxLength: maxLength(9)
+			},
+			domicilio: {
+				required,
+                maxLength: maxLength(100)
+			},
+		},
+		datosGarante2: {
+			apePaterno: {
+				required,
+                maxLength: maxLength(50)
+			},
+			apeMaterno: {
+				required,
+                maxLength: maxLength(50)
+			},
+			nombres: {
+				required,
+                maxLength: maxLength(50)
+			},
+			dni: {
+				required,
+				minLength: minLength(8),
+				maxLength: maxLength(8)
+			},
+			telefono: {
+				required,
+                numeric,
+				minLength: minLength(6),
+				maxLength: maxLength(9)
+			},
+			domicilio: {
+				required,
+                maxLength: maxLength(100)
+			},
+		},
+        datosSolicitud: {
+			monto: {
+				required,
+			},
+			motivo: {
+				required,
+                maxLength: maxLength(65535)
+			},
 		}
-	}
+	},
 }
 </script>
 <style>
+    .btn.boton-principal.noHabilitado {
+        background-color: #da251c;
+    }
+    .card-formulario-buscar{
+        margin-top: 54px !important;
+    }
+	.overlay-formulario{
+		max-width: 465px;
+		margin: 0 auto;
+	}
     .boton-regresar{
         max-width: 465px;
 		margin: 0 auto;

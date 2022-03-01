@@ -28,21 +28,20 @@
 									</b-input-group-prepend>
 									<b-form-input
 										id="input-1"
-										v-model="$v.form.dni.$model"
+										v-model="form.dni"
 										class="input-formulario"
 										type="number"
 										:state="EstadoValidacion('dni')"
 										placeholder="DNI"
-										required
 									></b-form-input>
 									<b-form-invalid-feedback
 										id="input-1-live-feedback"
 									>
 										<div v-if="!$v.form.dni.required">
-											El número de DNI es requerido
+											Debe ingresar el número de DNI
 										</div>
 										<div v-if="!$v.form.dni.minLength || !$v.form.dni.maxLength">
-											El número de DNI no es válido
+											Número de DNI no válido
 										</div>
 									</b-form-invalid-feedback>
 								</b-input-group>
@@ -61,19 +60,21 @@
 									</b-input-group-prepend>
 									<b-form-input
 										id="input-2"
-										v-model="$v.form.contrasenia.$model"
+										v-model="form.contrasenia"
 										class="input-formulario"
 										type="password"
 										:state="EstadoValidacion('contrasenia')"
 										placeholder="Contraseña"
-										required
 									></b-form-input>
 									<b-form-invalid-feedback
 										id="input-1-live-feedback"
 										
 									>
 										<div v-if="!$v.form.contrasenia.required">
-											La contraseña es requerida
+											Debe ingresar la Contraseña
+										</div>
+										<div v-if="!$v.form.contrasenia.maxLength">
+											Contraseña muy larga
 										</div>
 									</b-form-invalid-feedback>
 								</b-input-group>
@@ -109,6 +110,7 @@ export default {
 			},
 			contrasenia: {
 				required,
+				maxLength: maxLength(20)
 			},
 		},
 	},

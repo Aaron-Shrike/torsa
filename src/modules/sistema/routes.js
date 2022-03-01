@@ -19,8 +19,8 @@ export const SistemaRoutes = [
             ...SolicitudCreditoRoutes,
             ...BuscarSocioHabilitadoRoutes,
         ],
-        meta: {
-            requiereAutenticacion: true
-        },
+        // meta: {
+        //     requiereAutenticacion: true
+        // },
     },
 ]

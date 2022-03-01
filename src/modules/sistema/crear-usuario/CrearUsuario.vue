@@ -625,10 +625,6 @@ export default {
 .form-control {
   padding: 0.375rem 1.5rem !important;
 }
-.btn.boton-principal {
-  height: 45px;
-  font-size: 22px;
-}
 
 #div-retroceder .contenido {
   margin-left: 20px;

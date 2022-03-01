@@ -84,7 +84,6 @@
     }
     .btn.boton-principal{
         background-color: var(--color-principal);
-        
     }
     .btn.boton-principal:hover{
         opacity: .92;
@@ -155,6 +154,10 @@
     }
     .form-control.input-formulario::placeholder{
         color: var(--color-inputs);
+    }
+    textarea.form-control.input-formulario{
+        height: 100px;
+        resize: none;
     }
 
     .swal2-popup{
