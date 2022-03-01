@@ -687,15 +687,15 @@ export default {
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
         datosSocio: {
-            codigo: '1',
-            dni: '87654321',
-            apePaterno: "",
-            apeMaterno: "",
-            nombre: "",
-            fecNacimiento: "",
-            telefono: "",
-            domicilio: "",
-            activo: ""
+            codigo: '',
+            dni: '',
+            apePaterno: '',
+            apeMaterno: '',
+            nombre: '',
+            fecNacimiento: '',
+            telefono: '',
+            domicilio: '',
+            activo: '',
         },
 		datosGarante1: {
 			apePaterno: '',
@@ -724,14 +724,8 @@ export default {
         ...mapState('iniciarSesion', ['usuario']),
     },
 	methods: {
-        ValidarDNIBuscar() 
-        {
-            const { $dirty, $error } = this.$v.dniBuscar;
-            return $dirty ? !$error : null;
-        },
         RegresarBuscarSocio()
         {
-            this.efectoCargandoBoton = false
             this.ActivarFormularioBuscarSocio()
             this.OcultarFormularioSocio()
             this.disabled_input = 0
@@ -739,19 +733,16 @@ export default {
         },
         RegresarSocio()
         {
-            this.efectoCargandoBoton = false
             this.ActivarFormularioSocio()
             this.OcultarFormularioGarante1()
         },
         RegresarGarante1()
         {
-            this.efectoCargandoBoton = false
             this.ActivarFormularioGarante1()
             this.OcultarFormularioGarante2()
         },
         RegresarGrante2()
         {
-            this.efectoCargandoBoton = false
             this.ActivarFormularioGarante2()
             this.OcultarFormularioSolicitud()
         },
@@ -825,73 +816,97 @@ export default {
         },
         VerificarDniGarante1()
         {
-            this.efectoCargandoFormulario = true
+            if(this.datosSocio.dni != this.datosGarante1.dni)
+            {
+                this.efectoCargandoFormulario = true
 
-            axios.post('/api/varificar-garante', this.datosGarante1.dni)
-                .then((respuesta) => 
-                {
-                    let data = respuesta.data
+                axios.post('/api/varificar-garante', this.datosGarante1.dni)
+                    .then((respuesta) => 
+                    {
+                        let data = respuesta.data
 
-                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                        if(respuesta.status == 200 && typeof data.error === 'undefined')
+                        {
+                            this.datosGarante1.apePaterno = data.apePaterno
+                            this.datosGarante1.apeMaterno = data.apeMaterno
+                            this.datosGarante1.nombres = data.nombres
+                            this.datosGarante1.telefono = data.telefono
+                            this.datosGarante1.domicilio = data.domicilio
+                        }
+                        else
+                        {
+                            this.datosGarante1.apePaterno = ""
+                            this.datosGarante1.apeMaterno = ""
+                            this.datosGarante1.nombres = ""
+                            this.datosGarante1.telefono = ""
+                            this.datosGarante1.domicilio = ""
+                        }
+                    })
+                    .catch(() => 
                     {
-                        this.datosGarante1.apePaterno = data.apePaterno
-                        this.datosGarante1.apeMaterno = data.apeMaterno
-                        this.datosGarante1.nombres = data.nombres
-                        this.datosGarante1.telefono = data.telefono
-                        this.datosGarante1.domicilio = data.domicilio
-                    }
-                    else
+                        this.MensajeDeError()
+                    })
+                    .finally(()=>
                     {
-                        this.datosGarante1.apePaterno = ""
-                        this.datosGarante1.apeMaterno = ""
-                        this.datosGarante1.nombres = ""
-                        this.datosGarante1.telefono = ""
-                        this.datosGarante1.domicilio = ""
-                    }
-                })
-                .catch(() => 
-                {
-                    this.MensajeDeError()
-                })
-                .finally(()=>
-                {
-                    this.efectoCargandoFormulario = false
-                });
+                        this.efectoCargandoFormulario = false
+                    });
+            }
+            else
+            {
+                this.datosGarante1.dni = ""
+                this.MensajeDeError("El socio no puede ser garante de su solicitud.")
+            }
         },
         VerificarDniGarante2()
         {
-            this.efectoCargandoFormulario = true
-            
-            axios.post('/api/varificar-garante', this.datosGarante2.dni)
-                .then((respuesta) => 
+            if(this.datosGarante1.dni != this.datosGarante2.dni)
+            {
+                if(this.datosSocio.dni != this.datosGarante2.dni)
                 {
-                    let data = respuesta.data
+                    this.efectoCargandoFormulario = true
 
-                    if(respuesta.status == 200 && typeof data.error === 'undefined')
-                    {
-                        this.datosGarante2.apePaterno = data.apePaterno
-                        this.datosGarante2.apeMaterno = data.apeMaterno
-                        this.datosGarante2.nombres = data.nombres
-                        this.datosGarante2.telefono = data.telefono
-                        this.datosGarante2.domicilio = data.domicilio
-                    }
-                    else
-                    {
-                        this.datosGarante2.apePaterno = ""
-                        this.datosGarante2.apeMaterno = ""
-                        this.datosGarante2.nombres = ""
-                        this.datosGarante2.telefono = ""
-                        this.datosGarante2.domicilio = ""
-                    }
-                })
-                .catch(() => 
+                    axios.post('/api/varificar-garante', this.datosGarante2.dni)
+                        .then((respuesta) => 
+                        {
+                            let data = respuesta.data
+
+                            if(respuesta.status == 200 && typeof data.error === 'undefined')
+                            {
+                                this.datosGarante2.apePaterno = data.apePaterno
+                                this.datosGarante2.apeMaterno = data.apeMaterno
+                                this.datosGarante2.nombres = data.nombres
+                                this.datosGarante2.telefono = data.telefono
+                                this.datosGarante2.domicilio = data.domicilio
+                            }
+                            else
+                            {
+                                this.datosGarante2.apePaterno = ""
+                                this.datosGarante2.apeMaterno = ""
+                                this.datosGarante2.nombres = ""
+                                this.datosGarante2.telefono = ""
+                                this.datosGarante2.domicilio = ""
+                            }
+                        })
+                        .catch(() => 
+                        {
+                            this.MensajeDeError()
+                        })
+                        .finally(()=>
+                        {
+                            this.efectoCargandoFormulario = false
+                        });
+                }
+                else
                 {
-                    this.MensajeDeError()
-                })
-                .finally(()=>
-                {
-                    this.efectoCargandoFormulario = false
-                });
+                    this.datosGarante2.dni = ""
+                    this.MensajeDeError("El socio no puede ser garante de su solicitud.")
+                }
+            }
+            else
+            {
+                this.datosGarante2.dni = ""
+                this.MensajeDeError("El garante ya ha sido registrado para esta solicitud.")
+            }
         },
 		ValidarDatosGarante1()
         {
@@ -903,28 +918,10 @@ export default {
                 {
                     this.ActivarFormularioGarante2()
                     this.OcultarFormularioGarante1()
-                    // axios.post('/api/varificar-garante', this.datosGarante1.dni)
-                    //     .then((respuesta) => 
-                    //     {
-                    //         let data = respuesta.data
-
-                    //         if(respuesta.status == 200 && typeof data.error === 'undefined')
-                    //         {
-                                // this.ActivarFormularioGarante2()
-                                // this.OcultarFormularioGarante1()
-                        //     }
-                        //     else
-                        //     {
-                        //         this.MensajeDeError(data.mensaje)
-                        //     }
-                        // })
-                        // .catch(() => 
-                        // {
-                        //     this.MensajeDeError()
-                        // })
                 }
 				else
                 {
+                    this.datosGarante1.dni = ""
                     this.MensajeDeError("El socio no puede ser garante de su solicitud.")
                 }
 			}
@@ -941,33 +938,16 @@ export default {
                     {
                         this.ActivarFormularioSolicitud()
                         this.OcultarFormularioGarante2()
-                        // axios.post('/api/varificar-garante', this.datosGarante2.dni)
-                        //     .then((respuesta) => 
-                        //     {
-                        //         let data = respuesta.data
-
-                        //         if(respuesta.status == 200 && typeof data.error === 'undefined')
-                        //         {
-                                    // this.ActivarFormularioSolicitud()
-                                    // this.OcultarFormularioGarante2()
-                            //     }
-                            //     else
-                            //     {
-                            //         this.MensajeDeError(data.mensaje)
-                            //     }
-                            // })
-                            // .catch(() => 
-                            // {
-                            //     this.MensajeDeError()
-                            // });
                     }
                     else
                     {
+                        this.datosGarante2.dni = ""
                         this.MensajeDeError("El socio no puede ser garante de su solicitud.")
                     }
                 }
 				else
                 {
+                    this.datosGarante2.dni = ""
                     this.MensajeDeError("El garante ya ha sido registrado para esta solicitud.")
                 }
 			}
@@ -979,9 +959,9 @@ export default {
 			if(!this.$v.datosSolicitud.$anyError)
             { 
                 this.efectoCargandoBoton = true
-
                 this.datosSolicitud.codSocio = this.datosSocio.codigo
                 this.datosSolicitud.codUsuario = this.usuario.codigo
+
                 let datos = {
                     socio: this.datosSocio,
                     garante1: this.datosGarante1,
@@ -996,7 +976,16 @@ export default {
 
                         if(respuesta.status == 200 && typeof data.error === 'undefined')
                         {
-                            //registrar solicitud
+                            this.ActivarFormularioBuscarSocio()
+                            this.OcultarFormularioSolicitud()
+
+                            this.LimpiarFormularios()
+                            
+                            this.$swal({
+                                title: "Solicitud de Crédito registrada",
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar',
+                            })
                         }
                         else
                         {
@@ -1013,6 +1002,54 @@ export default {
                     });
 			}
         },
+        LimpiarFormularios()
+        {
+            this.socioHabilitado = false
+            this.disabled_input = 0
+            this.disabled_input_NoHabilitado = 0
+            this.dniBuscar = ""
+            this.titulo = "",
+
+            this.datosSocio = {
+                codigo: '',
+                dni: '',
+                apePaterno: '',
+                apeMaterno: '',
+                nombre: '',
+                fecNacimiento: '',
+                telefono: '',
+                domicilio: '',
+                activo: ''
+            }
+            this.datosGarante1 = {
+                apePaterno: '',
+                apeMaterno: '',
+                nombres: '',
+                dni: '',
+                telefono: '',
+                domicilio: '',
+            }
+            this.datosGarante2 = {
+                apePaterno: '',
+                apeMaterno: '',
+                nombres: '',
+                dni: '',
+                telefono: '',
+                domicilio: '',
+            }
+            this.datosSolicitud = {
+                codUsuario: '',
+                codSocio: '',
+                monto: '',
+                motivo: '',
+            }
+
+            this.$v.dniBuscar.$reset()
+            this.$v.datosSocio.$reset()
+            this.$v.datosGarante1.$reset()
+            this.$v.datosGarante2.$reset()
+            this.$v.datosSolicitud.$reset()
+        },
         MensajeDeError(mensaje = 'Error al conectar al servidor.')
         {
 			this.$swal({
@@ -1021,6 +1058,11 @@ export default {
 				confirmButtonText: 'Aceptar',
 			})
 		},
+        ValidarDNIBuscar() 
+        {
+            const { $dirty, $error } = this.$v.dniBuscar;
+            return $dirty ? !$error : null;
+        },
         ValidarDatosSocio(name) 
         {
             const { $dirty, $error } = this.$v.datosSocio[name];
