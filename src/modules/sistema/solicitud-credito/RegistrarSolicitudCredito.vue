@@ -269,19 +269,19 @@
                                         >
                                             <b-form-input
                                                 id="input-3"
-                                                v-model="datosGarante1.nombres"
+                                                v-model="datosGarante1.nombre"
                                                 class="input-formulario"
                                                 type="text"
-                                                :state="EstadoValidacionGarante1('nombres')"
+                                                :state="EstadoValidacionGarante1('nombre')"
                                                 placeholder="Nombres"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-3-live-feedback"
                                             >
-                                                <div v-if="!$v.datosGarante1.nombres.required">
+                                                <div v-if="!$v.datosGarante1.nombre.required">
                                                     Debe ingresar el(los) Nombre(s)
                                                 </div>
-                                                <div v-if="!$v.datosGarante1.nombres.maxLength">
+                                                <div v-if="!$v.datosGarante1.nombre.maxLength">
                                                     Nombre(s) muy largo
                                                 </div>
                                             </b-form-invalid-feedback>
@@ -468,19 +468,19 @@
                                         >
                                             <b-form-input
                                                 id="input-3"
-                                                v-model="datosGarante2.nombres"
+                                                v-model="datosGarante2.nombre"
                                                 class="input-formulario"
                                                 type="text"
-                                                :state="EstadoValidacionGarante2('nombres')"
+                                                :state="EstadoValidacionGarante2('nombre')"
                                                 placeholder="Nombres"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-3-live-feedback"
                                             >
-                                                <div v-if="!$v.datosGarante2.nombres.required">
+                                                <div v-if="!$v.datosGarante2.nombre.required">
                                                     Debe ingresar el(los) Nombre(s)
                                                 </div>
-                                                <div v-if="!$v.datosGarante2.nombres.maxLength">
+                                                <div v-if="!$v.datosGarante2.nombre.maxLength">
                                                     Nombre(s) muy largo
                                                 </div>
                                             </b-form-invalid-feedback>
@@ -667,27 +667,27 @@ import axios from 'axios'
 import { mapState } from 'vuex'
 export default {
     data: () =>  ({
-        socioHabilitado: false,
+        socioHabilitado: true,
         disabled_input: 0,
         disabled_input_NoHabilitado: 0,
         dniBuscar: "",
         titulo: "",
-        usuarioPrueba: { //Se creó este Usuario para poder verificar si se cumplen las condiciones
-            codigo: "1",
-            dni: "12345678",
-            apePaterno: "Rios",
-            apeMaterno: "Tapia",
-            nombre: "Carlos",
-            fecNacimiento: "1990-05-15",
-            telefono: "979875512",
-            domicilio: "Amarantos 123",
-            activo: "1",
-        },
+        // usuarioPrueba: { //Se creó este Usuario para poder verificar si se cumplen las condiciones
+        //     codigo: "1",
+        //     dni: "12345678",
+        //     apePaterno: "Rios",
+        //     apeMaterno: "Tapia",
+        //     nombre: "Carlos",
+        //     fecNacimiento: "1990-05-15",
+        //     telefono: "979875512",
+        //     domicilio: "Amarantos 123",
+        //     activo: "1",
+        // },
 
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
         datosSocio: {
-            codigo: '',
+            codSocio: '',
             dni: '',
             apePaterno: '',
             apeMaterno: '',
@@ -698,17 +698,19 @@ export default {
             activo: '',
         },
 		datosGarante1: {
+            codGarante: '',
 			apePaterno: '',
 			apeMaterno: '',
-			nombres: '',
+			nombre: '',
 			dni: '',
 			telefono: '',
 			domicilio: '',
 		},
 		datosGarante2: {
+            codGarante: '',
 			apePaterno: '',
 			apeMaterno: '',
-			nombres: '',
+			nombre: '',
 			dni: '',
 			telefono: '',
 			domicilio: '',
@@ -728,6 +730,7 @@ export default {
         {
             this.ActivarFormularioBuscarSocio()
             this.OcultarFormularioSocio()
+            this.socioHabilitado = true
             this.disabled_input = 0
             this.disabled_input_NoHabilitado = 0
         },
@@ -752,14 +755,15 @@ export default {
             document.querySelector(".seccion-buscar-socio").classList.add("ocultar-informacion");
             this.ActivarFormularioSocio();
         },
-        AgregarDatosSocio() 
+        AgregarDatosSocio(data) 
         {
-            this.datosSocio.apePaterno = this.usuarioPrueba.apePaterno;
-            this.datosSocio.apeMaterno = this.usuarioPrueba.apeMaterno;
-            this.datosSocio.nombre = this.usuarioPrueba.nombre;
-            this.datosSocio.fecNacimiento = this.usuarioPrueba.fecNacimiento;
-            this.datosSocio.telefono = this.usuarioPrueba.telefono;
-            this.datosSocio.domicilio = this.usuarioPrueba.domicilio;
+            this.datosSocio.codSocio = data.codSocio
+            this.datosSocio.apePaterno = data.apePaterno
+            this.datosSocio.apeMaterno = data.apeMaterno
+            this.datosSocio.nombre = data.nombre
+            this.datosSocio.fecNacimiento = data.fecNacimiento
+            this.datosSocio.telefono = data.telefono
+            this.datosSocio.domicilio = data.domicilio
         },
         BuscarSocio() 
         {
@@ -767,43 +771,60 @@ export default {
             if (!this.$v.dniBuscar.$anyError) 
             {
                 //Hacer un buscar y que retorne los datos del usuario (en caso exista), sino que retorne un null
-
-                if (this.dniBuscar == this.usuarioPrueba.dni)    //Se debe reemplazar el (usuario.dni)por el dni real del socio, (dniBuscar es del input)
-                {
-                    //Socio encontrado 
-
-                    this.NextCardSocio(); //Pasa al card Socio
-
-                    this.$swal("Usuario encontrado", "", "success");
-                    this.titulo = "Socio encontrado";
-                    
-                    this.socioHabilitado = true; //El socio está o no habilitado para crédito
-
-                    if (this.socioHabilitado) 
+                axios.get('/api/buscar-garante-habilitado/'+this.dniBuscar)
+                    .then((respuesta) => 
                     {
-                        //Socio habilitado
-                        this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs necesarios
-                        this.AgregarDatosSocio(); //Se agrega los datos a los inputs
-                    } 
-                    else 
+                        let data = respuesta.data
+
+                        if(respuesta.status == 200 && typeof data.error === 'undefined' && typeof data.activo != 'undefined')
+                        {
+                            // this.$swal("Socio encontrado", "", "success");
+                            this.titulo = "Socio encontrado";
+
+                            this.NextCardSocio(); //Pasa al card Socio
+
+                            this.socioHabilitado = (data.activo == "1") ? true : false
+
+                            if (this.socioHabilitado) 
+                            {
+                                //Socio habilitado
+                                this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs necesarios
+                                this.AgregarDatosSocio(data); //Se agrega los datos a los inputs
+                            } 
+                            else 
+                            {
+                                //Socio no habilitado
+                                this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs
+                                this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
+                                this.AgregarDatosSocio(data);
+                            }
+                        }
+                        else
+                        {
+                            if(data.error == true)
+                            {
+                                this.MensajeDeAviso(data.mensaje)
+                                this.dniBuscar = ""
+                            }
+                            else
+                            {
+                                this.datosSocio.codSocio = ""
+                                this.datosSocio.apePaterno = ""
+                                this.datosSocio.apeMaterno = ""
+                                this.datosSocio.nombre = ""
+                                this.datosSocio.fecNacimiento = ""
+                                this.datosSocio.telefono = ""
+                                this.datosSocio.domicilio = ""
+                                // this.$swal("Socio No encontrado", "", "error");
+                                this.titulo = "Ingresar nuevo socio"
+                                this.NextCardSocio();
+                            }
+                        }
+                    })
+                    .catch(() => 
                     {
-                        //Socio no habilitado
-                        this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs
-                        this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
-                        this.AgregarDatosSocio();
-                    }
-                } 
-                else 
-                {
-                    this.datosSocio.apePaterno = ""
-                    this.datosSocio.apeMaterno = ""
-                    this.datosSocio.nombre = ""
-                    this.datosSocio.fecNacimiento = ""
-                    this.datosSocio.telefono = ""
-                    this.datosSocio.domicilio = ""
-                    this.$swal("Usuario No encontrado", "", "error");
-                    (this.titulo = "Ingresar nuevo socio"), this.NextCardSocio();
-                }
+                        this.MensajeDeError()
+                    })
             }
         },
         ValidarSocio() 
@@ -820,24 +841,27 @@ export default {
             {
                 this.efectoCargandoFormulario = true
 
-                axios.post('/api/varificar-garante', this.datosGarante1.dni)
+                axios.get('/api/buscar-garante-habilitado/'+this.datosGarante1.dni)
                     .then((respuesta) => 
                     {
                         let data = respuesta.data
 
                         if(respuesta.status == 200 && typeof data.error === 'undefined')
                         {
+                            this.datosGarante1.codGarante = data.codSocio
                             this.datosGarante1.apePaterno = data.apePaterno
                             this.datosGarante1.apeMaterno = data.apeMaterno
-                            this.datosGarante1.nombres = data.nombres
+                            this.datosGarante1.nombre = data.nombre
                             this.datosGarante1.telefono = data.telefono
                             this.datosGarante1.domicilio = data.domicilio
                         }
                         else
                         {
+                            this.MensajeDeAviso(data.mensaje)
+                            this.datosGarante1.codGarante = ""
                             this.datosGarante1.apePaterno = ""
                             this.datosGarante1.apeMaterno = ""
-                            this.datosGarante1.nombres = ""
+                            this.datosGarante1.nombre = ""
                             this.datosGarante1.telefono = ""
                             this.datosGarante1.domicilio = ""
                         }
@@ -865,24 +889,27 @@ export default {
                 {
                     this.efectoCargandoFormulario = true
 
-                    axios.post('/api/varificar-garante', this.datosGarante2.dni)
+                    axios.get('/api/buscar-garante-habilitado/'+this.datosGarante2.dni)
                         .then((respuesta) => 
                         {
                             let data = respuesta.data
 
                             if(respuesta.status == 200 && typeof data.error === 'undefined')
                             {
+                                this.datosGarante2.codGarante = data.codSocio
                                 this.datosGarante2.apePaterno = data.apePaterno
                                 this.datosGarante2.apeMaterno = data.apeMaterno
-                                this.datosGarante2.nombres = data.nombres
+                                this.datosGarante2.nombre = data.nombre
                                 this.datosGarante2.telefono = data.telefono
                                 this.datosGarante2.domicilio = data.domicilio
                             }
                             else
                             {
+                                this.MensajeDeAviso(data.mensaje)
+                                this.datosGarante2.codGarante = ""
                                 this.datosGarante2.apePaterno = ""
                                 this.datosGarante2.apeMaterno = ""
-                                this.datosGarante2.nombres = ""
+                                this.datosGarante2.nombre = ""
                                 this.datosGarante2.telefono = ""
                                 this.datosGarante2.domicilio = ""
                             }
@@ -959,7 +986,7 @@ export default {
 			if(!this.$v.datosSolicitud.$anyError)
             { 
                 this.efectoCargandoBoton = true
-                this.datosSolicitud.codSocio = this.datosSocio.codigo
+                this.datosSolicitud.codSocio = this.datosSocio.codSocio
                 this.datosSolicitud.codUsuario = this.usuario.codigo
 
                 let datos = {
@@ -1011,7 +1038,7 @@ export default {
             this.titulo = "",
 
             this.datosSocio = {
-                codigo: '',
+                codSocio: '',
                 dni: '',
                 apePaterno: '',
                 apeMaterno: '',
@@ -1022,17 +1049,19 @@ export default {
                 activo: ''
             }
             this.datosGarante1 = {
+                codGarante: '',  
                 apePaterno: '',
                 apeMaterno: '',
-                nombres: '',
+                nombre: '',
                 dni: '',
                 telefono: '',
                 domicilio: '',
             }
             this.datosGarante2 = {
+                codGarante: '',
                 apePaterno: '',
                 apeMaterno: '',
-                nombres: '',
+                nombre: '',
                 dni: '',
                 telefono: '',
                 domicilio: '',
@@ -1055,6 +1084,14 @@ export default {
 			this.$swal({
 				title: mensaje,
 				icon: 'error',
+				confirmButtonText: 'Aceptar',
+			})
+		},
+        MensajeDeAviso(mensaje)
+        {
+			this.$swal({
+				title: mensaje,
+				icon: 'info',
 				confirmButtonText: 'Aceptar',
 			})
 		},
@@ -1176,7 +1213,7 @@ export default {
 				required,
                 maxLength: maxLength(50)
 			},
-			nombres: {
+			nombre: {
 				required,
                 maxLength: maxLength(50)
 			},
@@ -1205,7 +1242,7 @@ export default {
 				required,
                 maxLength: maxLength(50)
 			},
-			nombres: {
+			nombre: {
 				required,
                 maxLength: maxLength(50)
 			},
