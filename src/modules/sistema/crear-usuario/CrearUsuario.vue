@@ -275,8 +275,6 @@ export default {
     };
   },
   created() {
-    axios.defaults.withCredentials = true;
-    axios.defaults.baseURL = "http://localhost:8000";
     axios
       .get("/api/tipocargo")
       .then((response) => {
@@ -300,8 +298,6 @@ export default {
       };
       //if (this.$v.datosUsuario.correo.email){
       this.show = true;
-      axios.defaults.withCredentials = true;
-      axios.defaults.baseURL = "http://localhost:8000";
       axios
         .post("/api/validarEmail/", data)
         .then((response) => {
@@ -332,8 +328,6 @@ export default {
       };
       if (this.datosUsuario.dni.length === 8) {
         this.show = true;
-        axios.defaults.withCredentials = true;
-        axios.defaults.baseURL = "http://localhost:8000";
         axios.post("/api/validarDNI", data).then((response) => {
             let respuesta = response.data;
             if (response.status === 200) {
@@ -480,8 +474,6 @@ export default {
         contrasenia: contrasena,
         activo: 1,
       };
-      axios.defaults.withCredentials = true;
-      axios.defaults.baseURL = "http://localhost:8000";
       this.$v.contactoEmergencia.$touch();
       if (!this.$v.contactoEmergencia.$anyError) {
         this.show = true;

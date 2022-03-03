@@ -10,14 +10,14 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Codigo Usuario</th>
+                            <th>Nombre Socio</th>
                             <th>Monto</th>
                             <th>Motivo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="solicitud in solicitudes" :key="solicitud.id">
-                            <td>{{solicitud.codSocio}}</td>
+                            <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
                             <td>{{solicitud.monto}}</td>
                             <td>{{solicitud.motivo}}</td>
                         </tr>
@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import { mapState } from 'vuex';
 
 export default {
     data() {
@@ -41,25 +42,25 @@ export default {
             solicitudes: []
         }
     },
+    computed: {
+        ...mapState('iniciarSesion', ['usuario'])
+    },
     created() {
-        axios.defaults.withCredentials = true;
-        axios.defaults.baseURL = "http://localhost:8000";
-        axios
-            .get("/api/listarSolicitudesDia")
+        axios.get("/api/listarSolicitudesDia/"+this.usuario.codUsuario)
             .then((response) => {
-                  let data = response.data;
-                  if (response.status === 200) {
-                      for (var i = 0; i < data.length; i++) {
-                          this.solicitudes.push(data[i]);
-                      }
-                  } else {
-                      console.log("error interno");
-                  }
+                let data = response.data;
+                if (response.status === 200) {
+                    for (var i = 0; i < data.length; i++) {
+                        this.solicitudes.push(data[i]);
+                    }
+                } else {
+                    console.log("error interno");
+                }
         })
         .catch(() => {
-          console.log("error al conectar con el servidor");
+            console.log("error al conectar con el servidor");
         });
-  },
+    },
     methods: {
         printDate: function () {
             return new Date().toLocaleDateString();
