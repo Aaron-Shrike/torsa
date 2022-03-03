@@ -6,13 +6,14 @@
         <div class="card-body">
           <h3 class="card-title subTitle">Ingrese el DNI del Socio</h3>
           <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
+            <label>DNI</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
               placeholder="DNI"
-              v-model="dniBuscar"
-              :state="ValidarDNIBuscar()">
+              v-model="$v.dniBuscar.$model"
+              :state="ValidarDNIBuscar()"
+              @keyup="buscarSocio">
             </b-form-input>
             <b-form-invalid-feedback id="input-1-live-feedback">
               <div v-if="!$v.dniBuscar.required">El DNI es requerido</div>
@@ -30,7 +31,7 @@
         <div class="card-body">
           <h3 class="card-title subTitle">Datos del Socio</h3>
           <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
+            <label>DNI</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -46,7 +47,7 @@
           </div>
 
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Paterno</label>
+            <label>Apellido Paterno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -61,7 +62,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Materno</label>
+            <label>Apellido Materno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -76,7 +77,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Nombre</label>
+            <label>Nombre</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -91,7 +92,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Fecha de Nacimiento</label>
+            <label>Fecha de Nacimiento</label>
             <b-form-input
               type="date"
               class="form-control input-formulario"
@@ -104,7 +105,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Teléfono</label>
+            <label>Teléfono</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -119,7 +120,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Domicilio</label>
+            <label>Domicilio</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -150,7 +151,7 @@
         <div class="card-body">
           <h3 class="card-title subTitle">Datos del Primer Garante</h3>
           <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
+            <label>DNI</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -164,7 +165,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Paterno</label>
+            <label>Apellido Paterno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -178,7 +179,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Materno</label>
+            <label>Apellido Materno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -192,7 +193,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Nombre</label>
+            <label>Nombre</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -206,7 +207,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Teléfono</label>
+            <label>Teléfono</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -220,7 +221,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Domicilio</label>
+            <label>Domicilio</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -249,7 +250,7 @@
         <div class="card-body">
           <h3 class="card-title subTitle">Datos del Segundo Garante</h3>
           <div class="form-group">
-            <label for="formGroupExampleInput">DNI</label>
+            <label>DNI</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -263,7 +264,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Paterno</label>
+            <label>Apellido Paterno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -277,7 +278,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Apellido Materno</label>
+            <label>Apellido Materno</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -291,7 +292,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Nombre</label>
+            <label>Nombre</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -305,7 +306,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Teléfono</label>
+            <label>Teléfono</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -319,7 +320,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Domicilio</label>
+            <label>Domicilio</label>
             <b-form-input
               type="text"
               class="form-control input-formulario"
@@ -348,7 +349,7 @@
         <div class="card-body">
           <h3 class="card-title subTitle">Ingrese los datos</h3>
           <div class="form-group">
-            <label for="formGroupExampleInput">Monto</label>
+            <label>Monto</label>
             <b-form-input
               type="number"
               class="form-control input-formulario"
@@ -361,7 +362,7 @@
             </b-form-invalid-feedback>
           </div>
           <div class="form-group">
-            <label for="formGroupExampleInput">Motivo</label>
+            <label>Motivo</label>
             <b-form-textarea
               type="text"
               class="form-control input-formulario textAreaMotivo"
@@ -379,6 +380,7 @@
 
 <script>
 import { required, maxLength, minLength } from "vuelidate/lib/validators";
+import axios from "axios";
 
 export default {
   data() {
@@ -515,30 +517,72 @@ export default {
       this.$v.dniBuscar.$touch();
       if (!this.$v.dniBuscar.$anyError) {
         //Hacer un buscar y que retorne los datos del usuario (en caso exista), sino que retorne un null
+        if (this.dniBuscar.length === 8){
+          axios.defaults.withCredentials = true;
+          axios.defaults.baseURL = "http://localhost:8000";
+          axios.get("/api/buscar-garante-habilitado/"+this.dniBuscar).then((response) => {
+            let respuesta = response.data;
+            if(response.status == 200 && typeof respuesta.error === 'undefined' && typeof respuesta.activo != 'undefined')
+            {
+              this.titulo = "Socio encontrado";
 
-        if (this.dniBuscar == this.usuario.dni) {   //Se debe reemplazar el (usuario.dni)por el dni real del socio, (dniBuscar es del input)
-          //Socio encontrado 
+              this.NextCardSocio(); //Pasa al card Socio
 
-          this.nextCardSocio(); //Pasa al card Socio
+              this.socioHabilitado = (respuesta.activo == "1") ? true : false
 
-          this.$swal("Usuario encontrado", "", "success");
-          this.titulo = "Socio encontrado";
-         
-          this.socioHabilitado = true; //El socio está o no habilitado para crédito
-
-          if (this.socioHabilitado) {
-            //Socio habilitado
-            this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs necesarios
-            this.agregarDatosSocio(); //Se agrega los datos a los inputs
-          } else {
-            //Socio no habilitado
-            this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs
-            this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
-            this.agregarDatosSocio();
-          }
-        } else {
-          this.$swal("Usuario No encontrado", "", "error");
-          (this.titulo = "Ingresar nuevo socio"), this.nextCardSocio();
+              if (this.socioHabilitado)
+              {
+                this.usuario.dni = respuesta.dni;
+                this.usuario.apPaterno = respuesta.apePaterno;
+                this.usuario.apMaterno = respuesta.apeMaterno;
+                this.usuario.nombre = respuesta.nombre;
+                this.usuario.fecha = respuesta.fecNacimiento;
+                this.usuario.domicilio = respuesta.domicilio;
+                this.usuario.telefono= respuesta.telefono;
+                //Socio habilitado
+                this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs necesarios
+                this.agregarDatosSocio(); //Se agrega los datos a los inputs
+              }
+              else
+              {
+                this.usuario.dni = respuesta.dni;
+                this.usuario.apPaterno = respuesta.apePaterno;
+                this.usuario.apMaterno = respuesta.apeMaterno;
+                this.usuario.nombre = respuesta.nombre;
+                this.usuario.fecha = respuesta.fecNacimiento;
+                this.usuario.domicilio = respuesta.domicilio;
+                this.usuario.telefono= respuesta.telefono;
+                //Socio no habilitado
+                this.disabled_input = (this.disabled_input + 1) % 2; //Inhabilita los inputs
+                this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
+                this.agregarDatosSocio();
+              }
+            }
+            else
+            {
+              console.log("1")
+              if(respuesta.error == true)
+              {
+                this.$swal(respuesta.mensaje, "", "info");
+                this.dniBuscar = ""
+              }
+              else
+              {
+                this.datosSocio.codSocio = ""
+                this.datosSocio.apePaterno = ""
+                this.datosSocio.apeMaterno = ""
+                this.datosSocio.nombre = ""
+                this.datosSocio.fecNacimiento = ""
+                this.datosSocio.telefono = ""
+                this.datosSocio.domicilio = ""
+                this.$swal("Socio No encontrado", "", "info");
+                this.titulo = "Ingresar nuevo socio"
+                this.nextCardSocio();
+              }
+            }
+          }).catch(() => {
+            this.mensajeDeError();
+          });
         }
       }
     },
