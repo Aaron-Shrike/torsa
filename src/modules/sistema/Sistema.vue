@@ -50,13 +50,13 @@
                     <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.tipoUsuario == 'Administrador'">
                         Crear Usuario
                     </b-list-group-item>
-                    <b-list-group-item :to="{name: 'BuscarSocioHabilitado'}" v-if="usuario.tipoUsuario == 'Promotor'">
-                        Buscar Socio Habilitado
-                    </b-list-group-item>
-                     <b-list-group-item :to="{name: 'ListarSolicitudesRegistradas'}" v-if="usuario.tipoUsuario == 'Promotor'">
+                    <b-list-group-item :to="{name: 'ListarSolicitudesRegistradas'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Listar Solicitudes Registradas
                     </b-list-group-item>
                     <!-- <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item> -->
+                    <b-list-group-item button @click.prevent="CerrarSesion">
+                        Cerrar Sesión
+                    </b-list-group-item>
                 </b-list-group>
             </div>
         </b-sidebar>
@@ -64,7 +64,7 @@
     </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
     data: () =>  ({
 		
@@ -72,6 +72,14 @@ export default {
     computed:{
         ...mapState('iniciarSesion', ['usuario']),
     },
+    methods: {
+        ...mapMutations('iniciarSesion', ['EditarCerrarSesion']),
+        CerrarSesion()
+        {
+            this.EditarCerrarSesion();
+            this.$router.push({ name: "IniciarSesion"})
+        }
+    }
 }
 </script>
 <style>
