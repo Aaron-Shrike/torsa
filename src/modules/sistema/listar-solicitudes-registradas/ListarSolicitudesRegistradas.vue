@@ -45,7 +45,7 @@ export default {
         axios.defaults.withCredentials = true;
         axios.defaults.baseURL = "http://localhost:8000";
         axios
-            .get("/api/listarSolicitudesDia")
+            .get("/api/listarSolicitudesDia/solicitud")
             .then((response) => {
                   let data = response.data;
                   if (response.status === 200) {
