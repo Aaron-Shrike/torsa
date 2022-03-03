@@ -3,15 +3,15 @@ export const IniciarSesionStore = {
     namespaced: true,
     state: {
         autenticado: false,
-        // usuario: {},
-        usuario: {
-            codigo: '1',
-            dni: '73976711',
-            nombre: 'Aarón',
-            apePaterno: 'Rojas',
-            apeMaterno: 'Vera',
-            tipoUsuario: 'Promotor'
-        },
+        usuario: {},
+        // usuario: {
+        //     codUsuario: '3',
+        //     dni: '73976711',
+        //     nombre: 'Aarón',
+        //     apePaterno: 'Rojas',
+        //     apeMaterno: 'Vera',
+        //     tipoUsuario: 'Administrador'
+        // },
     },
     mutations: {
         EditarIniciarSesion(state, payload)

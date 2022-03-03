@@ -20,8 +20,8 @@ export const SistemaRoutes = [
             ...BuscarSocioHabilitadoRoutes,
             ...ListarSolicitudesRegistradasRoutes,
         ],
-        // meta: {
-        //     requiereAutenticacion: true
-        // },
+        meta: {
+            requiereAutenticacion: true
+        },
     },
 ]

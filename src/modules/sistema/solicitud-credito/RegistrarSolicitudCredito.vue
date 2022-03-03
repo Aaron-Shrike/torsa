@@ -987,7 +987,7 @@ export default {
             { 
                 this.efectoCargandoBoton = true
                 this.datosSolicitud.codSocio = this.datosSocio.codSocio
-                this.datosSolicitud.codUsuario = this.usuario.codigo
+                this.datosSolicitud.codUsuario = this.usuario.codUsuario
 
                 let datos = {
                     socio: this.datosSocio,
