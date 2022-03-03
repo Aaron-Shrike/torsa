@@ -298,6 +298,7 @@ export default {
       };
       //if (this.$v.datosUsuario.correo.email){
       this.show = true;
+      axios.defaults.baseURL = process.env.VUE_APP_API_URL;
       axios
         .post("/api/validarEmail/", data)
         .then((response) => {

@@ -22,7 +22,7 @@ import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
 //SweetAlert2
 import VueSweetalert2 from 'vue-sweetalert2';
