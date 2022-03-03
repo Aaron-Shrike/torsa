@@ -10,16 +10,16 @@
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>DNI</th>
-                            <th>Apellidos</th>
-                            <th>Nombre</th>
+                            <th>Codigo Usuario</th>
+                            <th>Monto</th>
+                            <th>Motivo</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="solicitud in solicitudes" :key="solicitud.id">
-                            <td>{{solicitud.dni}}</td>
-                            <td>{{solicitud.apellidos}}</td>
-                            <td>{{solicitud.nombre}}</td>
+                            <td>{{solicitud.codSocio}}</td>
+                            <td>{{solicitud.monto}}</td>
+                            <td>{{solicitud.motivo}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -32,17 +32,34 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
         return{
             date: '',
-            solicitudes: [
-                { dni: '12345678', apellidos: 'Rojas Rojas', nombre: 'Frank'},
-                { dni: '98765432', apellidos: 'Lopez Lopez', nombre: 'Victor'},
-                { dni: '63524141', apellidos: 'Rios Cubas', nombre: 'Lisa'},
-            ]
+            solicitudes: []
         }
     },
+    created() {
+        axios.defaults.withCredentials = true;
+        axios.defaults.baseURL = "http://localhost:8000";
+        axios
+            .get("/api/listarSolicitudesDia")
+            .then((response) => {
+                  let data = response.data;
+                  if (response.status === 200) {
+                      for (var i = 0; i < data.length; i++) {
+                          this.solicitudes.push(data[i]);
+                      }
+                  } else {
+                      console.log("error interno");
+                  }
+        })
+        .catch(() => {
+          console.log("error al conectar con el servidor");
+        });
+  },
     methods: {
         printDate: function () {
             return new Date().toLocaleDateString();
