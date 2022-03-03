@@ -46,14 +46,7 @@ export default {
         ...mapState('iniciarSesion', ['usuario'])
     },
     created() {
-<<<<<<< HEAD
-        axios.defaults.withCredentials = true;
-        axios.defaults.baseURL = "http://localhost:8000";
-        axios
-            .get("/api/listarSolicitudesDia/solicitud")
-=======
         axios.get("/api/listarSolicitudesDia/"+this.usuario.codUsuario)
->>>>>>> 9529a684fb0ec488ffda55d9ce2b9f5fa8aa9466
             .then((response) => {
                 let data = response.data;
                 if (response.status === 200) {
