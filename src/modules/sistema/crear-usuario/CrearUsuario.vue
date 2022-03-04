@@ -16,7 +16,7 @@
                   placeholder="DNI"
                   v-model="$v.datosUsuario.dni.$model"
                   :state="ValidarDatosUsuario('dni')"
-                  @blur="validarDNI">
+                  @blur="ValidarDNI">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
                   <div v-if="!$v.datosUsuario.dni.required">El DNI es requerido</div>
@@ -106,7 +106,7 @@
                   <div v-if="!$v.datosPersonales.direccion.maxLength">La Dirección no es válida</div>
                 </b-form-invalid-feedback>
               </div>
-              <b-button block class="boton boton-principal" @click="procesar1">Continuar</b-button>
+              <b-button block class="boton boton-principal" @click="Procesar1">Continuar</b-button>
             </div>
           </div>
         </section>
@@ -115,7 +115,7 @@
 
         <section class="seccion-datosUsuario ocultar-informacion">
           <div class="contenido" id="div-retroceder">
-            <label class="retroceder" @click="retrocederCard1">
+            <label class="retroceder" @click="RetrocederCard1">
               <b-icon icon="arrow-left" aria-hidden="true"></b-icon>Regresar</label>
           </div>
 
@@ -131,7 +131,7 @@
                   placeholder="Correo electrónico"
                   v-model="$v.datosUsuario.correo.$model"
                   :state="ValidarDatosUsuario('correo')"
-                  @blur="validarEmail">
+                  @blur="ValidarEmail">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
                   <div v-if="!$v.datosUsuario.correo.required">El correo electrónico es requerido</div>
@@ -166,7 +166,7 @@
                   <div v-if="!$v.datosUsuario.cargo.required">El Cargo es requerido</div>
                 </b-form-invalid-feedback>
               </div>
-              <b-button block class="boton boton-principal" @click="procesar2">Continuar</b-button>
+              <b-button block class="boton boton-principal" @click="Procesar2">Continuar</b-button>
             </div>
           </div>
         </section>
@@ -178,7 +178,7 @@
             <h1 class="card-title titulo">Registrar Usuario</h1>
 
             <div class="contenido" id="div-retroceder">
-              <label class="retroceder" @click="retrocederCard2">
+              <label class="retroceder" @click="RetrocederCard2">
                 <b-icon icon="arrow-left" aria-hidden="true"></b-icon>Regresar</label>
             </div>
 
@@ -230,7 +230,7 @@
                   <div v-if="!$v.contactoEmergencia.parentescoEmergencia.required">El Parentesco es requerido</div>
                 </b-form-invalid-feedback>
               </div>
-              <b-button block class="boton boton-principal" @click="procesar3">Registrar</b-button>
+              <b-button block class="boton boton-principal" @click="Procesar3">Registrar</b-button>
             </div>
           </div>
         </section>
@@ -277,22 +277,29 @@ export default {
   created() {
     axios
       .get("/api/tipocargo")
-      .then((response) => {
+      .then((response) => 
+      {
         let data = response.data;
-        if (response.status === 200) {
-          for (var i = 0; i < data.length; i++) {
+        if (response.status === 200) 
+        {
+          for (var i = 0; i < data.length; i++) 
+          {
             this.tcargos.push(data[i]);
           }
-        } else {
+        } 
+        else 
+        {
           console.log("error interno");
         }
       })
-      .catch(() => {
+      .catch(() => 
+      {
         console.log("error al conectar con el servidor");
       });
   },
   methods: {
-    validarEmail() {
+    ValidarEmail() 
+    {
       var data = {
         correo: this.datosUsuario.correo,
       };
@@ -301,42 +308,57 @@ export default {
       axios.defaults.baseURL = process.env.VUE_APP_API_URL;
       axios
         .post("/api/validarEmail/", data)
-        .then((response) => {
+        .then((response) => 
+        {
           let respuesta = response.data;
-          if (response.status === 200) {
-            if (respuesta === 1) {
+          if (response.status === 200) 
+          {
+            if (respuesta === 1) 
+            {
               this.$v.datosUsuario.correo.$model = "";
               this.$swal("Email En uso","Parece que el Email ya se encuentra registrado","error");
               this.show = false;
-            } else {
+            } 
+            else 
+            {
               this.$swal("Email Validado","Email listo para usarse","success");
               this.show = false;
             }
-          } else {
-            this.mensajeDeError(respuesta.mensaje);
+          } 
+          else 
+          {
+            this.MensajeDeError(respuesta.mensaje);
             this.show = false;
           }
         })
-        .catch(() => {
-          this.mensajeDeError();
+        .catch(() => 
+        {
+          this.MensajeDeError();
           this.show = false;
         });
       //}
     },
-    validarDNI() {
+    ValidarDNI() 
+    {
       var data = {
         dni: this.datosUsuario.dni,
       };
-      if (this.datosUsuario.dni.length === 8) {
+      if (this.datosUsuario.dni.length === 8) 
+      {
         this.show = true;
-        axios.post("/api/validarDNI", data).then((response) => {
+        axios.post("/api/validarDNI", data).then((response) => 
+        {
             let respuesta = response.data;
-            if (response.status === 200) {
-              if (respuesta === 1) {
+            if (response.status === 200) 
+            {
+              if (respuesta === 1) 
+              {
                 this.$v.datosUsuario.dni.$model = "";
                 this.$swal("DNI En uso","Parece que el DNI ya se encuentra registrado","error");
                 this.show = false;
-              } else {
+              } 
+              else 
+              {
                 axios.defaults.withCredentials = false;
                 axios.defaults.baseURL = "";
                 axios.get(
@@ -344,10 +366,12 @@ export default {
                       this.datosUsuario.dni +
                       "?api_token=" +
                       "8a24b3f591fabc8aedf751a710d73de43a9761da5e2bf5ce73c83a892d66dd28"
-                  ).then((response) => {
+                  ).then((response) => 
+                  {
                     let res = response.data;
                     console.log(res.success);
-                    if (res.success) {
+                    if (res.success) 
+                    {
                       this.$swal("DNI Encontrado","No es necesario ingresar nombres y apellidos del trabajador","success");
                       this.$v.datosPersonales.nombre.$model =
                         res.data["nombres"];
@@ -356,109 +380,133 @@ export default {
                       this.$v.datosPersonales.apellidoMaterno.$model =
                         res.data["apellido_materno"];
                       this.show = false;
-                    } else {
-                      this.mensajeDeError(res.message);
+                    } 
+                    else 
+                    {
+                      this.MensajeDeError(res.message);
                       this.show = false;
                     }
                   })
-                  .catch(() => {
-                    this.mensajeDeError();
+                  .catch(() => 
+                  {
+                    this.MensajeDeError();
                     this.show = false;
                   });
               }
-            } else {
-              this.mensajeDeError(respuesta.mensaje);
+            } 
+            else 
+            {
+              this.MensajeDeError(respuesta.mensaje);
               this.show = false;
             }
           })
-          .catch(() => {
-            this.mensajeDeError();
+          .catch(() => 
+          {
+            this.MensajeDeError();
             this.show = false;
           });
       }
     },
-    ValidarDatosPersonales(name) {
+    ValidarDatosPersonales(name) 
+    {
       const { $dirty, $error } = this.$v.datosPersonales[name];
       return $dirty ? !$error : null;
     },
-    ValidarDatosUsuario(name) {
+    ValidarDatosUsuario(name) 
+    {
       const { $dirty, $error } = this.$v.datosUsuario[name];
       return $dirty ? !$error : null;
     },
-    ValidarContactoEmergencia(name) {
+    ValidarContactoEmergencia(name) 
+    {
       const { $dirty, $error } = this.$v.contactoEmergencia[name];
       return $dirty ? !$error : null;
     },
-    retrocederCard1() {
+    RetrocederCard1() 
+    {
       this.OcultarFormularioDatosUsuario();
       this.ActivarFormularioDatosPersonales();
     },
-    retrocederCard2() {
+    RetrocederCard2() 
+    {
       this.OcultarFormularioContactoEmergencia();
       this.ActivarFormularioDatosUsuario();
     },
 
-    OcultarFormularioDatosPersonales() {
+    OcultarFormularioDatosPersonales() 
+    {
       document.querySelector(".seccion-datosPersonales").classList.remove("mostrar-informacion");
       document.querySelector(".seccion-datosPersonales").classList.add("ocultar-informacion");
     },
 
-    OcultarFormularioDatosUsuario() {
+    OcultarFormularioDatosUsuario() 
+    {
       document.querySelector(".seccion-datosUsuario").classList.remove("mostrar-informacion");
       document.querySelector(".seccion-datosUsuario").classList.add("ocultar-informacion");
     },
-    OcultarFormularioContactoEmergencia() {
+    OcultarFormularioContactoEmergencia() 
+    {
       document.querySelector(".seccion-contactoEmergencia").classList.remove("mostrar-informacion");
       document.querySelector(".seccion-contactoEmergencia").classList.add("ocultar-informacion");
     },
-    ActivarFormularioDatosPersonales() {
+    ActivarFormularioDatosPersonales() 
+    {
       document.querySelector(".seccion-datosPersonales").classList.remove("ocultar-informacion");
       document.querySelector(".seccion-datosPersonales").classList.add("mostrar-informacion");
     },
-    ActivarFormularioDatosUsuario() {
+    ActivarFormularioDatosUsuario() 
+    {
       document.querySelector(".seccion-datosUsuario").classList.remove("ocultar-informacion");
       document.querySelector(".seccion-datosUsuario").classList.add("mostrar-informacion");
     },
-    ActivarFormularioContactoEmergencia() {
+    ActivarFormularioContactoEmergencia() 
+    {
       document.querySelector(".seccion-contactoEmergencia").classList.remove("ocultar-informacion");
       document.querySelector(".seccion-contactoEmergencia").classList.add("mostrar-informacion");
     },
 
-    procesar1() {
+    Procesar1() 
+    {
       this.$v.datosPersonales.$touch();
       this.$v.datosUsuario.dni.$touch();
-      if (!this.$v.datosPersonales.$anyError) {
+      if (!this.$v.datosPersonales.$anyError) 
+      {
         this.OcultarFormularioDatosPersonales();
         this.ActivarFormularioDatosUsuario();
       }
     },
-    procesar2() {
+    Procesar2() 
+    {
       this.$v.datosUsuario.$touch();
-      if (!this.$v.datosUsuario.$anyError) {
+      if (!this.$v.datosUsuario.$anyError) 
+      {
         this.OcultarFormularioDatosUsuario();
         this.ActivarFormularioContactoEmergencia();
       }
       this.$v.contactoEmergencia.parentescoEmergencia.$model = "";
     },
-    limpiarCampos() {
+    LimpiarCampos() 
+    {
       this.$router.push({ name: "Sistema" });
     },
-    generateP() {
+    GenerateP() 
+    {
       var pass = "";
       var str =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
         "abcdefghijklmnopqrstuvwxyz0123456789@#$";
 
-      for (var i = 1; i <= 8; i++) {
+      for (var i = 1; i <= 8; i++) 
+      {
         var char = Math.floor(Math.random() * str.length + 1);
-
         pass += str.charAt(char);
       }
 
       return pass;
     },
-    procesar3() {
-      var contrasena = this.generateP();
+    Procesar3() 
+    {
+      var contrasena = this.GenerateP();
       var data = {
         nombreC: this.contactoEmergencia.nombreEmergencia,
         numero: this.contactoEmergencia.telefonoEmergencia,
@@ -476,28 +524,35 @@ export default {
         activo: 1,
       };
       this.$v.contactoEmergencia.$touch();
-      if (!this.$v.contactoEmergencia.$anyError) {
+      if (!this.$v.contactoEmergencia.$anyError) 
+      {
         this.show = true;
         axios
           .post("/api/nuevo", data)
-          .then((response) => {
+          .then((response) => 
+          {
             let data = response.data;
-            if (response.status === 200) {
+            if (response.status === 200) 
+            {
               this.$swal("Usuario Registrado","Para inciar sesion porfavor verique su correo electronico","success");
-              this.limpiarCampos();
+              this.LimpiarCampos();
               this.show = false;
-            } else {
-              this.mensajeDeError(data.mensaje);
+            } 
+            else 
+            {
+              this.MensajeDeError(data.mensaje);
               this.show = false;
             }
           })
-          .catch(() => {
-            this.mensajeDeError();
+          .catch(() => 
+          {
+            this.MensajeDeError();
             this.show = false;
           });
       }
     },
-    mensajeDeError(mensaje = "Error al conectar al servidor.") {
+    MensajeDeError(mensaje = "Error al conectar al servidor.") 
+    {
       this.$swal("Error!", mensaje, "error");
     },
   },

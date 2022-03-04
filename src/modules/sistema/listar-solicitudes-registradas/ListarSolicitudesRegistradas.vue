@@ -47,22 +47,29 @@ export default {
     },
     created() {
         axios.get("/api/listarSolicitudesDia/"+this.usuario.codUsuario)
-            .then((response) => {
+            .then((response) => 
+            {
                 let data = response.data;
-                if (response.status === 200) {
-                    for (var i = 0; i < data.length; i++) {
+                if (response.status === 200) 
+                {
+                    for (var i = 0; i < data.length; i++) 
+                    {
                         this.solicitudes.push(data[i]);
                     }
-                } else {
+                } 
+                else 
+                {
                     console.log("error interno");
                 }
         })
-        .catch(() => {
+        .catch(() => 
+        {
             console.log("error al conectar con el servidor");
         });
     },
     methods: {
-        printDate: function () {
+        printDate: function () 
+        {
             return new Date().toLocaleDateString();
         },
     },
