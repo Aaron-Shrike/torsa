@@ -275,6 +275,7 @@ export default {
     };
   },
   created() {
+    axios.defaults.baseURL = process.env.VUE_APP_API_URL;
     axios
       .get("/api/tipocargo")
       .then((response) => 
@@ -346,6 +347,7 @@ export default {
       if (this.datosUsuario.dni.length === 8) 
       {
         this.show = true;
+        axios.defaults.baseURL = process.env.VUE_APP_API_URL;
         axios.post("/api/validarDNI", data).then((response) => 
         {
             let respuesta = response.data;
@@ -359,7 +361,6 @@ export default {
               } 
               else 
               {
-                axios.defaults.withCredentials = false;
                 axios.defaults.baseURL = "";
                 axios.get(
                     "https://apiperu.dev/api/dni/" +
@@ -527,6 +528,7 @@ export default {
       if (!this.$v.contactoEmergencia.$anyError) 
       {
         this.show = true;
+        axios.defaults.baseURL = process.env.VUE_APP_API_URL;
         axios
           .post("/api/nuevo", data)
           .then((response) => 
