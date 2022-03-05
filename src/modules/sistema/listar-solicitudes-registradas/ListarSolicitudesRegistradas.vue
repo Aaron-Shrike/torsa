@@ -23,7 +23,7 @@
                         </tr>
                     </tbody>
                 </table>
-            
+                <p class="mensaje-error" v-if="!haySolicitudes">* No hay Solicitudes Registradas el día de hoy *</p>
             </div>
         </div>
     </div>
@@ -39,7 +39,8 @@ export default {
     data() {
         return{
             date: '',
-            solicitudes: []
+            solicitudes: [],
+            haySolicitudes: false
         }
     },
     computed: {
@@ -52,9 +53,14 @@ export default {
                 let data = response.data;
                 if (response.status === 200) 
                 {
-                    for (var i = 0; i < data.length; i++) 
+                    if(data.length > 0)
                     {
-                        this.solicitudes.push(data[i]);
+                        this.haySolicitudes = true
+
+                        for (var i = 0; i < data.length; i++) 
+                        {
+                            this.solicitudes.push(data[i]);
+                        }
                     }
                 } 
                 else 
@@ -79,3 +85,9 @@ export default {
 }
 
 </script>
+
+<style>
+    .mensaje-error{
+        color: var(--color-error);
+    }
+</style>

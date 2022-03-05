@@ -108,6 +108,8 @@
                                     <label for="formGroupExampleInput">Fecha de Nacimiento</label>
                                     <b-form-input
                                     type="date"
+                                    min="1900-01-01" 
+                                    :max="fechaMaxima"
                                     class="form-control input-formulario"
                                     v-model="datosSocio.fecNacimiento"
                                     :state="ValidarDatosSocio('fecNacimiento')"
@@ -192,10 +194,10 @@
                                     <p class="subtitulo-formulario">Datos del primer garante</p>
                                     <b-form @submit.prevent="ValidarDatosGarante1">
                                         <b-form-group
-                                            id="input-group-4"
+                                            id="input-group-1"
                                         >
                                             <b-form-input
-                                                id="input-4"
+                                                id="input-1"
                                                 v-model="datosGarante1.dni"
                                                 class="input-formulario"
                                                 type="number"
@@ -204,7 +206,7 @@
                                                 @blur="VerificarDniGarante1"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-4-live-feedback"
+                                                id="input-1-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.dni.required">
                                                     Debe ingresar el número de DNI
@@ -219,10 +221,10 @@
                                         </b-form-group>
                                         
                                         <b-form-group
-                                            id="input-group-1"
+                                            id="input-group-2"
                                         >
                                             <b-form-input
-                                                id="input-1"
+                                                id="input-2"
                                                 v-model="datosGarante1.apePaterno"
                                                 class="input-formulario"
                                                 type="text"
@@ -230,7 +232,7 @@
                                                 placeholder="Apellido Paterno"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-1-live-feedback"
+                                                id="input-2-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.apePaterno.required">
                                                     Debe ingresar el Apellido Paterno
@@ -242,10 +244,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-2"
+                                            id="input-group-3"
                                         >
                                             <b-form-input
-                                                id="input-2"
+                                                id="input-3"
                                                 v-model="datosGarante1.apeMaterno"
                                                 class="input-formulario"
                                                 type="text"
@@ -253,7 +255,7 @@
                                                 placeholder="Apellido Materno"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-2-live-feedback"
+                                                id="input-3-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.apeMaterno.required">
                                                     Debe ingresar el Apellido Materno
@@ -265,10 +267,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-3"
+                                            id="input-group-4"
                                         >
                                             <b-form-input
-                                                id="input-3"
+                                                id="input-4"
                                                 v-model="datosGarante1.nombre"
                                                 class="input-formulario"
                                                 type="text"
@@ -276,7 +278,7 @@
                                                 placeholder="Nombres"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-3-live-feedback"
+                                                id="input-4-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.nombre.required">
                                                     Debe ingresar el(los) Nombre(s)
@@ -292,6 +294,29 @@
                                         >
                                             <b-form-input
                                                 id="input-5"
+                                                type="date"
+                                                min="1900-01-01" 
+                                                :max="fechaMaxima"
+                                                class="input-formulario"
+                                                v-model="datosGarante1.fecNacimiento"
+                                                :state="EstadoValidacionGarante1('fecNacimiento')"
+                                                placeholder="Fecha de Nacimiento"
+                                            >
+                                            </b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-5-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.nombre.required">
+                                                    Debe ingresar la Fecha de Nacimiento
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-6"
+                                        >
+                                            <b-form-input
+                                                id="input-6"
                                                 v-model="datosGarante1.telefono"
                                                 class="input-formulario"
                                                 type="tel"
@@ -299,7 +324,7 @@
                                                 placeholder="Teléfono/Celular"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-5-live-feedback"
+                                                id="input-6-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.telefono.required">
                                                     Debe ingresar el número de Teléfono
@@ -317,10 +342,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-6"
+                                            id="input-group-7"
                                         >
                                             <b-form-input
-                                                id="input-6"
+                                                id="input-7"
                                                 v-model="datosGarante1.domicilio"
                                                 class="input-formulario"
                                                 type="text"
@@ -328,7 +353,7 @@
                                                 placeholder="Domicilio"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-6-live-feedback"
+                                                id="input-7-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.domicilio.required">
                                                     Debe ingresar el Domicilio
@@ -391,10 +416,10 @@
                                     <p class="subtitulo-formulario">Datos del segundo garante</p>
                                     <b-form @submit.prevent="ValidarDatosGarante2">
                                         <b-form-group
-                                            id="input-group-4"
+                                            id="input-group-1"
                                         >
                                             <b-form-input
-                                                id="input-4"
+                                                id="input-1"
                                                 v-model="datosGarante2.dni"
                                                 class="input-formulario"
                                                 type="number"
@@ -403,7 +428,7 @@
                                                 @blur="VerificarDniGarante2"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-4-live-feedback"
+                                                id="input-1-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.dni.required">
                                                     Debe ingresar el número de DNI
@@ -418,10 +443,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-1"
+                                            id="input-group-2"
                                         >
                                             <b-form-input
-                                                id="input-1"
+                                                id="input-2"
                                                 v-model="datosGarante2.apePaterno"
                                                 class="input-formulario"
                                                 type="text"
@@ -429,7 +454,7 @@
                                                 placeholder="Apellido Paterno"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-1-live-feedback"
+                                                id="input-2-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.apePaterno.required">
                                                     Debe ingresar el Apellido Paterno
@@ -441,10 +466,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-2"
+                                            id="input-group-3"
                                         >
                                             <b-form-input
-                                                id="input-2"
+                                                id="input-3"
                                                 v-model="datosGarante2.apeMaterno"
                                                 class="input-formulario"
                                                 type="text"
@@ -452,7 +477,7 @@
                                                 placeholder="Apellido Materno"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-2-live-feedback"
+                                                id="input-3-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.apeMaterno.required">
                                                     Debe ingresar el Apellido Materno
@@ -464,10 +489,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-3"
+                                            id="input-group-4"
                                         >
                                             <b-form-input
-                                                id="input-3"
+                                                id="input-4"
                                                 v-model="datosGarante2.nombre"
                                                 class="input-formulario"
                                                 type="text"
@@ -475,7 +500,7 @@
                                                 placeholder="Nombres"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-3-live-feedback"
+                                                id="input-4-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.nombre.required">
                                                     Debe ingresar el(los) Nombre(s)
@@ -491,6 +516,29 @@
                                         >
                                             <b-form-input
                                                 id="input-5"
+                                                type="date"
+                                                min="1900-01-01" 
+                                                :max="fechaMaxima"
+                                                class="input-formulario"
+                                                v-model="datosGarante2.fecNacimiento"
+                                                :state="EstadoValidacionGarante2('fecNacimiento')"
+                                                placeholder="Fecha de Nacimiento"
+                                            >
+                                            </b-form-input>
+                                            <b-form-invalid-feedback
+                                                id="input-5-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.nombre.required">
+                                                    Debe ingresar la Fecha de Nacimiento
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-6"
+                                        >
+                                            <b-form-input
+                                                id="input-6"
                                                 v-model="datosGarante2.telefono"
                                                 class="input-formulario"
                                                 type="tel"
@@ -498,7 +546,7 @@
                                                 placeholder="Teléfono/Celular"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-5-live-feedback"
+                                                id="input-6-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.telefono.required">
                                                     Debe ingresar el número de Teléfono
@@ -516,10 +564,10 @@
                                         </b-form-group>
 
                                         <b-form-group
-                                            id="input-group-6"
+                                            id="input-group-7"
                                         >
                                             <b-form-input
-                                                id="input-6"
+                                                id="input-7"
                                                 v-model="datosGarante2.domicilio"
                                                 class="input-formulario"
                                                 type="text"
@@ -527,7 +575,7 @@
                                                 placeholder="Domicilio"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-6-live-feedback"
+                                                id="input-7-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.domicilio.required">
                                                     Debe ingresar el Domicilio
@@ -672,7 +720,7 @@ export default {
         disabled_input_NoHabilitado: 0,
         dniBuscar: "",
         titulo: "",
-        // usuarioPrueba: { //Se creó este Usuario para poder verificar si se cumplen las condiciones
+        // usuarioPrueba: { //Se creó este Socio para poder verificar si se cumplen las condiciones
         //     codigo: "1",
         //     dni: "12345678",
         //     apePaterno: "Rios",
@@ -686,6 +734,8 @@ export default {
 
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
+        fechaMaxima: '',
+        fechaValor: '',
         datosSocio: {
             codSocio: '',
             dni: '',
@@ -702,6 +752,7 @@ export default {
 			apePaterno: '',
 			apeMaterno: '',
 			nombre: '',
+            fecNacimiento: '',
 			dni: '',
 			telefono: '',
 			domicilio: '',
@@ -711,6 +762,7 @@ export default {
 			apePaterno: '',
 			apeMaterno: '',
 			nombre: '',
+            fecNacimiento: '',
 			dni: '',
 			telefono: '',
 			domicilio: '',
@@ -725,7 +777,27 @@ export default {
     computed: {
         ...mapState('iniciarSesion', ['usuario']),
     },
+    mounted() {
+        this.FechasParaDatePicker()
+    },
 	methods: {
+        FechasParaDatePicker()
+        {
+            let hoy = new Date();
+            let anio = hoy.getFullYear()-18
+            let mes = `${(hoy.getMonth()+1)}`.padStart(2,'0')
+            let dia = `${(hoy.getDate())}`.padStart(2,'0')
+            
+            let fecha = `${anio}-${mes}-${dia}`
+            this.fechaMaxima = fecha
+
+            anio -= 70;
+            mes = `${(hoy.getMonth()+7)}`.padStart(2,'0')
+            dia = 15;
+
+            fecha = `${anio}-${mes}-${dia}`
+            this.fechaValor = fecha
+        },
         RegresarBuscarSocio()
         {
             this.ActivarFormularioBuscarSocio()
@@ -837,81 +909,27 @@ export default {
         },
         VerificarDniGarante1()
         {
-            if(this.datosSocio.dni != this.datosGarante1.dni)
-            {
-                this.efectoCargandoFormulario = true
+            this.$v.datosGarante1.dni.$touch();
 
-                axios.get('/api/buscar-garante-habilitado/'+this.datosGarante1.dni)
-                    .then((respuesta) => 
-                    {
-                        let data = respuesta.data
-
-                        if(respuesta.status == 200 && typeof data.error === 'undefined')
-                        {
-                            this.datosGarante1.codGarante = data.codSocio
-                            this.datosGarante1.apePaterno = data.apePaterno
-                            this.datosGarante1.apeMaterno = data.apeMaterno
-                            this.datosGarante1.nombre = data.nombre
-                            this.datosGarante1.telefono = data.telefono
-                            this.datosGarante1.domicilio = data.domicilio
-                        }
-                        else
-                        {
-                            this.MensajeDeAviso(data.mensaje)
-                            this.datosGarante1.codGarante = ""
-                            this.datosGarante1.apePaterno = ""
-                            this.datosGarante1.apeMaterno = ""
-                            this.datosGarante1.nombre = ""
-                            this.datosGarante1.telefono = ""
-                            this.datosGarante1.domicilio = ""
-                        }
-                    })
-                    .catch(() => 
-                    {
-                        this.MensajeDeError()
-                    })
-                    .finally(()=>
-                    {
-                        this.efectoCargandoFormulario = false
-                    });
-            }
-            else
+            if(!this.$v.datosGarante1.dni.$error)
             {
-                this.datosGarante1.dni = ""
-                this.MensajeDeError("El socio no puede ser garante de su solicitud.")
-            }
-        },
-        VerificarDniGarante2()
-        {
-            if(this.datosGarante1.dni != this.datosGarante2.dni)
-            {
-                if(this.datosSocio.dni != this.datosGarante2.dni)
+                if(this.datosSocio.dni != this.datosGarante1.dni)
                 {
                     this.efectoCargandoFormulario = true
 
-                    axios.get('/api/buscar-garante-habilitado/'+this.datosGarante2.dni)
+                    axios.get('/api/buscar-garante-habilitado/'+this.datosGarante1.dni)
                         .then((respuesta) => 
                         {
                             let data = respuesta.data
 
                             if(respuesta.status == 200 && typeof data.error === 'undefined')
                             {
-                                this.datosGarante2.codGarante = data.codSocio
-                                this.datosGarante2.apePaterno = data.apePaterno
-                                this.datosGarante2.apeMaterno = data.apeMaterno
-                                this.datosGarante2.nombre = data.nombre
-                                this.datosGarante2.telefono = data.telefono
-                                this.datosGarante2.domicilio = data.domicilio
+                                this.AgregarDatosGarante1(data)
                             }
                             else
                             {
                                 this.MensajeDeAviso(data.mensaje)
-                                this.datosGarante2.codGarante = ""
-                                this.datosGarante2.apePaterno = ""
-                                this.datosGarante2.apeMaterno = ""
-                                this.datosGarante2.nombre = ""
-                                this.datosGarante2.telefono = ""
-                                this.datosGarante2.domicilio = ""
+                                this.LimpiarDatosGarante1()
                             }
                         })
                         .catch(() => 
@@ -925,15 +943,98 @@ export default {
                 }
                 else
                 {
-                    this.datosGarante2.dni = ""
+                    this.datosGarante1.dni = ""
                     this.MensajeDeError("El socio no puede ser garante de su solicitud.")
                 }
             }
-            else
+        },
+        AgregarDatosGarante1(data)
+        {
+            this.datosGarante1.codGarante = data.codSocio
+            this.datosGarante1.apePaterno = data.apePaterno
+            this.datosGarante1.apeMaterno = data.apeMaterno
+            this.datosGarante1.nombre = data.nombre
+            this.datosGarante1.fecNacimiento = data.fecNacimiento
+            this.datosGarante1.telefono = data.telefono
+            this.datosGarante1.domicilio = data.domicilio
+        },
+        LimpiarDatosGarante1()
+        {
+            this.datosGarante1.codGarante = ""
+            this.datosGarante1.apePaterno = ""
+            this.datosGarante1.apeMaterno = ""
+            this.datosGarante1.nombre = ""
+            this.datosGarante1.telefono = ""
+            this.datosGarante1.domicilio = ""
+        },
+        VerificarDniGarante2()
+        {
+            this.$v.datosGarante2.dni.$touch();
+
+            if(!this.$v.datosGarante2.dni.$error)
             {
-                this.datosGarante2.dni = ""
-                this.MensajeDeError("El garante ya ha sido registrado para esta solicitud.")
+                if(this.datosGarante1.dni != this.datosGarante2.dni)
+                {
+                    if(this.datosSocio.dni != this.datosGarante2.dni)
+                    {
+                        this.efectoCargandoFormulario = true
+
+                        axios.get('/api/buscar-garante-habilitado/'+this.datosGarante2.dni)
+                            .then((respuesta) => 
+                            {
+                                let data = respuesta.data
+
+                                if(respuesta.status == 200 && typeof data.error === 'undefined')
+                                {
+                                    this.AgregarDatosGarante2(data)
+                                }
+                                else
+                                {
+                                    this.MensajeDeAviso(data.mensaje)
+                                    this.LimpiarDatosGarante2()
+                                }
+                            })
+                            .catch(() => 
+                            {
+                                this.MensajeDeError()
+                            })
+                            .finally(()=>
+                            {
+                                this.efectoCargandoFormulario = false
+                            });
+                    }
+                    else
+                    {
+                        this.datosGarante2.dni = ""
+                        this.MensajeDeError("El socio no puede ser garante de su solicitud.")
+                    }
+                }
+                else
+                {
+                    this.datosGarante2.dni = ""
+                    this.MensajeDeError("El garante ya ha sido ingresado para esta solicitud.")
+                }
             }
+        },
+        AgregarDatosGarante2(data)
+        {
+            this.datosGarante2.codGarante = data.codSocio
+            this.datosGarante2.apePaterno = data.apePaterno
+            this.datosGarante2.apeMaterno = data.apeMaterno
+            this.datosGarante2.nombre = data.nombre
+            this.datosGarante2.fecNacimiento = data.fecNacimiento
+            this.datosGarante2.telefono = data.telefono
+            this.datosGarante2.domicilio = data.domicilio
+        },
+        LimpiarDatosGarante2()
+        {
+            this.datosGarante2.codGarante = ""
+            this.datosGarante2.apePaterno = ""
+            this.datosGarante2.apeMaterno = ""
+            this.datosGarante2.nombre = ""
+            this.datosGarante2.fecNacimiento = ""
+            this.datosGarante2.telefono = ""
+            this.datosGarante2.domicilio = ""
         },
 		ValidarDatosGarante1()
         {
@@ -941,16 +1042,32 @@ export default {
 
 			if(!this.$v.datosGarante1.$anyError)
             { 
-                if(this.datosSocio.dni != this.datosGarante1.dni)
-                {
-                    this.ActivarFormularioGarante2()
-                    this.OcultarFormularioGarante1()
-                }
-				else
-                {
-                    this.datosGarante1.dni = ""
-                    this.MensajeDeError("El socio no puede ser garante de su solicitud.")
-                }
+                this.efectoCargandoFormulario = true
+
+                axios.get('/api/validar-telefono/'+this.datosGarante1.telefono)
+                    .then((respuesta) => 
+                    {
+                        let data = respuesta.data
+
+                        if(respuesta.status == 200 && typeof data.error === 'undefined')
+                        {
+                            this.ActivarFormularioGarante2()
+                            this.OcultarFormularioGarante1()
+                        }
+                        else
+                        {
+                            this.MensajeDeAviso(data.mensaje)
+                            this.datosGarante1.telefono = ""
+                        }
+                    })
+                    .catch(() => 
+                    {
+                        this.MensajeDeError()
+                    })
+                    .finally(()=>
+                    {
+                        this.efectoCargandoFormulario = false
+                    });
 			}
 		},
 		ValidarDatosGarante2()
@@ -959,23 +1076,39 @@ export default {
 
 			if(!this.$v.datosGarante2.$anyError)
             { 
-                if(this.datosGarante1.dni != this.datosGarante2.dni)
+                if(this.datosGarante1.telefono != this.datosGarante2.telefono)
                 {
-                    if(this.datosSocio.dni != this.datosGarante2.dni)
-                    {
-                        this.ActivarFormularioSolicitud()
-                        this.OcultarFormularioGarante2()
-                    }
-                    else
-                    {
-                        this.datosGarante2.dni = ""
-                        this.MensajeDeError("El socio no puede ser garante de su solicitud.")
-                    }
+                    this.efectoCargandoFormulario = true
+
+                    axios.get('/api/validar-telefono/'+this.datosGarante2.telefono)
+                        .then((respuesta) => 
+                        {
+                            let data = respuesta.data
+
+                            if(respuesta.status == 200 && typeof data.error === 'undefined')
+                            {
+                                this.ActivarFormularioSolicitud()
+                                this.OcultarFormularioGarante2()
+                            }
+                            else
+                            {
+                                this.MensajeDeAviso(data.mensaje)
+                                this.datosGarante2.telefono = ""
+                            }
+                        })
+                        .catch(() => 
+                        {
+                            this.MensajeDeError()
+                        })
+                        .finally(()=>
+                        {
+                            this.efectoCargandoFormulario = false
+                        });
                 }
-				else
+                else
                 {
-                    this.datosGarante2.dni = ""
-                    this.MensajeDeError("El garante ya ha sido registrado para esta solicitud.")
+                    this.datosGarante2.telefono = ""
+                    this.MensajeDeError("El teléfono ya ha sido ingresado en el primer garante.")
                 }
 			}
 		},
@@ -995,7 +1128,7 @@ export default {
                     garante2: this.datosGarante2,
                     solicitud: this.datosSolicitud,
                 }
-                console.log(datos)
+                
                 axios.post('/api/registrar-solicitud', datos)
                     .then((respuesta) => 
                     {
@@ -1217,6 +1350,9 @@ export default {
 				required,
                 maxLength: maxLength(50)
 			},
+			fecNacimiento: {
+				required,
+			},
 			dni: {
 				required,
 				minLength: minLength(8),
@@ -1245,6 +1381,9 @@ export default {
 			nombre: {
 				required,
                 maxLength: maxLength(50)
+			},
+			fecNacimiento: {
+				required,
 			},
 			dni: {
 				required,

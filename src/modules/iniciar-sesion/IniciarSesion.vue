@@ -79,7 +79,21 @@
 									</b-form-invalid-feedback>
 								</b-input-group>
 							
-								<b-button block type="submit" class="boton boton-principal mt-2">Ingresar</b-button>
+								<b-overlay
+									:show="efectoCargandoBoton"
+									rounded
+									opacity="0.6"
+									class="d-block"
+								>
+									<b-button 
+										:disabled="efectoCargandoBoton"
+										block 
+										type="submit" 
+										class="boton boton-principal mt-2"
+									>
+										Ingresar
+									</b-button>
+								</b-overlay>
 							</b-form>
 						</b-card-text>
 					</b-card>
@@ -96,6 +110,7 @@ import axios from 'axios'
 import { mapMutations, mapState } from 'vuex'
 export default {
 	data: () =>  ({
+		efectoCargandoBoton: false,
 		form: {
 			dni: '',
 			contrasenia: '',
@@ -133,6 +148,8 @@ export default {
 				axios.get('/sanctum/csrf-cookie')
 					.then(() => 
 					{
+						this.efectoCargandoBoton = true
+
 						axios.post('/api/iniciar-sesion', this.form)
 							.then((respuesta) => 
 							{
@@ -151,6 +168,9 @@ export default {
 							.catch(() => 
 							{
 								this.MensajeDeError()
+							})
+							.finally(() => {
+								this.efectoCargandoBoton = false
 							});
 					})
 					.catch(() => 
