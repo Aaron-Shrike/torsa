@@ -1049,14 +1049,14 @@ export default {
                     {
                         let data = respuesta.data
 
-                        if(respuesta.status == 200 && typeof data.error === 'undefined')
+                        if(respuesta.status == 200 && data == 0)
                         {
                             this.ActivarFormularioGarante2()
                             this.OcultarFormularioGarante1()
                         }
                         else
                         {
-                            this.MensajeDeAviso(data.mensaje)
+                            this.MensajeDeAviso("El Teléfono ya se encuentra registrado.")
                             this.datosGarante1.telefono = ""
                         }
                     })
@@ -1085,14 +1085,14 @@ export default {
                         {
                             let data = respuesta.data
 
-                            if(respuesta.status == 200 && typeof data.error === 'undefined')
+                            if(respuesta.status == 200 && data == 0)
                             {
                                 this.ActivarFormularioSolicitud()
                                 this.OcultarFormularioGarante2()
                             }
                             else
                             {
-                                this.MensajeDeAviso(data.mensaje)
+                                this.MensajeDeAviso("El Teléfono ya se encuentra registrado.")
                                 this.datosGarante2.telefono = ""
                             }
                         })
