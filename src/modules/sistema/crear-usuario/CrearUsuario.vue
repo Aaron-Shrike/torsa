@@ -362,6 +362,7 @@ export default {
               else 
               {
                 axios.defaults.baseURL = "";
+                axios.defaults.withCredentials = false;
                 axios.get(
                     "https://apiperu.dev/api/dni/" +
                       this.datosUsuario.dni +
@@ -407,6 +408,7 @@ export default {
             this.show = false;
           });
       }
+      axios.defaults.withCredentials = false;
     },
     ValidarDatosPersonales(name) 
     {
@@ -484,7 +486,6 @@ export default {
         this.OcultarFormularioDatosUsuario();
         this.ActivarFormularioContactoEmergencia();
       }
-      this.$v.contactoEmergencia.parentescoEmergencia.$model = "";
     },
     LimpiarCampos() 
     {
@@ -534,7 +535,8 @@ export default {
           .then((response) => 
           {
             let data = response.data;
-            if (response.status === 200) 
+            console.log(data)
+            if (response.status === 200 && data == 'Correo Electronico Enviado')
             {
               this.$swal("Usuario Registrado","Para inciar sesion porfavor verique su correo electronico","success");
               this.LimpiarCampos();
@@ -542,7 +544,7 @@ export default {
             } 
             else 
             {
-              this.MensajeDeError(data.mensaje);
+              this.MensajeDeError('ERROR OCURRIDO EN EL SERVIDOR');
               this.show = false;
             }
           })
