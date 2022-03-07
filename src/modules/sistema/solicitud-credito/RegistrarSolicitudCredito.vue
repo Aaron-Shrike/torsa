@@ -230,6 +230,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('apePaterno')"
                                                 placeholder="Apellido Paterno"
+                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-2-live-feedback"
@@ -253,6 +254,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('apeMaterno')"
                                                 placeholder="Apellido Materno"
+                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-3-live-feedback"
@@ -276,6 +278,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('nombre')"
                                                 placeholder="Nombres"
+                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-4-live-feedback"
@@ -301,6 +304,7 @@
                                                 v-model="datosGarante1.fecNacimiento"
                                                 :state="EstadoValidacionGarante1('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
+                                                :disabled="garante1Encontrado"
                                             >
                                             </b-form-input>
                                             <b-form-invalid-feedback
@@ -322,6 +326,7 @@
                                                 type="tel"
                                                 :state="EstadoValidacionGarante1('telefono')"
                                                 placeholder="Teléfono/Celular"
+                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-6-live-feedback"
@@ -351,6 +356,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('domicilio')"
                                                 placeholder="Domicilio"
+                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-7-live-feedback"
@@ -452,6 +458,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('apePaterno')"
                                                 placeholder="Apellido Paterno"
+                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-2-live-feedback"
@@ -475,6 +482,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('apeMaterno')"
                                                 placeholder="Apellido Materno"
+                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-3-live-feedback"
@@ -498,6 +506,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('nombre')"
                                                 placeholder="Nombres"
+                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-4-live-feedback"
@@ -523,6 +532,7 @@
                                                 v-model="datosGarante2.fecNacimiento"
                                                 :state="EstadoValidacionGarante2('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
+                                                :disabled="garante2Encontrado"
                                             >
                                             </b-form-input>
                                             <b-form-invalid-feedback
@@ -544,6 +554,7 @@
                                                 type="tel"
                                                 :state="EstadoValidacionGarante2('telefono')"
                                                 placeholder="Teléfono/Celular"
+                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-6-live-feedback"
@@ -573,6 +584,7 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('domicilio')"
                                                 placeholder="Domicilio"
+                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-7-live-feedback"
@@ -634,9 +646,6 @@
                                 class="mb-2 card-formulario"
                             >
                                 <b-card-text>
-                                    <div class="logo-torsa logo-iniciar-sesion">
-                                        <img src="@/assets/logo-torsa.png" alt="Torsa Perú">
-                                    </div>
                                     <h2 class="titulo-formulario">Datos de crédito</h2>
                                     <p class="subtitulo-formulario">Ingresa los datos</p>
                                     <b-form @submit.prevent="ValidarDatosSolicitud">
@@ -695,7 +704,7 @@
                                                 type="submit" 
                                                 class="boton boton-principal mt-2 boton-block-icon"
                                             >
-                                                Registrar Solicitud de Crédito
+                                                Registrar
                                             </b-button>
                                         </b-overlay>
                                     </b-form>
@@ -734,6 +743,8 @@ export default {
 
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
+        garante1Encontrado: false,
+        garate2Encontrado: true,
         fechaMaxima: '',
         fechaValor: '',
         datosSocio: {
@@ -928,7 +939,10 @@ export default {
                             }
                             else
                             {
-                                this.MensajeDeAviso(data.mensaje)
+                                if(data.error == true)
+                                {
+                                    this.MensajeDeAviso(data.mensaje)
+                                }
                                 this.LimpiarDatosGarante1()
                             }
                         })
@@ -957,15 +971,18 @@ export default {
             this.datosGarante1.fecNacimiento = data.fecNacimiento
             this.datosGarante1.telefono = data.telefono
             this.datosGarante1.domicilio = data.domicilio
+            this.garante1Encontrado = true
         },
         LimpiarDatosGarante1()
         {
             this.datosGarante1.codGarante = ""
             this.datosGarante1.apePaterno = ""
             this.datosGarante1.apeMaterno = ""
+            this.datosGarante1.fecNacimiento = ""
             this.datosGarante1.nombre = ""
             this.datosGarante1.telefono = ""
             this.datosGarante1.domicilio = ""
+            this.garante1Encontrado = false
         },
         VerificarDniGarante2()
         {
@@ -990,7 +1007,10 @@ export default {
                                 }
                                 else
                                 {
-                                    this.MensajeDeAviso(data.mensaje)
+                                    if(data.error == true)
+                                    {
+                                        this.MensajeDeAviso(data.mensaje)
+                                    }
                                     this.LimpiarDatosGarante2()
                                 }
                             })
@@ -1025,6 +1045,7 @@ export default {
             this.datosGarante2.fecNacimiento = data.fecNacimiento
             this.datosGarante2.telefono = data.telefono
             this.datosGarante2.domicilio = data.domicilio
+            this.garante2Encontrado = true
         },
         LimpiarDatosGarante2()
         {
@@ -1035,6 +1056,7 @@ export default {
             this.datosGarante2.fecNacimiento = ""
             this.datosGarante2.telefono = ""
             this.datosGarante2.domicilio = ""
+            this.garante2Encontrado = false
         },
 		ValidarDatosGarante1()
         {
@@ -1042,58 +1064,24 @@ export default {
 
 			if(!this.$v.datosGarante1.$anyError)
             { 
-                this.efectoCargandoFormulario = true
-
-                axios.get('/api/validar-telefono/'+this.datosGarante1.telefono)
-                    .then((respuesta) => 
-                    {
-                        let data = respuesta.data
-
-                        if(respuesta.status == 200 && data == 0)
-                        {
-                            this.ActivarFormularioGarante2()
-                            this.OcultarFormularioGarante1()
-                        }
-                        else
-                        {
-                            this.MensajeDeAviso("El Teléfono ya se encuentra registrado.")
-                            this.datosGarante1.telefono = ""
-                        }
-                    })
-                    .catch(() => 
-                    {
-                        this.MensajeDeError()
-                    })
-                    .finally(()=>
-                    {
-                        this.efectoCargandoFormulario = false
-                    });
-			}
-		},
-		ValidarDatosGarante2()
-        {
-			this.$v.datosGarante2.$touch();
-
-			if(!this.$v.datosGarante2.$anyError)
-            { 
-                if(this.datosGarante1.telefono != this.datosGarante2.telefono)
+                if(this.datosGarante1.codGarante == "")
                 {
                     this.efectoCargandoFormulario = true
 
-                    axios.get('/api/validar-telefono/'+this.datosGarante2.telefono)
+                    axios.get('/api/validar-telefono/'+this.datosGarante1.telefono)
                         .then((respuesta) => 
                         {
                             let data = respuesta.data
 
                             if(respuesta.status == 200 && data == 0)
                             {
-                                this.ActivarFormularioSolicitud()
-                                this.OcultarFormularioGarante2()
+                                this.ActivarFormularioGarante2()
+                                this.OcultarFormularioGarante1()
                             }
                             else
                             {
                                 this.MensajeDeAviso("El Teléfono ya se encuentra registrado.")
-                                this.datosGarante2.telefono = ""
+                                this.datosGarante1.telefono = ""
                             }
                         })
                         .catch(() => 
@@ -1107,9 +1095,60 @@ export default {
                 }
                 else
                 {
-                    this.datosGarante2.telefono = ""
-                    this.MensajeDeError("El teléfono ya ha sido ingresado en el primer garante.")
+                    this.ActivarFormularioGarante2()
+                    this.OcultarFormularioGarante1()
                 }
+			}
+		},
+		ValidarDatosGarante2()
+        {
+			this.$v.datosGarante2.$touch();
+
+			if(!this.$v.datosGarante2.$anyError)
+            { 
+                if(this.datosGarante2.codGarante == "")
+                {
+                    if(this.datosGarante1.telefono != this.datosGarante2.telefono)
+                    {
+                        this.efectoCargandoFormulario = true
+
+                        axios.get('/api/validar-telefono/'+this.datosGarante2.telefono)
+                            .then((respuesta) => 
+                            {
+                                let data = respuesta.data
+
+                                if(respuesta.status == 200 && data == 0)
+                                {
+                                    this.ActivarFormularioSolicitud()
+                                    this.OcultarFormularioGarante2()
+                                }
+                                else
+                                {
+                                    this.MensajeDeAviso("El Teléfono ya se encuentra registrado.")
+                                    this.datosGarante2.telefono = ""
+                                }
+                            })
+                            .catch(() => 
+                            {
+                                this.MensajeDeError()
+                            })
+                            .finally(()=>
+                            {
+                                this.efectoCargandoFormulario = false
+                            });
+                    }
+                    else
+                    {
+                        this.datosGarante2.telefono = ""
+                        this.MensajeDeError("El teléfono ya ha sido ingresado en el primer garante.")
+                    }
+                }
+                else
+                {
+                    this.ActivarFormularioSolicitud()
+                    this.OcultarFormularioGarante2()
+                }
+                
 			}
 		},
         ValidarDatosSolicitud()
@@ -1169,6 +1208,8 @@ export default {
             this.disabled_input_NoHabilitado = 0
             this.dniBuscar = ""
             this.titulo = "",
+            this.garante1Encontrado = false
+            this.garante2Encontrado = false
 
             this.datosSocio = {
                 codSocio: '',
