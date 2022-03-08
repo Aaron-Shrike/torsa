@@ -219,12 +219,13 @@
                   v-model="$v.contactoEmergencia.parentescoEmergencia.$model"
                   :state="ValidarContactoEmergencia('parentescoEmergencia')">
                   <option value="">Seleccione una opción</option>
-                  <option>Padre</option>
-                  <option>Madre</option>
-                  <option>Hermano</option>
                   <option>Hermana</option>
-                  <option>Tío</option>
+                  <option>Hermano</option>
+                  <option>Madre</option>
+                  <option>Padre</option>
                   <option>Tía</option>
+                  <option>Tío</option>
+                  <option>Otros</option>
                 </b-form-select>
                 <b-form-invalid-feedback id="input-1-live-feedback">
                   <div v-if="!$v.contactoEmergencia.parentescoEmergencia.required">El Parentesco es requerido</div>
@@ -317,12 +318,12 @@ export default {
             if (respuesta === 1) 
             {
               this.$v.datosUsuario.correo.$model = "";
-              this.$swal("Email En uso","Parece que el Email ya se encuentra registrado","error");
+              this.$swal("Correo En Uso","El Correo electrónico ya se encuentra registrado","error");
               this.show = false;
             } 
             else 
             {
-              this.$swal("Email Validado","Email listo para usarse","success");
+              // this.$swal("Email Validado","Email listo para usarse","success");
               this.show = false;
             }
           } 
@@ -356,7 +357,7 @@ export default {
               if (respuesta === 1) 
               {
                 this.$v.datosUsuario.dni.$model = "";
-                this.$swal("DNI En uso","Parece que el DNI ya se encuentra registrado","error");
+                this.$swal("DNI En uso","El DNI ya se encuentra registrado","error");
                 this.show = false;
               } 
               else 
