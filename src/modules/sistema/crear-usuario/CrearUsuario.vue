@@ -507,6 +507,18 @@ export default {
 
       return pass;
     },
+
+    indexCargo(posicion){
+      var pos=0;
+      switch(posicion){
+        case 1: pos=4; break;
+        case 2: pos=3; break;
+        case 3: pos=1; break;
+        case 4: pos=2; break;
+      }
+      return pos;
+    },
+
     Procesar3() 
     {
       var contrasena = this.GenerateP();
@@ -521,7 +533,7 @@ export default {
         telefono: this.datosPersonales.telefono,
         domicilio: this.datosPersonales.direccion,
         correo: this.datosUsuario.correo,
-        codTipoCargo: this.datosUsuario.cargo,
+        codTipoCargo: this.indexCargo(this.datosUsuario.cargo),
         dni: this.datosUsuario.dni,
         contrasenia: contrasena,
         activo: 1,
