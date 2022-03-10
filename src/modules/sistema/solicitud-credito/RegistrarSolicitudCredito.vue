@@ -939,10 +939,10 @@ export default {
                             }
                             else
                             {
-                                if(data.error == true)
-                                {
+                                // if(data.error == true)
+                                // {
                                     this.MensajeDeAviso(data.mensaje)
-                                }
+                                // }
                                 this.LimpiarDatosGarante1()
                             }
                         })
@@ -1007,10 +1007,10 @@ export default {
                                 }
                                 else
                                 {
-                                    if(data.error == true)
-                                    {
+                                    // if(data.error == true)
+                                    // {
                                         this.MensajeDeAviso(data.mensaje)
-                                    }
+                                    // }
                                     this.LimpiarDatosGarante2()
                                 }
                             })
