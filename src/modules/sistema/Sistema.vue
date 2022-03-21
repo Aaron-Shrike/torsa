@@ -53,6 +53,9 @@
                     <b-list-group-item :to="{name: 'ListarSolicitudesRegistradas'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Listar Solicitudes Registradas
                     </b-list-group-item>
+                    <b-list-group-item :to="{name: 'AnularSolicitudCredito'}" v-if="usuario.tipoUsuario == 'Promotor'">
+                        Anular Solicitud de Crédito
+                    </b-list-group-item>
                     <!-- <b-list-group-item active>Dapibus ac facilisis in</b-list-group-item> -->
                     <b-list-group-item button @click.prevent="CerrarSesion">
                         Cerrar Sesión

@@ -5,25 +5,26 @@
             <h1 class="card-title titulo">SOLICITUDES DE HOY DIA</h1>
 
             <div class="card-body">
-                
-                <table class="table table-hover table-bordered">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>N°</th>
-                            <th>Socio</th>
-                            <th>Monto</th>
-                            <th>Motivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(solicitud,index) in solicitudes" :key="index">
-                            <td>{{index+1}}</td>
-                            <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
-                            <td>{{solicitud.monto}}</td>
-                            <td>{{solicitud.motivo}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>N°</th>
+                                <th>Socio</th>
+                                <th>Monto</th>
+                                <th>Motivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(solicitud,index) in solicitudes" :key="index">
+                                <td>{{index+1}}</td>
+                                <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
+                                <td>{{solicitud.monto}}</td>
+                                <td>{{solicitud.motivo}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <p class="mensaje-error" v-if="!haySolicitudes">* No hay Solicitudes Registradas el día de hoy *</p>
             </div>
         </div>
@@ -39,7 +40,6 @@ import { mapState } from 'vuex';
 export default {
     data() {
         return{
-            date: '',
             solicitudes: [],
             haySolicitudes: false
         }
@@ -79,8 +79,10 @@ export default {
 </script>
 
 <style>
-    .mensaje-error{
-        color: var(--color-error);
-    }
-    .lista{width: 55%;}
+.mensaje-error{
+    color: var(--color-error);
+}
+.lista{
+    width: 70%;
+}
 </style>

@@ -5,6 +5,8 @@ import { CrearUsuarioRoutes } from '@/modules/sistema/crear-usuario/routes.js'
 import { SolicitudCreditoRoutes } from '@/modules/sistema/solicitud-credito/routes.js'
 import { BuscarSocioHabilitadoRoutes } from '@/modules/sistema/buscar-socio-habilitado/routes.js'
 import { ListarSolicitudesRegistradasRoutes } from '@/modules/sistema/listar-solicitudes-registradas/routes.js'
+import { AnularSolicitudCreditoRoutes } from '@/modules/sistema/anular-solicitud-credito/routes.js'
+
 export const SistemaRoutes = [
     {
         path: '/sistema',
@@ -19,6 +21,7 @@ export const SistemaRoutes = [
             ...SolicitudCreditoRoutes,
             ...BuscarSocioHabilitadoRoutes,
             ...ListarSolicitudesRegistradasRoutes,
+            ...AnularSolicitudCreditoRoutes,
         ],
         meta: {
             requiereAutenticacion: true

@@ -25,6 +25,9 @@
         --color-error: #D9251B;
         --color-informacion: #2F86EB;
         --color-correcto: #47D764;
+
+        --color-si: #2F86EB;
+        --color-no: #D9251B;
     }
 
     html {
