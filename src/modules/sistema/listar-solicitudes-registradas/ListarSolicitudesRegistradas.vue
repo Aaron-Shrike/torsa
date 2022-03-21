@@ -1,22 +1,23 @@
 <template>
 <div class="contenedor">
-    <div class="contenido">
+    <div class="contenido lista">
         <div class="card">
-            <h1 class="card-title titulo">Solicitudes Registradas</h1>
+            <h1 class="card-title titulo">SOLICITUDES DE HOY DIA</h1>
 
             <div class="card-body">
-                <h3 class="card-title subTitle" v-show="date">Hoy día: {{ date }} </h3>
                 
                 <table class="table table-hover table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Nombre Socio</th>
+                            <th>N°</th>
+                            <th>Socio</th>
                             <th>Monto</th>
                             <th>Motivo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="solicitud in solicitudes" :key="solicitud.id">
+                        <tr v-for="(solicitud,index) in solicitudes" :key="index">
+                            <td>{{index+1}}</td>
                             <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
                             <td>{{solicitud.monto}}</td>
                             <td>{{solicitud.motivo}}</td>
@@ -73,15 +74,6 @@ export default {
             console.log("error al conectar con el servidor");
         });
     },
-    methods: {
-        printDate: function () 
-        {
-            return new Date().toLocaleDateString();
-        },
-    },
-    mounted: function () {
-        this.date = this.printDate();
-    },
 }
 
 </script>
@@ -90,4 +82,5 @@ export default {
     .mensaje-error{
         color: var(--color-error);
     }
+    .lista{width: 55%;}
 </style>
