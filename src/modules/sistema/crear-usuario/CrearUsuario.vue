@@ -92,6 +92,66 @@
                   <div v-if="!$v.datosPersonales.telefono.maxLength || !$v.datosPersonales.telefono.minLength">El Teléfono no es válido</div>
                 </b-form-invalid-feedback>
               </div>
+
+              <div class="form-group">
+                <label>Departamento</label>
+                <b-form-select
+                  class="form-control input-formulario"
+                  v-model="$v.datosPersonales.departamento.$model"
+                  :state="ValidarDatosPersonales('departamento')"
+                  :options="arregloDepartamentosUsuario"
+                  @change="CargarProvinciasUsuario">
+
+                  <template #first>
+                  <option value="null" disabled>- Seleccionar -</option>
+                  <option>Lambayeque</option>
+                  </template>
+
+                </b-form-select>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <div v-if="!$v.datosPersonales.departamento.required">Debe seleccionar su departamento</div>
+                </b-form-invalid-feedback>
+              </div>
+
+              <div class="form-group">
+                <label>Provincia</label>
+                <b-form-select
+                  class="form-control input-formulario"
+                  v-model="$v.datosPersonales.provincia.$model"
+                  :state="ValidarDatosPersonales('provincia')"
+                  :options="arregloProvinciasUsuario"
+                  @change="CargarDistritosUsuario">
+
+                  <template #first>
+                  <option value="null" disabled>- Seleccionar -</option>
+                  <option>Chiclayo</option>
+                  </template>
+
+                </b-form-select>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <div v-if="!$v.datosPersonales.provincia.required">Debe seleccionar su provincia</div>
+                </b-form-invalid-feedback>
+              </div>
+
+              <div class="form-group">
+                <label>Distrito</label>
+                <b-form-select
+                  class="form-control input-formulario"
+                  v-model="$v.datosPersonales.distrito.$model"
+                  :state="ValidarDatosPersonales('distrito')"
+                  :options="arregloProvinciasUsuario">
+                  
+                  <template #first>
+                  <option value="null" disabled>- Seleccionar -</option>
+                  <option>Chiclayo</option>
+                  </template>
+
+                </b-form-select>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <div v-if="!$v.datosPersonales.distrito.required">Debe seleccionar su distrito</div>
+                </b-form-invalid-feedback>
+              </div>
+
               <div class="form-group">
                 <label>Dirección</label>
                 <b-form-input
@@ -253,6 +313,9 @@ export default {
   data() {
     return {
       tcargos: [],
+      arregloDepartamentosUsuario: [],
+      arregloProvinciasUsuario: [],
+      arregloDistritosUsuario: [],
       show: false,
       datosPersonales: {
         nombre: "",
@@ -260,6 +323,9 @@ export default {
         apellidoMaterno: "",
         fechaNacimiento: "",
         telefono: "",
+        departamento: null,
+        provincia: null,
+        distrito: null,
         direccion: "",
       },
       datosUsuario: {
@@ -298,6 +364,9 @@ export default {
       {
         console.log("error al conectar con el servidor");
       });
+  },
+  mounted(){
+    this.CargarDepartamentosUsuario()
   },
   methods: {
     ValidarEmail() 
@@ -411,6 +480,95 @@ export default {
       }
       axios.defaults.withCredentials = false;
     },
+
+    CargarDepartamentosUsuario()
+    {
+      axios.get('/api/obtener-departamentos')
+      .then((respuesta) => 
+      {
+        let data = respuesta.data
+
+        if(respuesta.status == 200 && typeof data.error === 'undefined')
+        {
+          let departamentos = []
+          data.forEach(element => {
+          let obj = {
+            value: element.codDepartamento, 
+            text: element.nombre
+          }
+          departamentos.push(obj)
+          });
+          this.arregloDepartamentosUsuario = departamentos
+        }
+        else
+        {
+          console.log("No se pudo cargar los departamentos.")
+        }
+      })
+      .catch(() => 
+      {
+        console.log("No se pudo cargar los departamentos.")
+        })
+    },
+    CargarProvinciasUsuario()
+    {
+      axios.get('/api/obtener-provincias/' + this.datosPersonales.departamento)
+      .then((respuesta) => 
+      {
+        let data = respuesta.data
+
+        if(respuesta.status == 200 && typeof data.error === 'undefined')
+        {
+          let array = []
+          data.forEach(element => {
+            let obj = {
+              value: element.codProvincia, 
+              text: element.nombre
+            }
+            array.push(obj)
+          });
+          this.arregloProvinciasUsuario = array
+        }
+        else
+        {
+          console.log("No se pudo cargar las provincias.")
+        }
+      })
+      .catch(() => 
+      {
+        console.log("No se pudo cargar las provincias.")
+        })
+    },
+    CargarDistritosUsuario()
+    {
+      axios.get('/api/obtener-distritos/'+this.datosPersonales.provincia)
+      .then((respuesta) => 
+      {
+        let data = respuesta.data
+        
+        if(respuesta.status == 200 && typeof data.error === 'undefined')
+        {
+          let array = []
+          data.forEach(element => {
+            let obj = {
+              value: element.codDistrito, 
+              text: element.nombre
+            }
+          array.push(obj)
+          });
+          this.arregloDistritosUsuario = array
+        }
+        else
+        {
+          console.log("No se pudo cargar los distritos.")
+        }
+      })
+      .catch(() => 
+      {
+        console.log("No se pudo cargar los distritos.")
+      })
+    },
+
     ValidarDatosPersonales(name) 
     {
       const { $dirty, $error } = this.$v.datosPersonales[name];
@@ -551,7 +709,7 @@ export default {
             console.log(data)
             if (response.status === 200 && data == 'Correo Electronico Enviado')
             {
-              this.$swal("Usuario Registrado","Para inciar sesion porfavor verique su correo electronico","success");
+              this.$swal("Usuario Registrado","Para inciar sesión verifique su correo electrónico","success");
               this.LimpiarCampos();
               this.show = false;
             } 
@@ -594,6 +752,15 @@ export default {
         required,
         maxLength: maxLength(9),
         minLength: minLength(9),
+      },
+      departamento: {
+        required,
+      },
+      provincia: {
+        required,
+      },
+      distrito: {
+        required,
       },
       direccion: {
         required,
