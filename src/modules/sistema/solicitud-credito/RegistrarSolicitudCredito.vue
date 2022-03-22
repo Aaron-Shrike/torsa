@@ -348,9 +348,86 @@
 
                                         <b-form-group
                                             id="input-group-7"
+                                            label="Departamento:"
+                                            label-for="input-7"
+                                        >
+                                            <b-form-select 
+                                                id="input-7"
+                                                v-model="datosGarante1.departamento" 
+                                                :options="arregloDepartamentosGarante1"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante1('departamento')"
+                                                @change="CargarProvinciasGarante1"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-7-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.departamento.required">
+                                                    Debe seleccionar su departamento
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-8"
+                                            label="Provincia:"
+                                            label-for="input-8"
+                                        >
+                                            <b-form-select 
+                                                id="input-8"
+                                                v-model="datosGarante1.provincia" 
+                                                :options="arregloProvinciasGarante1"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante1('provincia')"
+                                                @change="CargarDistritosGarante1"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-8-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.provincia.required">
+                                                    Debe seleccionar su provincia
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-9"
+                                            label="Distrito:"
+                                            label-for="input-9"
+                                        >
+                                            <b-form-select 
+                                                id="input-9"
+                                                v-model="datosGarante1.distrito" 
+                                                :options="arregloDistritosGarante1"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante1('distrito')"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-9-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante1.distrito.required">
+                                                    Debe seleccionar su distrito
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-10"
                                         >
                                             <b-form-input
-                                                id="input-7"
+                                                id="input-10"
                                                 v-model="datosGarante1.domicilio"
                                                 class="input-formulario"
                                                 type="text"
@@ -359,7 +436,7 @@
                                                 :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-7-live-feedback"
+                                                id="input-10-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.domicilio.required">
                                                     Debe ingresar el Domicilio
@@ -576,9 +653,86 @@
 
                                         <b-form-group
                                             id="input-group-7"
+                                            label="Departamento:"
+                                            label-for="input-7"
+                                        >
+                                            <b-form-select 
+                                                id="input-7"
+                                                v-model="datosGarante2.departamento" 
+                                                :options="arregloDepartamentosGarante2"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante2('departamento')"
+                                                @change="CargarProvinciasGarante2"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-7-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.departamento.required">
+                                                    Debe seleccionar su departamento
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-8"
+                                            label="Provincia:"
+                                            label-for="input-8"
+                                        >
+                                            <b-form-select 
+                                                id="input-8"
+                                                v-model="datosGarante2.provincia" 
+                                                :options="arregloProvinciasGarante2"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante2('provincia')"
+                                                @change="CargarDistritosGarante2"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-8-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.provincia.required">
+                                                    Debe seleccionar su provincia
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-9"
+                                            label="Distrito:"
+                                            label-for="input-9"
+                                        >
+                                            <b-form-select 
+                                                id="input-9"
+                                                v-model="datosGarante2.distrito" 
+                                                :options="arregloDistritosGarante2"
+                                                class="input-formulario"
+                                                :state="EstadoValidacionGarante2('distrito')"
+                                            >
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-9-live-feedback"
+                                            >
+                                                <div v-if="!$v.datosGarante2.distrito.required">
+                                                    Debe seleccionar su distrito
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-10"
                                         >
                                             <b-form-input
-                                                id="input-7"
+                                                id="input-10"
                                                 v-model="datosGarante2.domicilio"
                                                 class="input-formulario"
                                                 type="text"
@@ -587,7 +741,7 @@
                                                 :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
-                                                id="input-7-live-feedback"
+                                                id="input-10-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.domicilio.required">
                                                     Debe ingresar el Domicilio
@@ -744,9 +898,15 @@ export default {
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
         garante1Encontrado: false,
-        garate2Encontrado: true,
+        garante2Encontrado: true,
         fechaMaxima: '',
         fechaValor: '',
+        arregloDepartamentosGarante1: [],
+        arregloProvinciasGarante1: [],
+        arregloDistritosGarante1: [],
+        arregloDepartamentosGarante2: [],
+        arregloProvinciasGarante2: [],
+        arregloDistritosGarante2: [],
         datosSocio: {
             codSocio: '',
             dni: '',
@@ -766,6 +926,9 @@ export default {
             fecNacimiento: '',
 			dni: '',
 			telefono: '',
+            departamento: null,
+            provincia: null,
+            distrito: null,
 			domicilio: '',
 		},
 		datosGarante2: {
@@ -776,6 +939,9 @@ export default {
             fecNacimiento: '',
 			dni: '',
 			telefono: '',
+            departamento: null,
+            provincia: null,
+            distrito: null,
 			domicilio: '',
 		},
 		datosSolicitud: {
@@ -790,6 +956,8 @@ export default {
     },
     mounted() {
         this.FechasParaDatePicker()
+        this.CargarDepartamentosGarante1()
+        this.CargarDepartamentosGarante2()
     },
 	methods: {
         FechasParaDatePicker()
@@ -808,6 +976,180 @@ export default {
 
             fecha = `${anio}-${mes}-${dia}`
             this.fechaValor = fecha
+        },
+        CargarDepartamentosGarante1()
+        {
+            axios.get('/api/obtener-departamentos')
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let departamentos = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDepartamento, 
+                                text: element.nombre
+                            }
+                            departamentos.push(obj)
+                        });
+                        this.arregloDepartamentosGarante1 = departamentos
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los departamentos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los departamentos.")
+                })
+        },
+        CargarProvinciasGarante1()
+        {
+            axios.get('/api/obtener-provincias/' + this.datosGarante1.departamento)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codProvincia, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloProvinciasGarante1 = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar las provincias.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar las provincias.")
+                })
+        },
+        CargarDistritosGarante1()
+        {
+            axios.get('/api/obtener-distritos/'+this.datosGarante1.provincia)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDistrito, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloDistritosGarante1 = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los distritos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los distritos.")
+                })
+        },
+        CargarDepartamentosGarante2()
+        {
+            axios.get('/api/obtener-departamentos')
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let departamentos = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDepartamento, 
+                                text: element.nombre
+                            }
+                            departamentos.push(obj)
+                        });
+                        this.arregloDepartamentosGarante2 = departamentos
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los departamentos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los departamentos.")
+                })
+        },
+        CargarProvinciasGarante2()
+        {
+            axios.get('/api/obtener-provincias/' + this.datosGarante2.departamento)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codProvincia, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloProvinciasGarante2 = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar las provincias.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar las provincias.")
+                })
+        },
+        CargarDistritosGarante2()
+        {
+            axios.get('/api/obtener-distritos/'+this.datosGarante2.provincia)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDistrito, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloDistritosGarante2 = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los distritos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los distritos.")
+                })
         },
         RegresarBuscarSocio()
         {
@@ -970,6 +1312,9 @@ export default {
             this.datosGarante1.nombre = data.nombre
             this.datosGarante1.fecNacimiento = data.fecNacimiento
             this.datosGarante1.telefono = data.telefono
+            this.datosGarante1.departamento = data.codDepartamento
+            this.datosGarante1.provincia = data.codProvincia
+            this.datosGarante1.distrito = data.codDistrito
             this.datosGarante1.domicilio = data.domicilio
             this.garante1Encontrado = true
         },
@@ -981,6 +1326,9 @@ export default {
             this.datosGarante1.fecNacimiento = ""
             this.datosGarante1.nombre = ""
             this.datosGarante1.telefono = ""
+            this.datosGarante1.departamento = null
+            this.datosGarante1.provincia = null
+            this.datosGarante1.distrito = null
             this.datosGarante1.domicilio = ""
             this.garante1Encontrado = false
         },
@@ -1044,6 +1392,9 @@ export default {
             this.datosGarante2.nombre = data.nombre
             this.datosGarante2.fecNacimiento = data.fecNacimiento
             this.datosGarante2.telefono = data.telefono
+            this.datosGarante2.departamento = data.codDepartamento
+            this.datosGarante2.provincia = data.codProvincia
+            this.datosGarante2.distrito = data.codDistrito
             this.datosGarante2.domicilio = data.domicilio
             this.garante2Encontrado = true
         },
@@ -1055,6 +1406,9 @@ export default {
             this.datosGarante2.nombre = ""
             this.datosGarante2.fecNacimiento = ""
             this.datosGarante2.telefono = ""
+            this.datosGarante2.departamento = null
+            this.datosGarante2.provincia = null
+            this.datosGarante2.distrito = null
             this.datosGarante2.domicilio = ""
             this.garante2Encontrado = false
         },
@@ -1229,6 +1583,9 @@ export default {
                 nombre: '',
                 dni: '',
                 telefono: '',
+                departamento: null,
+                provincia: null,
+                distrito: null,
                 domicilio: '',
             }
             this.datosGarante2 = {
@@ -1238,6 +1595,9 @@ export default {
                 nombre: '',
                 dni: '',
                 telefono: '',
+                departamento: null,
+                provincia: null,
+                distrito: null,
                 domicilio: '',
             }
             this.datosSolicitud = {
@@ -1405,6 +1765,15 @@ export default {
 				minLength: minLength(6),
 				maxLength: maxLength(9)
 			},
+            departamento: {
+				required,
+			},
+			provincia: {
+				required,
+			},
+			distrito: {
+				required,
+			},
 			domicilio: {
 				required,
                 maxLength: maxLength(100)
@@ -1436,6 +1805,15 @@ export default {
                 numeric,
 				minLength: minLength(6),
 				maxLength: maxLength(9)
+			},
+            departamento: {
+				required,
+			},
+			provincia: {
+				required,
+			},
+			distrito: {
+				required,
 			},
 			domicilio: {
 				required,

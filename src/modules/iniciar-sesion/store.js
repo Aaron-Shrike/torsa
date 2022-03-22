@@ -10,7 +10,8 @@ export const IniciarSesionStore = {
         //     nombre: 'Aarón',
         //     apePaterno: 'Rojas',
         //     apeMaterno: 'Vera',
-        //     tipoUsuario: 'Administrador'
+        //     tipoUsuario: 'Promotor',
+        //     // tipoUsuario: 'Administrador'
         // },
     },
     mutations: {
