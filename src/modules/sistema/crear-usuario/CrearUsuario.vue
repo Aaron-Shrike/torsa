@@ -101,10 +101,8 @@
                   :state="ValidarDatosPersonales('departamento')"
                   :options="arregloDepartamentosUsuario"
                   @change="CargarProvinciasUsuario">
-
                   <template #first>
                   <option value="null" disabled>- Seleccionar -</option>
-                  <option>Lambayeque</option>
                   </template>
 
                 </b-form-select>
@@ -121,10 +119,8 @@
                   :state="ValidarDatosPersonales('provincia')"
                   :options="arregloProvinciasUsuario"
                   @change="CargarDistritosUsuario">
-
                   <template #first>
                   <option value="null" disabled>- Seleccionar -</option>
-                  <option>Chiclayo</option>
                   </template>
 
                 </b-form-select>
@@ -139,11 +135,9 @@
                   class="form-control input-formulario"
                   v-model="$v.datosPersonales.distrito.$model"
                   :state="ValidarDatosPersonales('distrito')"
-                  :options="arregloProvinciasUsuario">
-                  
+                  :options="arregloDistritosUsuario">
                   <template #first>
                   <option value="null" disabled>- Seleccionar -</option>
-                  <option>Chiclayo</option>
                   </template>
 
                 </b-form-select>
@@ -690,6 +684,9 @@ export default {
         fecNacimiento: this.datosPersonales.fechaNacimiento,
         telefono: this.datosPersonales.telefono,
         domicilio: this.datosPersonales.direccion,
+        
+        codDistrito: this.datosPersonales.distrito,
+        
         correo: this.datosUsuario.correo,
         codTipoCargo: this.indexCargo(this.datosUsuario.cargo),
         dni: this.datosUsuario.dni,
