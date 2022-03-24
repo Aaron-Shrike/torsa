@@ -431,7 +431,7 @@ export default {
                     "https://apiperu.dev/api/dni/" +
                       this.datosUsuario.dni +
                       "?api_token=" +
-                      "e4652f29c9a1be56275f17d9feeb76702edf14a81aa81e65fdff7b4b6cdca243"
+                      "8a24b3f591fabc8aedf751a710d73de43a9761da5e2bf5ce73c83a892d66dd28"
                   ).then((response) => 
                   {
                     let res = response.data;
