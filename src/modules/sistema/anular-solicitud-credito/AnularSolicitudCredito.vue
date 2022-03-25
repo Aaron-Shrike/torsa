@@ -26,7 +26,7 @@
                             <td>{{solicitud.monto}}</td>
                             <td>{{solicitud.motivo}}</td>
                             <td>{{solicitud.telefono}}</td>
-                            <td><button type="button" @click="anular(solicitud.dni,index)" class="btn btn-primary btn-anular">Anular</button></td>
+                            <td><button type="button" @click="anular(solicitud.dni,index)" class="btn btn-danger btn-anular">Anular</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -54,7 +54,7 @@ export default {
     computed: {
         ...mapState('iniciarSesion', ['usuario'])
     },
-    created() {
+    mounted() {
         axios.get("/api/listarSolicitudesDia/"+this.usuario.codUsuario)
             .then((response) => 
             {
@@ -80,6 +80,7 @@ export default {
         {
             console.log("error al conectar con el servidor");
         });
+
     },
     methods: {
         anular(dni,index)
@@ -99,14 +100,25 @@ export default {
             {
                 if (result.isConfirmed)         //Anular
                 {
-                    console.log('SI');
-                    console.log('DNI: ' + dni); //DNI de la fila seleccionada
-
                     btns[index].classList.add('ocultar');   //Ocultar el botón
-              } 
-                else                            //No Anular
-                {
-                    console.log('NO');
+                    var codigo = this.solicitudes[index].codSolicitud;
+                    axios.defaults.baseURL = process.env.VUE_APP_API_URL;
+                    axios.post("/api/anularSolicitudPVC/"+codigo)
+                        .then((response) =>
+                        {
+                          if (response.status === 200)
+                          {
+                            this.$swal("Solicitud Anulada!!","La solicitud fue anulada con EXITO!!","success");
+                          }
+                          else
+                          {
+                            this.$swal("UPS!! ERROR","La solicitud no fue anulada","error");
+                          }
+                        })
+                        .catch(() =>
+                        {
+                          this.$swal("UPS!! ERROR EN EL SERVIDOR","Hubo un error al solicitar la peticion","error");
+                        });
                 }
             })
         },

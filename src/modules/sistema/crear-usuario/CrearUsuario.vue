@@ -438,7 +438,7 @@ export default {
                     console.log(res.success);
                     if (res.success) 
                     {
-                      this.$swal("DNI Encontrado","No es necesario ingresar nombres y apellidos del trabajador","success");
+                      //this.$swal("DNI Encontrado","No es necesario ingresar nombres y apellidos del trabajador","success");
                       this.$v.datosPersonales.nombre.$model =
                         res.data["nombres"];
                       this.$v.datosPersonales.apellidoPaterno.$model =
@@ -506,6 +506,7 @@ export default {
     },
     CargarProvinciasUsuario()
     {
+      axios.defaults.baseURL = process.env.VUE_APP_API_URL;
       axios.get('/api/obtener-provincias/' + this.datosPersonales.departamento)
       .then((respuesta) => 
       {
@@ -535,6 +536,7 @@ export default {
     },
     CargarDistritosUsuario()
     {
+      axios.defaults.baseURL = process.env.VUE_APP_API_URL;
       axios.get('/api/obtener-distritos/'+this.datosPersonales.provincia)
       .then((respuesta) => 
       {
