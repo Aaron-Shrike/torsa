@@ -381,7 +381,7 @@ export default {
             if (respuesta === 1) 
             {
               this.$v.datosUsuario.correo.$model = "";
-              this.$swal("Correo En Uso","El Correo electrónico ya se encuentra registrado","error");
+              this.$swal("El Correo electrónico ya se encuentra registrado","","error");
               this.show = false;
             } 
             else 
@@ -420,7 +420,7 @@ export default {
               if (respuesta === 1) 
               {
                 this.$v.datosUsuario.dni.$model = "";
-                this.$swal("DNI En uso","El DNI ya se encuentra registrado","error");
+                this.$swal("El DNI ya se encuentra registrado","","error");
                 this.show = false;
               } 
               else 
@@ -708,7 +708,7 @@ export default {
             console.log(data)
             if (response.status === 200 && data == 'Correo Electronico Enviado')
             {
-              this.$swal("Usuario Registrado","Para inciar sesión verifique su correo electrónico","success");
+              this.$swal("Usuario Registrado","Se ha enviado la contraseña de su cuenta de usuario a su correo electrónico","success");
               this.LimpiarCampos();
               this.show = false;
             } 
