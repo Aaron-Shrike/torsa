@@ -88,14 +88,14 @@
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Verificación</th>
-                                            <th>Detalles</th>
+                                            <!-- <th>Detalles</th> -->
                                             <th>Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(verificacion, index) in verificaciones" :key="index">
                                             <td>{{verificacion.descripcion}}</td>
-                                            <td>{{verificacion.detalle}}</td>
+                                            <!-- <td>{{verificacion.detalle}}</td> -->
                                             <td>
                                                 <b-form-checkbox 
                                                     class="input-formulario"
@@ -111,12 +111,18 @@
                                 </table>
                                 <b-row>
                                     <b-col class="d-flex justify-content-end">
-                                        <b-button
-                                            class="boton-principal"
-                                            @click="EnviarDatosVerificaciones"
+                                        <b-overlay
+                                            :show="efectoCargandoBoton"
+                                            rounded
+                                            opacity="0.6"
                                         >
-                                            Confirmar verificaciones
-                                        </b-button>
+                                            <b-button
+                                                class="boton-principal"
+                                                @click="EnviarDatosVerificaciones"
+                                            >
+                                                Confirmar verificaciones
+                                            </b-button>
+                                        </b-overlay>
                                     </b-col>
                                 </b-row>
                             </b-card-text>
@@ -139,7 +145,7 @@
                                 block
                                 :disabled="efectoCargandoBotonAceptar"
                                 class="boton boton-principal"
-                                @click="AceptarSplicitud"
+                                @click="AceptarSolicitud"
                             >
                                 Aprobar
                             </b-button>
@@ -168,31 +174,29 @@
 	</div>
 </template>
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import axios from 'axios'
 
-import { mapState } from 'vuex'
 export default {
     data: () =>  ({
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
-        verificacionesListas: true,
+        verificacionesListas: false,
         efectoCargandoBotonAceptar: false,
         efectoCargandoBotonRechazar: false,
         verificaciones: [
             {
                 descripcion: 'Verificación de deudas Bancarias',
-                detalle: '',
+                // detalle: '',
                 modelo: 'v1'
             },
             {
                 descripcion: 'Verificación de deudas con SUNAT',
-                detalle: '',
+                // detalle: '',
                 modelo: 'v2'
             },
             {
                 descripcion: 'Verificación de deudas en Inforcorp',
-                detalle: '',
+                // detalle: '',
                 modelo: 'v3'
             },
         ],
@@ -206,9 +210,6 @@ export default {
         datosGarante1: {},
         datosGarante2: {},
 	}),
-    computed: {
-        ...mapState('iniciarSesion', ['usuario']),
-    },
     mounted() {
         this.CargarDatos()
     },
@@ -225,8 +226,15 @@ export default {
                         this.datosSocio = data[0]
                         this.datosGarante1 = data[1][0]
                         this.datosGarante2 = data[1][1]
-                        // this.datosVerificacion = data.
-                        // this.verificacionesListas = data.
+
+                        let verificaciones = data[2]
+                        this.datosVerificacion.v1 = (verificaciones.v1 == 1) ? true : false
+                        this.datosVerificacion.v2 = (verificaciones.v2 == 1) ? true : false
+                        this.datosVerificacion.v3 = (verificaciones.v3 == 1) ? true : false
+
+                        if(this.datosVerificacion.v1 && this.datosVerificacion.v2 && this.datosVerificacion.v3){
+                            this.verificacionesListas = true
+                        }
                     }
                     else
                     {
@@ -237,13 +245,11 @@ export default {
                 {
                     console.log("no hay sistema")
                 })
-                .finally(() =>
-                {
-                    this.efectoCargandoBoton = false
-                });
         },
         EnviarDatosVerificaciones()
         {
+            this.efectoCargandoBoton = true
+
             this.datosVerificacion.codSolicitud = this.datosSocio.codSolicitud
             
             axios.post('/api/verificaciones-solicitud', this.datosVerificacion)
@@ -253,6 +259,15 @@ export default {
 
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
+                        if(this.datosVerificacion.v1 && this.datosVerificacion.v2 && this.datosVerificacion.v3)
+                        {
+                            this.verificacionesListas = true
+                        }
+                        else
+                        {
+                            this.verificacionesListas = false
+                        }
+
                         this.$swal({
                             title: "Verificaciones registradas",
                             icon: 'success',
@@ -297,13 +312,6 @@ export default {
 				confirmButtonText: 'Aceptar',
 			})
 		},
-	},
-    validations: {
-        dniBuscar: {
-            required,
-            maxLength: maxLength(8),
-            minLength: minLength(8),
-        },
 	},
 }
 </script>

@@ -1,46 +1,49 @@
 <template>
-<div class="contenedor">
-    <div class="contenido lista">
-        <div class="card">
-            <h1 class="card-title titulo">SOLICITUDES PENDIENTES DE VERIFICACIÓN CREDITICIA</h1>
+    <div class="seccion-solicitudes-pvc">
+        <b-container>
+            <b-row>
+                <b-col>
+                    <div class="card">
+                        <h1 class="card-title titulo">SOLICITUDES PENDIENTES DE VERIFICACIÓN CREDITICIA</h1>
 
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>N°</th>
-                                <th>DNI</th>
-                                <th>Socio</th>
-                                <th>Fecha</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(solicitud,index) in solicitudes" :key="index">
-                                <td>{{index+1}}</td>
-                                <td>{{solicitud.dni}}</td>
-                                <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
-                                <td>{{solicitud.fecha}}</td>
-                                <td>
-                                    <b-button 
-										block 
-										class="boton-principal"
-                                        :to="{name: 'SolicitudPVC', params: {codigo: solicitud.codSolicitud}}"
-									>
-										Ver Detalle
-									</b-button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p class="mensaje-error" v-if="!haySolicitudes">* No hay solicitudes pendientes de verificación crediticia *</p>
-            </div>
-        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>N°</th>
+                                            <th>DNI</th>
+                                            <th>Socio</th>
+                                            <th>Fecha</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(solicitud,index) in solicitudes" :key="index">
+                                            <td>{{index+1}}</td>
+                                            <td>{{solicitud.dni}}</td>
+                                            <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
+                                            <td>{{solicitud.fecha}}</td>
+                                            <td>
+                                                <b-button 
+                                                    block 
+                                                    class="boton-principal"
+                                                    :to="{name: 'SolicitudPVC', params: {codigo: solicitud.codSolicitud}}"
+                                                >
+                                                    Ver Detalle
+                                                </b-button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="mensaje-error" v-if="!haySolicitudes">* No hay solicitudes pendientes de verificación crediticia *</p>
+                        </div>
+                    </div>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
-</div>
-
 </template>
 
 <script>
@@ -94,10 +97,7 @@ export default {
 </script>
 
 <style>
-.mensaje-error{
-    color: var(--color-error);
-}
-.lista{
-    width: 70%;
-}
+    .seccion-solicitudes-pvc{
+        padding: 30px;
+    }
 </style>

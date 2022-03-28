@@ -84,6 +84,7 @@
         min-height: 54px;
         font-weight: 700;
         font-size: 24px;
+        padding: 10px 30px;
     }
     .btn.boton-principal{
         background-color: var(--color-principal);
