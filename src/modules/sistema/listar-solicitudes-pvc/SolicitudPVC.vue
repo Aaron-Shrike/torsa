@@ -225,6 +225,8 @@ export default {
                         this.datosSocio = data[0]
                         this.datosGarante1 = data[1][0]
                         this.datosGarante2 = data[1][1]
+                        // this.datosVerificacion = data.
+                        // this.verificacionesListas = data.
                     }
                     else
                     {
@@ -270,6 +272,14 @@ export default {
                 {
                     this.efectoCargandoBoton = false
                 });
+        },
+        AceptarSolicitud()
+        {
+
+        },
+        RechazarSolicitud()
+        {
+
         },
         MensajeDeError(mensaje = 'Error al conectar al servidor.')
         {
