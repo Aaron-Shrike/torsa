@@ -840,7 +840,7 @@
                                                 <div v-if="!$v.datosSolicitud.motivo.required">
                                                     Debe ingresar el Motivo
                                                 </div>
-                                                <div v-if="!$v.datosGarante1.telefono.maxLength">
+                                                <div v-if="!$v.datosSolicitud.motivo.maxLength">
                                                     Motivo muy largo
                                                 </div>
                                             </b-form-invalid-feedback>
