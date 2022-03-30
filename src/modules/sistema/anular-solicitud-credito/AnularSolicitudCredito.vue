@@ -6,26 +6,28 @@
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered">
+                    <table class="table table-hover table-bordered tablaSolicitudes">
                     <thead class="thead-dark">
                         <tr>
                             <th>N°</th>
+                            <th>Código</th>
                             <th>Dni</th>
                             <th>Socio</th>
-                            <th>Monto</th>
-                            <th>Motivo</th>
                             <th>Teléfono</th>
+                            <th>Motivo</th>
+                            <th>Monto</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="(solicitud,index) in solicitudes" :key="index">
                             <td>{{index+1}}</td>
+                            <td>{{solicitud.codSolicitud}}</td>
                             <td>{{solicitud.dni}}</td>
                             <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
-                            <td>{{solicitud.monto}}</td>
-                            <td>{{solicitud.motivo}}</td>
                             <td>{{solicitud.telefono}}</td>
+                            <td>{{solicitud.motivo}}</td>
+                            <td class="monto">{{'S/. '+solicitud.monto}}</td>
                             <td><button type="button" @click="anular(solicitud.dni,index)" class="btn btn-danger btn-anular">Anular</button></td>
                         </tr>
                     </tbody>
@@ -108,16 +110,16 @@ export default {
                         {
                           if (response.status === 200)
                           {
-                            this.$swal("Solicitud Anulada!!","La solicitud fue anulada con EXITO!!","success");
+                            this.$swal("La solicitud fue anulada","","success");
                           }
                           else
                           {
-                            this.$swal("UPS!! ERROR","La solicitud no fue anulada","error");
+                            this.$swal("La solicitud no fue anulada","","error");
                           }
                         })
                         .catch(() =>
                         {
-                          this.$swal("UPS!! ERROR EN EL SERVIDOR","Hubo un error al solicitar la peticion","error");
+                          this.$swal("Hubo un error al solicitar la petición en el servidor","","error");
                         });
                 }
             })
@@ -133,7 +135,7 @@ export default {
     color: var(--color-error);
 }
 .listaAnular{
-    width: 85%;
+    width: 95%;
 }
 .swalConfirmacion{
     width: 470px !important;
@@ -155,6 +157,17 @@ export default {
 }
 .ocultar{
     visibility: hidden;
+}
+.monto{
+    min-width: 135px;
+    text-align: right !important;
+}
+.tablaSolicitudes{
+    text-align: center;
+}
+.tablaSolicitudes td:nth-child(4),.tablaSolicitudes td:nth-child(6){
+    text-align: left !important;
+    min-width: 200px;
 }
 @media only screen and (max-width: 1000px){ 
 .listaAnular{

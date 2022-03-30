@@ -4,7 +4,7 @@ import InicioPagina from '@/modules/sistema/pages/InicioPagina.vue'
 import { CrearUsuarioRoutes } from '@/modules/sistema/crear-usuario/routes.js'
 import { SolicitudCreditoRoutes } from '@/modules/sistema/solicitud-credito/routes.js'
 import { BuscarSocioHabilitadoRoutes } from '@/modules/sistema/buscar-socio-habilitado/routes.js'
-import { ListarSolicitudesRegistradasRoutes } from '@/modules/sistema/listar-solicitudes-registradas/routes.js'
+//import { ListarSolicitudesRegistradasRoutes } from '@/modules/sistema/listar-solicitudes-registradas/routes.js'
 import { AnularSolicitudCreditoRoutes } from '@/modules/sistema/anular-solicitud-credito/routes.js'
 import { ListarSolicitudesPVCRoutes } from '@/modules/sistema/listar-solicitudes-pvc/routes.js'
 
@@ -21,7 +21,7 @@ export const SistemaRoutes = [
             ...CrearUsuarioRoutes,
             ...SolicitudCreditoRoutes,
             ...BuscarSocioHabilitadoRoutes,
-            ...ListarSolicitudesRegistradasRoutes,
+            //...ListarSolicitudesRegistradasRoutes,
             ...AnularSolicitudCreditoRoutes,
             ...ListarSolicitudesPVCRoutes,
         ],

@@ -18,9 +18,11 @@
                     <b-list-group-item :to="{name: 'RegistrarSolicitudCredito'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Registrar Solicitud de Crédito
                     </b-list-group-item>
+                    <!--
                     <b-list-group-item :to="{name: 'ListarSolicitudesRegistradas'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Listar Solicitudes Registradas
                     </b-list-group-item>
+                    -->
                     <b-list-group-item :to="{name: 'AnularSolicitudCredito'}" v-if="usuario.tipoUsuario == 'Promotor'">
                         Anular Solicitud de Crédito
                     </b-list-group-item>
