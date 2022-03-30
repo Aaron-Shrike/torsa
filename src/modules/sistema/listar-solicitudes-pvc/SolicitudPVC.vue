@@ -1,5 +1,26 @@
 <template>
     <div class="pagina-solicitud">
+        <!-- Solicitud ------------------------------------------------------------- -->
+        <section class="seccion-solicitud">
+            <b-container class="contenedor-socio">
+                <b-row align-v="center" align-h="center">
+                    <b-col>
+                        <b-card
+                            tag="div"
+                            class="mb-3 card-formulario card-ancho"
+                        >
+                            <b-card-text>
+                                <h2 class="titulo-formulario mb-2">Solicitud</h2>
+                                <p class="mb-1">Código: <b>{{datosSocio.codSolicitud}}</b></p>
+                                <p class="mb-1">Monto: <b>S/. {{datosSocio.monto}}</b></p>
+                                <p class="mb-1">Motivo: <b>{{datosSocio.motivo}}</b></p>
+                                <p class="mb-0">Fecha: <b>{{datosSocio.formatoFecha}}</b></p>
+                            </b-card-text>
+                        </b-card>
+                    </b-col>
+                </b-row>
+            </b-container>
+        </section>
         <!-- Socio ------------------------------------------------------------- -->
         <section class="seccion-socio">
             <b-container class="contenedor-socio">
@@ -10,32 +31,13 @@
                             class="mb-3 card-formulario card-ancho"
                         >
                             <b-card-text>
-                                <h2 class="titulo-formulario mb-2">Información Personal</h2>
-                                <p class="mb-1">Nombre completo: <b>{{datosSocio.apePaterno}} {{datosSocio.apeMaterno}}, {{datosSocio.nombre}}</b></p>
-                                <p class="mb-1">Número de DNI: <b>{{datosSocio.dni}}</b></p>
-                                <p class="mb-1">Fecha Nacimiento: <b>{{datosSocio.fecNacimiento}}</b></p>
-                                <p class="mb-0">Teléfono: <b>{{datosSocio.telefono}}</b></p>
-                            </b-card-text>
-                        </b-card>
-                    </b-col>
-                </b-row>
-            </b-container>
-        </section>
-        <!-- Domicilio -------------------------------------------------------- -->
-		<section class="seccion-domicilio">
-            <b-container class="contenedor-domicilio">
-                <b-row align-v="center" align-h="center">
-                    <b-col>
-                        <b-card
-                            tag="div"
-                            class="mb-3 card-formulario card-ancho"
-                        >
-                            <b-card-text>
-                                <h2 class="titulo-formulario mb-2">Docimicilio</h2>
-                                <p class="mb-1">
-                                    Dirección: <b>{{datosSocio.domicilio}}. 
-                                    {{datosSocio.departamento}} - {{datosSocio.provincia}} - {{datosSocio.distrito}}</b>
-                                </p>
+                                <h2 class="titulo-formulario mb-2">Socio</h2>
+                                <p class="mb-1">DNI: <b>{{datosSocio.dni}}</b></p>
+                                <p class="mb-1">Nombre: <b>{{datosSocio.apePaterno}} {{datosSocio.apeMaterno}}, {{datosSocio.nombre}}</b></p>
+                                <p class="mb-1">Fecha Nacimiento: <b>{{datosSocio.formatoFechaNacimiento}}</b></p>
+                                <p class="mb-1">Teléfono: <b>{{datosSocio.telefono}}</b></p>
+                                <p class="mb-0">Domicilio: <b>{{datosSocio.domicilio}}. 
+                                    {{datosSocio.departamento}} - {{datosSocio.provincia}} - {{datosSocio.distrito}}</b></p>
                             </b-card-text>
                         </b-card>
                     </b-col>
@@ -56,14 +58,14 @@
                                 <b-row cols="1" cols-md="2">
                                     <b-col>
                                         <p class="mb-2 subtitulo-formulario">Garante 1</p>
-                                        <p class="mb-1">Nombre completo: <b>{{datosGarante1.apePaterno}} {{datosGarante2.apeMaterno}}, {{datosGarante2.nombre}}</b></p>
-                                        <p class="mb-1">Número de DNI: <b>{{datosGarante1.dni}}</b></p>
+                                        <p class="mb-1">DNI: <b>{{datosGarante1.dni}}</b></p>
+                                        <p class="mb-1">Nombre: <b>{{datosGarante1.apePaterno}} {{datosGarante2.apeMaterno}}, {{datosGarante2.nombre}}</b></p>
                                         <p class="mb-0">Teléfono: <b>{{datosGarante1.telefono}}</b></p>
                                     </b-col>
                                     <b-col>
                                         <p class="mb-2 subtitulo-formulario">Garante 2</p>
-                                        <p class="mb-1">Nombre completo: <b>{{datosGarante2.apePaterno}} {{datosGarante2.apeMaterno}}, {{datosGarante2.nombre}}</b></p>
-                                        <p class="mb-1">Número de DNI: <b>{{datosGarante2.dni}}</b></p>
+                                        <p class="mb-1">DNI: <b>{{datosGarante2.dni}}</b></p>
+                                        <p class="mb-1">Nombre: <b>{{datosGarante2.apePaterno}} {{datosGarante2.apeMaterno}}, {{datosGarante2.nombre}}</b></p>
                                         <p class="mb-0">Teléfono: <b>{{datosGarante2.telefono}}</b></p>
                                     </b-col>
                                 </b-row>

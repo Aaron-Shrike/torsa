@@ -3,15 +3,18 @@
         <b-container>
             <b-row>
                 <b-col>
-                    <div class="card">
-                        <h1 class="card-title titulo">SOLICITUDES PENDIENTES DE VERIFICACIÓN CREDITICIA</h1>
-
-                        <div class="card-body">
+                    <b-card
+                        tag="div"
+                        class="card-formulario card-ancho"
+                    >
+                        <b-card-text>
+                            <h1 class="text-center titulo my-3">SOLICITUDES PENDIENTES DE VERIFICACIÓN CREDITICIA</h1>
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>N°</th>
+                                            <th>Código</th>
                                             <th>DNI</th>
                                             <th>Socio</th>
                                             <th>Fecha</th>
@@ -21,9 +24,10 @@
                                     <tbody>
                                         <tr v-for="(solicitud,index) in solicitudes" :key="index">
                                             <td>{{index+1}}</td>
+                                            <td>{{solicitud.codSolicitud}}</td>
                                             <td>{{solicitud.dni}}</td>
                                             <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
-                                            <td>{{solicitud.fecha}}</td>
+                                            <td>{{solicitud.formatoFecha}}</td>
                                             <td>
                                                 <b-button 
                                                     block 
@@ -37,9 +41,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="mensaje-error" v-if="!haySolicitudes">* No hay solicitudes pendientes de verificación crediticia *</p>
-                        </div>
-                    </div>
+                            <p class="mensaje-error text-center" v-if="!haySolicitudes">* No hay solicitudes pendientes de verificación crediticia *</p>
+                        </b-card-text>
+                    </b-card>
                 </b-col>
             </b-row>
         </b-container>
@@ -98,6 +102,6 @@ export default {
 
 <style>
     .seccion-solicitudes-pvc{
-        padding: 30px;
+        padding: 30px 0;
     }
 </style>
