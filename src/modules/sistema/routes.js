@@ -25,8 +25,8 @@ export const SistemaRoutes = [
             ...AnularSolicitudCreditoRoutes,
             ...ListarSolicitudesPVCRoutes,
         ],
-        // meta: {
-        //     requiereAutenticacion: true
-        // },
+        meta: {
+            requiereAutenticacion: true
+        },
     },
 ]

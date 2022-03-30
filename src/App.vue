@@ -38,7 +38,7 @@
         box-sizing: inherit;
     }
     body { 
-        font-size: 1.6rem;
+        font-size: 16px;
         background-color: var(--color-bg-principal) !important;
     }
 
@@ -53,24 +53,24 @@
     }
 
     h1 {
-        font-size: 4.8rem;
+        font-size: 48px;
     }
     h2 {
-        font-size: 3.6rem;
+        font-size: 36px;
     }
     h3 {
-        font-size: 3.2rem;
+        font-size: 32px;
     }
     h4 {
-        font-size: 2.8rem;
+        font-size: 28px;
     }
 
     h5 {
-        font-size: 2.4rem;
+        font-size: 24px;
     }
 
     h6{
-        font-size: 2rem;
+        font-size: 20px;
     }
 
     img {
@@ -150,11 +150,18 @@
     }
 
     .form-control.input-formulario{
+        padding: 0.375rem 1.2rem;
         border: 1px solid var(--color-inputs);
         border-radius: var(--redondeado-1);
-        height: 54px;
+        height: 45px;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 16px;
+    }
+    .input-group .form-control.input-formulario.is-invalid{
+        border-color: #dc3545;
+    }
+    .input-group .form-control.input-formulario.is-valid{
+        border-color: #28a745;
     }
     .form-control.input-formulario::placeholder{
         color: var(--color-inputs);
