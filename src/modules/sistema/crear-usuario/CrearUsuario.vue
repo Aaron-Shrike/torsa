@@ -372,7 +372,7 @@ export default {
       this.show = true;
       axios.defaults.baseURL = process.env.VUE_APP_API_URL;
       axios
-        .post("/api/validarEmail/", data)
+        .post("/api/validarEmail", data)
         .then((response) => 
         {
           let respuesta = response.data;
