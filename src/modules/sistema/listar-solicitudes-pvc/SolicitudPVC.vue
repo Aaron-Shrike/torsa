@@ -37,7 +37,7 @@
                                 <p class="mb-1">Fecha Nacimiento: <b>{{datosSocio.formatoFechaNacimiento}}</b></p>
                                 <p class="mb-1">Teléfono: <b>{{datosSocio.telefono}}</b></p>
                                 <p class="mb-0">Domicilio: <b>{{datosSocio.domicilio}}. 
-                                    {{datosSocio.departamento}} - {{datosSocio.provincia}} - {{datosSocio.distrito}}</b></p>
+                                    {{datosSocio.distrito}} - {{datosSocio.provincia}} - {{datosSocio.departamento}}</b></p>
                             </b-card-text>
                         </b-card>
                     </b-col>
@@ -187,17 +187,17 @@ export default {
         efectoCargandoBotonRechazar: false,
         verificaciones: [
             {
-                descripcion: 'Verificación de deudas Bancarias',
+                descripcion: 'No tiene deudas Bancarias',
                 // detalle: '',
                 modelo: 'v1'
             },
             {
-                descripcion: 'Verificación de deudas con SUNAT',
+                descripcion: 'No tiene deudas con SUNAT',
                 // detalle: '',
                 modelo: 'v2'
             },
             {
-                descripcion: 'Verificación de deudas en Inforcorp',
+                descripcion: 'No tiene deudas en Inforcorp',
                 // detalle: '',
                 modelo: 'v3'
             },
