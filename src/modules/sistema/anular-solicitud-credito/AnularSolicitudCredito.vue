@@ -14,7 +14,6 @@
                             <th>Dni</th>
                             <th>Socio</th>
                             <th>Teléfono</th>
-                            <th>Motivo</th>
                             <th>Monto</th>
                             <th>Estado</th>
                         </tr>
@@ -26,7 +25,6 @@
                             <td>{{solicitud.dni}}</td>
                             <td>{{solicitud.apePaterno}} {{solicitud.apeMaterno}}, {{solicitud.nombre}}</td>
                             <td>{{solicitud.telefono}}</td>
-                            <td>{{solicitud.motivo}}</td>
                             <td class="monto">{{'S/. '+solicitud.monto}}</td>
                             <td><button type="button" @click="anular(solicitud.dni,index)" class="btn btn-danger btn-anular">Anular</button></td>
                         </tr>
@@ -135,7 +133,7 @@ export default {
     color: var(--color-error);
 }
 .listaAnular{
-    width: 95%;
+    width: 80%;
 }
 .swalConfirmacion{
     width: 470px !important;
@@ -165,13 +163,9 @@ export default {
 .tablaSolicitudes{
     text-align: center;
 }
-.tablaSolicitudes td:nth-child(4),.tablaSolicitudes td:nth-child(6){
+.tablaSolicitudes td:nth-child(4){
     text-align: left !important;
     min-width: 200px;
 }
-@media only screen and (max-width: 1000px){ 
-.listaAnular{
-	width: 90% !important;
-    }
-}
+
 </style>
