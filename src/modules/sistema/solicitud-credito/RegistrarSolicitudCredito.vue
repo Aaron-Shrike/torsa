@@ -138,23 +138,20 @@
                                         <b-form-group
                                             id="input-group-7"
                                             label="Departamento:"
-                                            label-for="input-7"
-                                        >
+                                            label-for="input-7">
                                             <b-form-select 
                                                 id="input-7"
                                                 v-model="datosSocio.departamento" 
                                                 :options="arregloDepartamentosSocio"
                                                 class="input-formulario"
                                                 :state="ValidarDatosSocio('departamento')"
-                                                @change="CargarProvinciasSocio"
-                                            >
+                                                @change="CargarProvinciasSocio">
                                                 <template #first>
                                                     <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
                                                 </template>
                                             </b-form-select>
                                             <b-form-invalid-feedback
-                                                id="input-7-live-feedback"
-                                            >
+                                                id="input-7-live-feedback">
                                                 <div v-if="!$v.datosSocio.departamento.required">
                                                     Debe seleccionar su departamento
                                                 </div>
@@ -164,23 +161,20 @@
                                         <b-form-group
                                             id="input-group-8"
                                             label="Provincia:"
-                                            label-for="input-8"
-                                        >
+                                            label-for="input-8">
                                             <b-form-select 
                                                 id="input-8"
                                                 v-model="datosSocio.provincia" 
                                                 :options="arregloProvinciasSocio"
                                                 class="input-formulario"
                                                 :state="ValidarDatosSocio('provincia')"
-                                                @change="CargarDistritosSocio"
-                                            >
+                                                @change="CargarDistritosSocio">
                                                 <template #first>
                                                     <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
                                                 </template>
                                             </b-form-select>
                                             <b-form-invalid-feedback
-                                                id="input-8-live-feedback"
-                                            >
+                                                id="input-8-live-feedback">
                                                 <div v-if="!$v.datosSocio.provincia.required">
                                                     Debe seleccionar su provincia
                                                 </div>
@@ -190,22 +184,19 @@
                                         <b-form-group
                                             id="input-group-9"
                                             label="Distrito:"
-                                            label-for="input-9"
-                                        >
+                                            label-for="input-9">
                                             <b-form-select 
                                                 id="input-9"
                                                 v-model="datosSocio.distrito" 
                                                 :options="arregloDistritosSocio"
                                                 class="input-formulario"
-                                                :state="ValidarDatosSocio('distrito')"
-                                            >
+                                                :state="ValidarDatosSocio('distrito')">
                                                 <template #first>
                                                     <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
                                                 </template>
                                             </b-form-select>
                                             <b-form-invalid-feedback
-                                                id="input-9-live-feedback"
-                                            >
+                                                id="input-9-live-feedback">
                                                 <div v-if="!$v.datosSocio.distrito.required">
                                                     Debe seleccionar su distrito
                                                 </div>
