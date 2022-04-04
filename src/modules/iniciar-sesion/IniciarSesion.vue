@@ -31,6 +31,8 @@
 										v-model="form.dni"
 										class="input-formulario"
 										type="number"
+										min="11111111"
+										max="99999999"
 										:state="EstadoValidacion('dni')"
 										placeholder="DNI"
 									></b-form-input>
@@ -40,8 +42,14 @@
 										<div v-if="!$v.form.dni.required">
 											Debe ingresar el número de DNI
 										</div>
-										<div v-if="!$v.form.dni.minLength || !$v.form.dni.maxLength">
+										<div v-if="!$v.form.dni.numeric">
 											Número de DNI no válido
+										</div>
+										<div v-if="!$v.form.dni.minLength">
+											Número de DNI muy corto
+										</div>
+										<div v-if="!$v.form.dni.maxLength">
+											Número de DNI demasiado largo
 										</div>
 									</b-form-invalid-feedback>
 								</b-input-group>
@@ -74,7 +82,7 @@
 											Debe ingresar la Contraseña
 										</div>
 										<div v-if="!$v.form.contrasenia.maxLength">
-											Contraseña muy larga
+											Contraseña demasiado larga
 										</div>
 									</b-form-invalid-feedback>
 								</b-input-group>
@@ -104,7 +112,7 @@
 </template>
 
 <script>
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
 import axios from 'axios'
 
 import { mapMutations, mapState } from 'vuex'
@@ -121,7 +129,8 @@ export default {
 			dni: {
 				required,
 				minLength: minLength(8),
-				maxLength: maxLength(8)
+				maxLength: maxLength(8),
+				numeric
 			},
 			contrasenia: {
 				required,

@@ -171,7 +171,7 @@
             </b-container>
         </section>
         <!-- Garante 01 -------------------------------------------------------- -->
-		<section class="seccion-garante seccion-garante-1 ocultar-informacion">
+		<section class="seccion-garante seccion-garante-1">
             <b-container class="contenedor-garante">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -200,6 +200,8 @@
                                                 id="input-1"
                                                 v-model="datosGarante1.dni"
                                                 class="input-formulario"
+                                                min="11111111"
+                                                max="99999999"
                                                 type="number"
                                                 :state="EstadoValidacionGarante1('dni')"
                                                 placeholder="DNI"
@@ -210,6 +212,9 @@
                                             >
                                                 <div v-if="!$v.datosGarante1.dni.required">
                                                     Debe ingresar el número de DNI
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.dni.numeric">
+                                                    Número de DNI no válido
                                                 </div>
                                                 <div v-if="!$v.datosGarante1.dni.minLength">
                                                     Número de DNI muy corto
@@ -310,9 +315,15 @@
                                             <b-form-invalid-feedback
                                                 id="input-5-live-feedback"
                                             >
-                                                <div v-if="!$v.datosGarante1.nombre.required">
+                                                <div v-if="!$v.datosGarante1.fecNacimiento.required">
                                                     Debe ingresar la Fecha de Nacimiento
                                                 </div>
+                                                <!-- <div v-if="!$v.datosGarante1.fecNacimiento.minValue">
+                                                    Fecha de Nacimiento no adminitida
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.fecNacimiento.maxValue">
+                                                    Fecha de Nacimiento, menor de edad
+                                                </div> -->
                                             </b-form-invalid-feedback>
                                         </b-form-group>
 
@@ -476,7 +487,7 @@
             </b-container>
         </section>
         <!-- Garante 02 -------------------------------------------------------- -->
-        <section class="seccion-garante seccion-garante-2 ocultar-informacion">
+        <section class="seccion-garante seccion-garante-2">
             <b-container class="contenedor-garante">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -506,6 +517,8 @@
                                                 v-model="datosGarante2.dni"
                                                 class="input-formulario"
                                                 type="number"
+                                                min="11111111"
+                                                max="99999999"
                                                 :state="EstadoValidacionGarante2('dni')"
                                                 placeholder="DNI"
                                                 @blur="VerificarDniGarante2"
@@ -515,6 +528,9 @@
                                             >
                                                 <div v-if="!$v.datosGarante2.dni.required">
                                                     Debe ingresar el número de DNI
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.dni.numeric">
+                                                    Número de DNI no válido
                                                 </div>
                                                 <div v-if="!$v.datosGarante2.dni.minLength">
                                                     Número de DNI muy corto
@@ -781,7 +797,7 @@
             </b-container>
         </section>
         <!-- Solicitud de Credito ---------------------------------------------- -->
-        <section class="seccion-solicitud ocultar-informacion">
+        <section class="seccion-solicitud">
             <b-container class="contenedor-iniciar-sesion">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -811,6 +827,8 @@
                                                 v-model="datosSolicitud.monto"
                                                 class="input-formulario"
                                                 type="number"
+                                                min="1"
+                                                step="0.1"
                                                 :state="EstadoValidacionSolicitud('monto')"
                                                 placeholder="Monto"
                                             ></b-form-input>
@@ -819,6 +837,9 @@
                                             >
                                                 <div v-if="!$v.datosSolicitud.monto.required">
                                                     Debe ingresar el Monto
+                                                </div>
+                                                <div v-if="!$v.datosSolicitud.monto.decimal">
+                                                    Monto no válido
                                                 </div>
                                             </b-form-invalid-feedback>
                                         </b-form-group>
@@ -872,7 +893,7 @@
 	</div>
 </template>
 <script>
-import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, numeric, decimal } from 'vuelidate/lib/validators'
 import axios from 'axios'
 
 import { mapState } from 'vuex'
@@ -898,7 +919,7 @@ export default {
         efectoCargandoBoton: false,
         efectoCargandoFormulario: false,
         garante1Encontrado: false,
-        garante2Encontrado: true,
+        garante2Encontrado: false,
         fechaMaxima: '',
         fechaValor: '',
         arregloDepartamentosGarante1: [],
@@ -1757,7 +1778,8 @@ export default {
 			dni: {
 				required,
 				minLength: minLength(8),
-				maxLength: maxLength(8)
+				maxLength: maxLength(8),
+                numeric
 			},
 			telefono: {
 				required,
@@ -1798,7 +1820,8 @@ export default {
 			dni: {
 				required,
 				minLength: minLength(8),
-				maxLength: maxLength(8)
+				maxLength: maxLength(8),
+                numeric
 			},
 			telefono: {
 				required,
@@ -1823,6 +1846,7 @@ export default {
         datosSolicitud: {
 			monto: {
 				required,
+                decimal
 			},
 			motivo: {
 				required,
