@@ -2,7 +2,7 @@
     <div>
         <!-- Buscar Socio ------------------------------------------------------------- -->
         <section class="seccion-buscar-socio">
-            <b-container class="contenedor-socio">
+            <b-container class="contenedor-socio contenedor-buscar">
                 <b-row class="">
                     <b-col cols="12">
                         <div class="card card-formulario-buscar">
@@ -45,7 +45,7 @@
                             <div class="card-body">
                                 <h3 class="card-title subTitle">Datos del Socio</h3>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">DNI</label>
+                                    <!-- <label for="formGroupExampleInput">DNI</label> -->
                                     <b-form-input
                                     type="number"
                                     class="form-control input-formulario"
@@ -60,7 +60,7 @@
                                     </b-form-input>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Apellido Paterno</label>
+                                    <!-- <label for="formGroupExampleInput">Apellido Paterno</label> -->
                                     <b-form-input
                                     type="text"
                                     class="form-control input-formulario"
@@ -75,7 +75,7 @@
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Apellido Materno</label>
+                                    <!-- <label for="formGroupExampleInput">Apellido Materno</label> -->
                                     <b-form-input
                                     type="text"
                                     class="form-control input-formulario"
@@ -90,7 +90,7 @@
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Nombre</label>
+                                    <!-- <label for="formGroupExampleInput">Nombre</label> -->
                                     <b-form-input
                                     type="text"
                                     class="form-control input-formulario"
@@ -105,7 +105,7 @@
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Fecha de Nacimiento</label>
+                                    <!-- <label for="formGroupExampleInput">Fecha de Nacimiento</label> -->
                                     <b-form-input
                                     type="date"
                                     min="1900-01-01" 
@@ -120,7 +120,7 @@
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Teléfono</label>
+                                    <!-- <label for="formGroupExampleInput">Teléfono</label> -->
                                     <b-form-input
                                     type="number"
                                     class="form-control input-formulario"
@@ -134,8 +134,77 @@
                                     <div v-if="!$v.datosSocio.telefono.maxLength || !$v.datosSocio.telefono.minLength">El Teléfono no es válido</div>
                                     </b-form-invalid-feedback>
                                 </div>
+                                
+                                        <b-form-group
+                                            id="input-group-7"
+                                            label="Departamento:"
+                                            label-for="input-7">
+                                            <b-form-select 
+                                                id="input-7"
+                                                v-model="datosSocio.departamento" 
+                                                :options="arregloDepartamentosSocio"
+                                                class="input-formulario"
+                                                :state="ValidarDatosSocio('departamento')"
+                                                @change="CargarProvinciasSocio">
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-7-live-feedback">
+                                                <div v-if="!$v.datosSocio.departamento.required">
+                                                    Debe seleccionar su departamento
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-8"
+                                            label="Provincia:"
+                                            label-for="input-8">
+                                            <b-form-select 
+                                                id="input-8"
+                                                v-model="datosSocio.provincia" 
+                                                :options="arregloProvinciasSocio"
+                                                class="input-formulario"
+                                                :state="ValidarDatosSocio('provincia')"
+                                                @change="CargarDistritosSocio">
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-8-live-feedback">
+                                                <div v-if="!$v.datosSocio.provincia.required">
+                                                    Debe seleccionar su provincia
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
+                                        <b-form-group
+                                            id="input-group-9"
+                                            label="Distrito:"
+                                            label-for="input-9">
+                                            <b-form-select 
+                                                id="input-9"
+                                                v-model="datosSocio.distrito" 
+                                                :options="arregloDistritosSocio"
+                                                class="input-formulario"
+                                                :state="ValidarDatosSocio('distrito')">
+                                                <template #first>
+                                                    <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
+                                                </template>
+                                            </b-form-select>
+                                            <b-form-invalid-feedback
+                                                id="input-9-live-feedback">
+                                                <div v-if="!$v.datosSocio.distrito.required">
+                                                    Debe seleccionar su distrito
+                                                </div>
+                                            </b-form-invalid-feedback>
+                                        </b-form-group>
+
                                 <div class="form-group">
-                                    <label for="formGroupExampleInput">Domicilio</label>
+                                    <!-- <label for="formGroupExampleInput">Domicilio</label> -->
                                     <b-form-input
                                     type="text"
                                     class="form-control input-formulario"
@@ -145,8 +214,8 @@
                                     :disabled="disabled_input_NoHabilitado == 1">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.domicilio.required">La Dirección es requerida</div>
-                                    <div v-if="!$v.datosSocio.domicilio.maxLength">La Dirección no es válida</div>
+                                    <div v-if="!$v.datosSocio.domicilio.required">Debe ingresar el Domicilio</div>
+                                    <div v-if="!$v.datosSocio.domicilio.maxLength">Domicilio muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                             
@@ -928,6 +997,9 @@ export default {
         arregloDepartamentosGarante2: [],
         arregloProvinciasGarante2: [],
         arregloDistritosGarante2: [],
+        arregloDepartamentosSocio: [],
+        arregloProvinciasSocio: [],
+        arregloDistritosSocio: [],
         datosSocio: {
             codSocio: '',
             dni: '',
@@ -936,6 +1008,9 @@ export default {
             nombre: '',
             fecNacimiento: '',
             telefono: '',
+            departamento: null,
+            provincia: null,
+            distrito: null,
             domicilio: '',
             activo: '',
         },
@@ -977,6 +1052,7 @@ export default {
     },
     mounted() {
         this.FechasParaDatePicker()
+        this.CargarDepartamentosSocio()
         this.CargarDepartamentosGarante1()
         this.CargarDepartamentosGarante2()
     },
@@ -1172,6 +1248,93 @@ export default {
                     console.error("No se pudo cargar los distritos.")
                 })
         },
+        CargarDepartamentosSocio()
+        {
+            axios.get('/api/obtener-departamentos')
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let departamentos = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDepartamento, 
+                                text: element.nombre
+                            }
+                            departamentos.push(obj)
+                        });
+                        this.arregloDepartamentosSocio = departamentos
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los departamentos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los departamentos.")
+                })
+        },
+        CargarProvinciasSocio()
+        {
+            axios.get('/api/obtener-provincias/' + this.datosSocio.departamento)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codProvincia, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloProvinciasSocio = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar las provincias.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar las provincias.")
+                })
+        },
+        CargarDistritosSocio()
+        {
+            axios.get('/api/obtener-distritos/'+this.datosSocio.provincia)
+                .then((respuesta) => 
+                {
+                    let data = respuesta.data
+
+                    if(respuesta.status == 200 && typeof data.error === 'undefined')
+                    {
+                        let array = []
+                        data.forEach(element => {
+                            let obj = {
+                                value: element.codDistrito, 
+                                text: element.nombre
+                            }
+                            array.push(obj)
+                        });
+                        this.arregloDistritosSocio = array
+                    }
+                    else
+                    {
+                        console.error("No se pudo cargar los distritos.")
+                    }
+                })
+                .catch(() => 
+                {
+                    console.error("No se pudo cargar los distritos.")
+                })
+        },
         RegresarBuscarSocio()
         {
             this.ActivarFormularioBuscarSocio()
@@ -1209,6 +1372,9 @@ export default {
             this.datosSocio.nombre = data.nombre
             this.datosSocio.fecNacimiento = data.fecNacimiento
             this.datosSocio.telefono = data.telefono
+            this.datosSocio.departamento = data.codDepartamento
+            this.datosSocio.provincia = data.codProvincia
+            this.datosSocio.distrito = data.codDistrito
             this.datosSocio.domicilio = data.domicilio
         },
         BuscarSocio() 
@@ -1260,6 +1426,9 @@ export default {
                                 this.datosSocio.nombre = ""
                                 this.datosSocio.fecNacimiento = ""
                                 this.datosSocio.telefono = ""
+                                this.datosSocio.departamento = null
+                                this.datosSocio.provincia = null
+                                this.datosSocio.distrito = null
                                 this.datosSocio.domicilio = ""
                                 // this.$swal("Socio No encontrado", "", "error");
                                 this.titulo = "Ingresar nuevo socio"
@@ -1594,6 +1763,9 @@ export default {
                 nombre: '',
                 fecNacimiento: '',
                 telefono: '',
+                departamento: null,
+                provincia: null,
+                distrito: null,
                 domicilio: '',
                 activo: ''
             }
@@ -1754,6 +1926,15 @@ export default {
                 maxLength: maxLength(9),
                 minLength: minLength(9),
             },
+            departamento: {
+				required,
+			},
+			provincia: {
+				required,
+			},
+			distrito: {
+				required,
+			},
             domicilio: {
                 required,
                 maxLength: maxLength(50),
@@ -1857,6 +2038,10 @@ export default {
 }
 </script>
 <style>
+    .contenedor-buscar{
+        width: 50% !important;
+        min-width: 450px !important;
+    }
     .btn.boton-principal.noHabilitado {
         background-color: #da251c;
     }
