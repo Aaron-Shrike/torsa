@@ -16,11 +16,18 @@
                   placeholder="DNI"
                   v-model="$v.datosUsuario.dni.$model"
                   :state="ValidarDatosUsuario('dni')"
-                  @blur="ValidarDNI">
+                  @blur="ValidarDNI"
+                  ref="dni"
+                  min="11111111"
+                  max="99999999"
+                  onkeypress="return event.charCode >=48 && event.charCode <=57"
+                  :disabled="disabledDNI">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosUsuario.dni.required">El DNI es requerido</div>
-                  <div v-if="!$v.datosUsuario.dni.maxLength || !$v.datosUsuario.dni.minLength">El DNI no es válido</div>
+                  <div v-if="!$v.datosUsuario.dni.required">Debe ingresar el número de DNI</div>
+                  <div v-if="!$v.datosUsuario.dni.numeric">Número de DNI no válido</div>
+                  <div v-if="!$v.datosUsuario.dni.minLength">Número de DNI muy corto</div>
+                  <div v-if="!$v.datosUsuario.dni.maxLength">Número de DNI muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -31,11 +38,12 @@
                   class="form-control input-formulario"
                   placeholder="Nombre"
                   v-model="$v.datosPersonales.nombre.$model"
-                  :state="ValidarDatosPersonales('nombre')">
+                  :state="ValidarDatosPersonales('nombre')"
+                  :disabled="campoInhabilitado">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.nombre.required">El Nombre es requerido</div>
-                  <div v-if="!$v.datosPersonales.nombre.maxLength">El Nombre no es válido</div>
+                  <div v-if="!$v.datosPersonales.nombre.required">Debe ingresar el(los) Nombre(s)</div>
+                  <div v-if="!$v.datosPersonales.nombre.maxLength">Nombre(s) muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -45,11 +53,12 @@
                   class="form-control input-formulario"
                   placeholder="Apellido Paterno"
                   v-model="$v.datosPersonales.apellidoPaterno.$model"
-                  :state="ValidarDatosPersonales('apellidoPaterno')">
+                  :state="ValidarDatosPersonales('apellidoPaterno')"
+                  :disabled="campoInhabilitado">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.apellidoPaterno.required">El Apellido Paterno es requerido</div>
-                  <div v-if="!$v.datosPersonales.apellidoPaterno.maxLength">El Apellido Paterno no es válido</div>
+                  <div v-if="!$v.datosPersonales.apellidoPaterno.required">Debe ingresar el Apellido Paterno</div>
+                  <div v-if="!$v.datosPersonales.apellidoPaterno.maxLength">Apellido Paterno muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -59,23 +68,30 @@
                   class="form-control input-formulario"
                   placeholder="Apellido Materno"
                   v-model="$v.datosPersonales.apellidoMaterno.$model"
-                  :state="ValidarDatosPersonales('apellidoMaterno')">
+                  :state="ValidarDatosPersonales('apellidoMaterno')"
+                  :disabled="campoInhabilitado">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.apellidoMaterno.required">El Apellido Materno es requerido</div>
-                  <div v-if="!$v.datosPersonales.apellidoMaterno.maxLength">El Apellido Materno no es válido</div>
+                  <div v-if="!$v.datosPersonales.apellidoMaterno.required">Debe ingresar el Apellido Materno</div>
+                  <div v-if="!$v.datosPersonales.apellidoMaterno.maxLength">Apellido Materno muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
                 <label>Fecha de Nacimiento</label>
                 <b-form-input
                   type="date"
+                  min="1900-01-01" 
+                  :max="fechaMaxima"
                   class="form-control input-formulario"
                   v-model="$v.datosPersonales.fechaNacimiento.$model"
-                  :state="ValidarDatosPersonales('fechaNacimiento')">
+                  :state="ValidarDatosPersonales('fechaNacimiento')"
+                  :disabled="usuarioEncontrado"
+                  ref="fechaNac"
+                  @blur="fechaIngresadaManual">
                 </b-form-input>
+                <div class="Div-validar" v-if="fechaIngresadaMayor">Fecha de Nacimiento no válido</div>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.fechaNacimiento.required">La Fecha de Nacimiento es requerido</div>
+                  <div v-if="!$v.datosPersonales.fechaNacimiento.required">Debe ingresar la Fecha de Nacimiento</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -83,13 +99,17 @@
                 <b-form-input
                   type="number"
                   class="form-control input-formulario"
-                  placeholder="Teléfono"
+                  placeholder="Teléfono/Celular"
                   v-model="$v.datosPersonales.telefono.$model"
-                  :state="ValidarDatosPersonales('telefono')">
+                  :state="ValidarDatosPersonales('telefono')"
+                  onkeypress="return event.charCode >=48 && event.charCode <=57"
+                  :disabled="usuarioEncontrado">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.telefono.required">El Teléfono es requerido</div>
-                  <div v-if="!$v.datosPersonales.telefono.maxLength || !$v.datosPersonales.telefono.minLength">El Teléfono no es válido</div>
+                  <div v-if="!$v.datosPersonales.telefono.required">Debe ingresar el número de Teléfono</div>
+                  <div v-if="!$v.datosPersonales.telefono.numeric">Número de Teléfono no válido</div>
+                  <div v-if="!$v.datosPersonales.telefono.minLength">Número de Teléfono muy corto</div>
+                  <div v-if="!$v.datosPersonales.telefono.maxLength">Número de Teléfono muy largo</div>
                 </b-form-invalid-feedback>
               </div>
 
@@ -100,9 +120,10 @@
                   v-model="$v.datosPersonales.departamento.$model"
                   :state="ValidarDatosPersonales('departamento')"
                   :options="arregloDepartamentosUsuario"
-                  @change="CargarProvinciasUsuario">
+                  @change="CargarProvinciasUsuario"
+                  :disabled="usuarioEncontrado">
                   <template #first>
-                  <option value="null" disabled>- Seleccionar -</option>
+                  <b-form-select-option :value="null" disabled>- Seleccionar -</b-form-select-option>
                   </template>
 
                 </b-form-select>
@@ -118,7 +139,8 @@
                   v-model="$v.datosPersonales.provincia.$model"
                   :state="ValidarDatosPersonales('provincia')"
                   :options="arregloProvinciasUsuario"
-                  @change="CargarDistritosUsuario">
+                  @change="CargarDistritosUsuario"
+                  :disabled="usuarioEncontrado">
                   <template #first>
                   <option value="null" disabled>- Seleccionar -</option>
                   </template>
@@ -135,7 +157,8 @@
                   class="form-control input-formulario"
                   v-model="$v.datosPersonales.distrito.$model"
                   :state="ValidarDatosPersonales('distrito')"
-                  :options="arregloDistritosUsuario">
+                  :options="arregloDistritosUsuario"
+                  :disabled="usuarioEncontrado">
                   <template #first>
                   <option value="null" disabled>- Seleccionar -</option>
                   </template>
@@ -147,17 +170,18 @@
               </div>
 
               <div class="form-group">
-                <label>Dirección</label>
+                <label>Domicilio</label>
                 <b-form-input
                   type="text"
                   class="form-control input-formulario"
-                  placeholder="Dirección"
-                  v-model="$v.datosPersonales.direccion.$model"
-                  :state="ValidarDatosPersonales('direccion')">
+                  placeholder="Domicilio"
+                  v-model="$v.datosPersonales.domicilio.$model"
+                  :state="ValidarDatosPersonales('domicilio')"
+                  :disabled="usuarioEncontrado">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.direccion.required">La Dirección es requerida</div>
-                  <div v-if="!$v.datosPersonales.direccion.maxLength">La Dirección no es válida</div>
+                  <div v-if="!$v.datosPersonales.domicilio.required">Debe ingresar el Domicilio</div>
+                  <div v-if="!$v.datosPersonales.domicilio.maxLength">Domicilio muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <b-button block class="boton boton-principal" @click="Procesar1">Continuar</b-button>
@@ -188,7 +212,7 @@
                   @blur="ValidarEmail">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosUsuario.correo.required">El correo electrónico es requerido</div>
+                  <div v-if="!$v.datosUsuario.correo.required">Debe ingresar el correo electrónico</div>
                   <div v-if="!$v.datosUsuario.correo.email">El correo electrónico no es válido</div>
                 </b-form-invalid-feedback>
               </div>
@@ -202,7 +226,7 @@
                   :state="ValidarDatosUsuario('correoRepetido')">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosUsuario.correoRepetido.required">El correo electrónico es requerido</div>
+                  <div v-if="!$v.datosUsuario.correoRepetido.required">Debe ingresar el correo electrónico</div>
                   <div v-if="!$v.datosUsuario.correoRepetido.email">El correo electrónico no es válido</div>
                   <div v-if="!$v.datosUsuario.correoRepetido.sameAs">El correo electrónico no coincide</div>
                 </b-form-invalid-feedback>
@@ -213,11 +237,11 @@
                   class="form-control input-formulario"
                   v-model="$v.datosUsuario.cargo.$model"
                   :state="ValidarDatosUsuario('cargo')">
-                  <option value="">Seleccione una opción</option>
+                  <option value="" disabled>- Seleccionar -</option>
                   <option v-for="(cgr, cargos) in tcargos" v-bind:key="cargos" v-bind:value="cargos + 1">{{ cgr.descripcion }}</option>
                 </b-form-select>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosUsuario.cargo.required">El Cargo es requerido</div>
+                  <div v-if="!$v.datosUsuario.cargo.required">Debe seleccionar el Cargo</div>
                 </b-form-invalid-feedback>
               </div>
               <b-button block class="boton boton-principal" @click="Procesar2">Continuar</b-button>
@@ -248,8 +272,8 @@
                   :state="ValidarContactoEmergencia('nombreEmergencia')">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.contactoEmergencia.nombreEmergencia.required">El Nombre Completo es requerido</div>
-                  <div v-if="!$v.contactoEmergencia.nombreEmergencia.maxLength">El Nombre Completo no es válido</div>
+                  <div v-if="!$v.contactoEmergencia.nombreEmergencia.required">Debe ingresar el Nombre Completo</div>
+                  <div v-if="!$v.contactoEmergencia.nombreEmergencia.maxLength">Nombre Completo muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -257,13 +281,16 @@
                 <b-form-input
                   type="number"
                   class="form-control input-formulario"
-                  placeholder="Teléfono"
+                  placeholder="Teléfono/Celular"
                   v-model="$v.contactoEmergencia.telefonoEmergencia.$model"
-                  :state="ValidarContactoEmergencia('telefonoEmergencia')">
+                  :state="ValidarContactoEmergencia('telefonoEmergencia')"
+                  onkeypress="return event.charCode >=48 && event.charCode <=57">
                 </b-form-input>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.required">El Teléfono es requerido</div>
-                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.maxLength || !$v.contactoEmergencia.telefonoEmergencia.minLength">El Teléfono no es válido</div>
+                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.required">Debe ingresar el Número de Teléfono</div>
+                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.numeric">Número de Teléfono no válido</div>
+                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.minLength">Número de Teléfono muy corto</div>
+                  <div v-if="!$v.contactoEmergencia.telefonoEmergencia.maxLength">Número de Teléfono muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
@@ -272,7 +299,7 @@
                   class="form-control input-formulario"
                   v-model="$v.contactoEmergencia.parentescoEmergencia.$model"
                   :state="ValidarContactoEmergencia('parentescoEmergencia')">
-                  <option value="">Seleccione una opción</option>
+                  <option value="" disabled>- Seleccionar -</option>
                   <option>Hermana</option>
                   <option>Hermano</option>
                   <option>Madre</option>
@@ -282,7 +309,7 @@
                   <option>Otros</option>
                 </b-form-select>
                 <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.contactoEmergencia.parentescoEmergencia.required">El Parentesco es requerido</div>
+                  <div v-if="!$v.contactoEmergencia.parentescoEmergencia.required">Debe seleccionar el Parentesco</div>
                 </b-form-invalid-feedback>
               </div>
               <b-button block class="boton boton-principal" @click="Procesar3">Registrar</b-button>
@@ -301,6 +328,7 @@ import {
   minLength,
   email,
   sameAs,
+  numeric,
 } from "vuelidate/lib/validators";
 import axios from "axios";
 export default {
@@ -310,7 +338,13 @@ export default {
       arregloDepartamentosUsuario: [],
       arregloProvinciasUsuario: [],
       arregloDistritosUsuario: [],
+      fechaMaxima: '',
+      fechaValor: '',
+      fechaIngresadaMayor: false,
       show: false,
+      usuarioEncontrado: true,
+      campoInhabilitado: true,
+      disabledDNI: false,
       datosPersonales: {
         nombre: "",
         apellidoPaterno: "",
@@ -320,7 +354,7 @@ export default {
         departamento: null,
         provincia: null,
         distrito: null,
-        direccion: "",
+        domicilio: "",
       },
       datosUsuario: {
         dni: "",
@@ -360,6 +394,7 @@ export default {
       });
   },
   mounted(){
+    this.FechasParaDatePicker()
     this.CargarDepartamentosUsuario()
   },
   methods: {
@@ -421,6 +456,7 @@ export default {
               {
                 this.$v.datosUsuario.dni.$model = "";
                 this.$swal("El DNI ya se encuentra registrado","","error");
+                this.$refs.dni.focus();
                 this.show = false;
               } 
               else 
@@ -438,6 +474,7 @@ export default {
                     console.log(res.success);
                     if (res.success) 
                     {
+                      this.disabledDNI=true;
                       //this.$swal("DNI Encontrado","No es necesario ingresar nombres y apellidos del trabajador","success");
                       this.$v.datosPersonales.nombre.$model =
                         res.data["nombres"];
@@ -446,10 +483,12 @@ export default {
                       this.$v.datosPersonales.apellidoMaterno.$model =
                         res.data["apellido_materno"];
                       this.show = false;
+                      this.usuarioEncontrado=false;
                     } 
                     else 
                     {
                       this.MensajeDeError(res.message);
+                      this.$v.datosUsuario.dni.$model = "";
                       this.show = false;
                     }
                   })
@@ -474,7 +513,33 @@ export default {
       }
       axios.defaults.withCredentials = false;
     },
+    fechaIngresadaManual(){
+      if(this.$refs.fechaNac.value>this.fechaMaxima){
+        this.fechaIngresadaMayor=true;
+        this.$refs.fechaNac.$el.classList.add('is-invalid')
+        
+      }else{
+        this.fechaIngresadaMayor=false;
+        this.$refs.fechaNac.$el.classList.remove('is-invalid')
+      }
+    },
+    FechasParaDatePicker()
+    {
+      let hoy = new Date();
+      let anio = hoy.getFullYear()-18
+      let mes = `${(hoy.getMonth()+1)}`.padStart(2,'0')
+      let dia = `${(hoy.getDate())}`.padStart(2,'0')
+            
+      let fecha = `${anio}-${mes}-${dia}`
+      this.fechaMaxima = fecha
 
+      anio -= 70;
+      mes = `${(hoy.getMonth()+7)}`.padStart(2,'0')
+      dia = 15;
+
+      fecha = `${anio}-${mes}-${dia}`
+      this.fechaValor = fecha
+    },
     CargarDepartamentosUsuario()
     {
       axios.get('/api/obtener-departamentos')
@@ -685,10 +750,8 @@ export default {
         apeMaterno: this.datosPersonales.apellidoMaterno,
         fecNacimiento: this.datosPersonales.fechaNacimiento,
         telefono: this.datosPersonales.telefono,
-        domicilio: this.datosPersonales.direccion,
-        
+        domicilio: this.datosPersonales.domicilio,
         codDistrito: this.datosPersonales.distrito,
-        
         correo: this.datosUsuario.correo,
         codTipoCargo: this.indexCargo(this.datosUsuario.cargo),
         dni: this.datosUsuario.dni,
@@ -727,7 +790,7 @@ export default {
     },
     MensajeDeError(mensaje = "Error al conectar al servidor.") 
     {
-      this.$swal("Error!", mensaje, "error");
+      this.$swal(mensaje,"", "error");
     },
   },
   validations: {
@@ -751,6 +814,7 @@ export default {
         required,
         maxLength: maxLength(9),
         minLength: minLength(9),
+        numeric,
       },
       departamento: {
         required,
@@ -761,7 +825,7 @@ export default {
       distrito: {
         required,
       },
-      direccion: {
+      domicilio: {
         required,
         maxLength: maxLength(50),
       },
@@ -771,6 +835,7 @@ export default {
         required,
         maxLength: maxLength(8),
         minLength: minLength(8),
+        numeric,
       },
       correo: {
         required,
@@ -796,6 +861,7 @@ export default {
         required,
         maxLength: maxLength(9),
         minLength: minLength(9),
+        numeric,
       },
       parentescoEmergencia: {
         required,
@@ -872,5 +938,10 @@ export default {
   font-weight: 600;
   color: var(--color-principal);
   font-size: 25px;
+}
+.Div-validar{
+  color: #DC3545;
+  font: 12.8px Poppins, sans-serif;
+  margin-top: 5px;
 }
 </style>
