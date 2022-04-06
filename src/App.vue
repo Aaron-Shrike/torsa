@@ -25,6 +25,7 @@
         --color-error: #D9251B;
         --color-informacion: #2F86EB;
         --color-correcto: #47D764;
+        --color-peligro: #FF9F46;
 
         --color-si: #2F86EB;
         --color-no: #D9251B;
@@ -189,15 +190,17 @@
     .swal2-popup .swal2-actions{
         width: 100%;
     }
-    .swal2-popup .swal2-styled.swal2-confirm {
+
+    .swal2-popup .swal2-styled.swal2-confirm,
+    .swal2-popup .swal2-styled.swal2-deny,
+    .swal2-popup .swal2-styled.swal2-cancel {
         border-radius: var(--redondeado-1);
         font-size: 24px;
         font-weight: 700;
         min-height: 54px;
-        padding: 0;
-        width: 295px;
         max-width: 100%;
     }
+
     .swal2-icon-error .swal2-styled.swal2-confirm {
         background-color: var(--color-error);
     }
@@ -215,6 +218,23 @@
     }
     .swal2-icon-info .swal2-styled.swal2-confirm:focus {
         box-shadow: 0 0 0 3px rgba(var(--color-informacion),.5);
+    }
+    .swal2-icon-warning .swal2-styled.swal2-confirm {
+        background-color: var(--color-peligro);
+    }
+    .swal2-icon-warning .swal2-styled.swal2-confirm:focus {
+        box-shadow: 0 0 0 3px rgba(var(--color-peligro),.5);
+    }
+
+    .swal2-icon-error .swal2-styled.swal2-confirm,
+    .swal2-icon-success .swal2-styled.swal2-cancel,
+    .swal2-icon-warning .swal2-styled.swal2-cancel {
+        background-color: var(--color-error);
+    }
+    .swal2-icon-error .swal2-styled.swal2-confirm:focus,
+    .swal2-icon-success .swal2-styled.swal2-cancel:focus,
+    .swal2-icon-warning .swal2-styled.swal2-cancel:focus {
+        box-shadow: 0 0 0 3px rgba(var(--color-error),.5);
     }
 
     .swal2-popup .swal2-title{

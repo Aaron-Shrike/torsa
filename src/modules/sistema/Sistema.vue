@@ -3,7 +3,7 @@
         <b-navbar toggleable="md" type="dark" class="barra-navegacion">
             <b-navbar-toggle v-b-toggle.sidebar-backdrop class="icono-menu" target="none"></b-navbar-toggle>
 
-            <b-navbar-brand href="#" class="ml-4">Torsa Perú</b-navbar-brand>
+            <b-navbar-brand :to="{name: 'Sistema'}" class="ml-4">Torsa Perú</b-navbar-brand>
         </b-navbar>
 
         <b-sidebar

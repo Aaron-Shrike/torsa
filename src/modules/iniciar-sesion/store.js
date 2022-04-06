@@ -4,6 +4,7 @@ export const IniciarSesionStore = {
     state: {
         autenticado: false,
         usuario: {},
+        // autenticado: true,
         // usuario: {
         //     codUsuario: '3',
         //     dni: '73976711',
