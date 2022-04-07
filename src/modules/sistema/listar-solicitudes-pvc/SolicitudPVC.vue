@@ -366,14 +366,17 @@ export default {
         },
         ConfirmarAprobarSolicitud()
         {
-            this.$swal({
+            this.$swal(
+            {
 				title: "¿Desea aprobar la solicitud?",
 				icon: 'warning',
 				confirmButtonText: 'Aprobar',
 				cancelButtonText: 'Cancelar',
                 showCancelButton: true,
-			}).then((result) => {
-                if (result.isConfirmed) {
+			})
+            .then((result) => {
+                if (result.isConfirmed) 
+                {
                     this.AprobarSolicitud()
                 }
             })
@@ -393,11 +396,14 @@ export default {
 
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
-                        this.$swal({
-                            title: "Solicitud aprobada correctamente",
+                        this.$swal(
+                        {
+                            title: "Verificación crediticia aprobada correctamente.",
                             icon: 'success',
                             confirmButtonText: 'Aceptar',
-                        }).then((result) => {
+                        })
+                        .then((result) => 
+                        {
                             if (result.isConfirmed) {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
@@ -435,11 +441,14 @@ export default {
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
                         this.$swal({
-                            title: "Solicitud rechazada correctamente",
+                            title: "Solicitud rechazada correctamente.",
                             icon: 'success',
                             confirmButtonText: 'Aceptar',
-                        }).then((result) => {
-                            if (result.isConfirmed) {
+                        })
+                        .then((result) => 
+                        {
+                            if (result.isConfirmed) 
+                            {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
                         })
