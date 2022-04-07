@@ -106,6 +106,7 @@
                                                         class="input-formulario"
                                                         v-model="datosVerificacion[verificacion.modelo]"
                                                         size="lg"
+                                                        switch
                                                     >
                                                         
                                                     </b-form-checkbox>
