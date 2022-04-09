@@ -31,22 +31,6 @@
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">
-                <label>Nombre</label>
-                <b-form-input
-                  name="nombre"
-                  type="text"
-                  class="form-control input-formulario"
-                  placeholder="Nombre"
-                  v-model="$v.datosPersonales.nombre.$model"
-                  :state="ValidarDatosPersonales('nombre')"
-                  :disabled="campoInhabilitado">
-                </b-form-input>
-                <b-form-invalid-feedback id="input-1-live-feedback">
-                  <div v-if="!$v.datosPersonales.nombre.required">Debe ingresar el(los) Nombre(s)</div>
-                  <div v-if="!$v.datosPersonales.nombre.maxLength">Nombre(s) muy largo</div>
-                </b-form-invalid-feedback>
-              </div>
-              <div class="form-group">
                 <label>Apellido Paterno</label>
                 <b-form-input
                   type="text"
@@ -74,6 +58,22 @@
                 <b-form-invalid-feedback id="input-1-live-feedback">
                   <div v-if="!$v.datosPersonales.apellidoMaterno.required">Debe ingresar el Apellido Materno</div>
                   <div v-if="!$v.datosPersonales.apellidoMaterno.maxLength">Apellido Materno muy largo</div>
+                </b-form-invalid-feedback>
+              </div>
+              <div class="form-group">
+                <label>Nombre</label>
+                <b-form-input
+                  name="nombre"
+                  type="text"
+                  class="form-control input-formulario"
+                  placeholder="Nombre"
+                  v-model="$v.datosPersonales.nombre.$model"
+                  :state="ValidarDatosPersonales('nombre')"
+                  :disabled="campoInhabilitado">
+                </b-form-input>
+                <b-form-invalid-feedback id="input-1-live-feedback">
+                  <div v-if="!$v.datosPersonales.nombre.required">Debe ingresar el(los) Nombre(s)</div>
+                  <div v-if="!$v.datosPersonales.nombre.maxLength">Nombre(s) muy largo</div>
                 </b-form-invalid-feedback>
               </div>
               <div class="form-group">

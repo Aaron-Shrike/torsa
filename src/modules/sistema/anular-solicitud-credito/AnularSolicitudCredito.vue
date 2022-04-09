@@ -85,29 +85,47 @@ export default {
     methods: {
         anular(dni,index)
         {
-            const btns = document.querySelectorAll(".btn-anular");
+            const botones = document.querySelectorAll(".btn-anular");
+            var codigo = this.solicitudes[index].codSolicitud;
             this.$swal.fire(
                 {
-                    title: '¿Está seguro que desea anular ésta solicitud de crédito?',
-                    icon: 'info',
+                    title: '¿Está seguro que desea anular la solicitud de crédito con código '+codigo+'?',
+                    text: 'Ingrese el Motivo:',
+                    //icon: 'info',
+                    input: 'textarea',
+                    inputPlaceholder: 'Motivo',
                     showCancelButton: true,
                     confirmButtonText: 'SI',
                     cancelButtonText: 'NO',
                     customClass: "swalConfirmacion",
+                    inputValidator: texto =>
+                    {
+                        // Si el valor es válido, debes regresar undefined. Si no, una cadena
+                        if (!texto)
+                        {
+                            return "Debe ingresar el Motivo";
+                        }
+                        else
+                        {
+                            return undefined;
+                        }
+                    }
                 }
             )
             .then((result) => 
             {
                 if (result.isConfirmed)         //Anular
                 {
-                    btns[index].classList.add('ocultar');   //Ocultar el botón
-                    var codigo = this.solicitudes[index].codSolicitud;
+                    botones[index].classList.add('ocultar');   //Ocultar el botón
+                    // var codigo = this.solicitudes[index].codSolicitud;
+                    let motivo=result.value; //Motivo
                     axios.defaults.baseURL = process.env.VUE_APP_API_URL;
                     axios.post("/api/anularSolicitudPVC/"+codigo)
                         .then((response) =>
                         {
                           if (response.status === 200)
                           {
+                            console.log(motivo);
                             this.$swal("La solicitud fue anulada","","success");
                           }
                           else
@@ -137,6 +155,7 @@ export default {
 }
 .swalConfirmacion{
     width: 470px !important;
+    padding: 10px 0px !important;
     border-top: 16px solid var(--color-informacion) !important;
 }
 .swalConfirmacion .swal2-confirm, .swalConfirmacion .swal2-cancel{
@@ -152,6 +171,10 @@ export default {
 } 
 .swalConfirmacion .swal2-cancel{
     background: var(--color-no) !important;
+}
+.swalConfirmacion .swal2-textarea{
+    font-family: var(--fuente-secundaria) !important;
+    color: var(--color-subtitulo) !important;
 }
 .ocultar{
     visibility: hidden;
