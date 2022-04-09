@@ -33,6 +33,7 @@
 										type="number"
 										min="11111111"
 										max="99999999"
+										step="1"
 										:state="EstadoValidacion('dni')"
 										placeholder="DNI"
 									></b-form-input>

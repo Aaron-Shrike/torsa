@@ -95,26 +95,51 @@
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th>Verificación</th>
+                                                <!-- <th>Verificado</th> -->
                                                 <th>Estado</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(verificacion, index) in verificaciones" :key="index">
                                                 <td>{{verificacion.descripcion}}</td>
+                                                <td class="radio-button">
+                                                    <b-form-group v-slot="{ ariaDescribedby }">
+                                                        <b-form-radio-group
+                                                            id="radio-group-2"
+                                                            v-model="datosVerificacion[verificacion.modelo]"
+                                                            :aria-describedby="ariaDescribedby"
+                                                            :name="'radio-sub-component-'+index"
+                                                            @change="EnviarDatosVerificaciones"
+                                                        >
+                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
+                                                            <b-form-radio value="NR">No revisado</b-form-radio>
+                                                            <b-form-radio value="AP">Aprobado</b-form-radio>
+                                                        </b-form-radio-group>
+                                                    </b-form-group>
+                                                </td>
+                                                <!-- <td>
+                                                    <b-form-checkbox 
+                                                        class="input-formulario"
+                                                        size="lg"
+                                                        switch
+                                                        
+                                                    >
+                                                    </b-form-checkbox>
+                                                </td>
                                                 <td>
                                                     <b-form-checkbox 
                                                         class="input-formulario"
                                                         v-model="datosVerificacion[verificacion.modelo]"
                                                         size="lg"
+                                                        @change="EnviarDatosVerificaciones"
                                                         switch
                                                     >
-                                                        
                                                     </b-form-checkbox>
-                                                </td>
+                                                </td> -->
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <b-row>
+                                    <!-- <b-row>
                                         <b-col class="d-flex justify-content-end">
                                             <b-overlay
                                                 :show="efectoCargandoBoton"
@@ -129,7 +154,7 @@
                                                 </b-button>
                                             </b-overlay>
                                         </b-col>
-                                    </b-row>
+                                    </b-row> -->
                                 </b-card-text>
                             </b-card>
                         </b-col>
@@ -304,11 +329,12 @@ export default {
                         this.datosGarante2 = data[1][1]
 
                         let verificaciones = data[2]
-                        this.datosVerificacion.v1 = (verificaciones.v1 == 1) ? true : false
-                        this.datosVerificacion.v2 = (verificaciones.v2 == 1) ? true : false
-                        this.datosVerificacion.v3 = (verificaciones.v3 == 1) ? true : false
+                        this.datosVerificacion.v1 = verificaciones.v1
+                        this.datosVerificacion.v2 = verificaciones.v2
+                        this.datosVerificacion.v3 = verificaciones.v3
 
-                        if(this.datosVerificacion.v1 && this.datosVerificacion.v2 && this.datosVerificacion.v3){
+                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
+                        {
                             this.verificacionesListas = true
                         }
                         this.efectoCargandoPagina = false
@@ -336,7 +362,7 @@ export default {
 
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
-                        if(this.datosVerificacion.v1 && this.datosVerificacion.v2 && this.datosVerificacion.v3)
+                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
                         {
                             this.verificacionesListas = true
                         }
@@ -345,11 +371,11 @@ export default {
                             this.verificacionesListas = false
                         }
 
-                        this.$swal({
-                            title: "Verificaciones registradas",
-                            icon: 'success',
-                            confirmButtonText: 'Aceptar',
-                        })
+                        // this.$swal({
+                        //     title: "Verificaciones registradas",
+                        //     icon: 'success',
+                        //     confirmButtonText: 'Aceptar',
+                        // })
                     }
                     else
                     {
@@ -399,7 +425,7 @@ export default {
                     {
                         this.$swal(
                         {
-                            title: "Verificación crediticia aprobada correctamente.",
+                            title: "Verificación crediticia aprobada.",
                             icon: 'success',
                             confirmButtonText: 'Aceptar',
                         })
@@ -408,6 +434,7 @@ export default {
                             if (result.isConfirmed) {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
+                            console.log(result)
                         })
                     }
                     else
@@ -442,7 +469,7 @@ export default {
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
                         this.$swal({
-                            title: "Solicitud rechazada correctamente.",
+                            title: "Solicitud rechazada.",
                             icon: 'success',
                             confirmButtonText: 'Aceptar',
                         })
@@ -498,7 +525,7 @@ export default {
 			motivo: {
 				required,
                 minLength: minLength(3),
-                maxLength: maxLength(70)
+                maxLength: maxLength(200)
 			},
 		},
     }
@@ -511,5 +538,8 @@ export default {
     .card-ancho{
         max-width: none !important; 
         min-height: auto !important;
+    }
+    .radio-button fieldset{
+        margin-bottom: 0 !important;
     }
 </style>
