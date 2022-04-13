@@ -30,6 +30,10 @@
                     <b-list-group-item :to="{name: 'ListarSolicitudesPVC'}" v-if="usuario.tipoUsuario == 'Recepcionista'">
                         Listar Solicitudes Pendientes de Verificación Crediticia
                     </b-list-group-item>
+
+                    <b-list-group-item :to="{name: 'ListarSolicitudesPVD'}" v-if="usuario.tipoUsuario == 'Recepcionista'">
+                        Listar Solicitudes Pendientes de Verificación de Datos
+                    </b-list-group-item>
                     
                     <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.tipoUsuario == 'Administrador'">
                         Crear Usuario
