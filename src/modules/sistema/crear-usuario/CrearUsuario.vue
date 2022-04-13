@@ -184,7 +184,12 @@
                   <div v-if="!$v.datosPersonales.domicilio.maxLength">Domicilio muy largo</div>
                 </b-form-invalid-feedback>
               </div>
-              <b-button block class="boton boton-principal" @click="Procesar1">Continuar</b-button>
+              <b-button block 
+                class="boton boton-principal" 
+                @click="Procesar1"
+                :disabled="usuarioEncontrado">
+                Continuar
+              </b-button>
             </div>
           </div>
         </section>

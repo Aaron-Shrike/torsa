@@ -98,6 +98,9 @@ export default {
                     confirmButtonText: 'SI',
                     cancelButtonText: 'NO',
                     customClass: "swalConfirmacion",
+                    inputAttributes: {
+                        maxlength: 200,
+                    },
                     inputValidator: texto =>
                     {
                         // Si el valor es válido, debes regresar undefined. Si no, una cadena
