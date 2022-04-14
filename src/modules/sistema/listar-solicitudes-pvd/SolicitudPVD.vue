@@ -131,7 +131,7 @@
             <div class="seccion-confirmar">
                 <b-container class="contenedor-botones">
                     <b-row cols="1" cols-md="2" align-v="center" align-h="center">
-                        <b-col v-if="verificacionLista" class="d-md-flex justify-content-center">
+                        <b-col v-if="verificacionesListas" class="d-md-flex justify-content-center">
                             <b-overlay
                                 :show="efectoCargandoBotonAprobar"
                                 rounded
@@ -235,26 +235,35 @@
 </template>
 <script>
 import { required, minLength, maxLength } from 'vuelidate/lib/validators'
-//import axios from 'axios'
+import axios from 'axios'
 
 export default {
     data: () =>  ({
-        // efectoCargandoPagina: true,
-        efectoCargandoPagina: false,
+        efectoCargandoPagina: true,
         efectoCargandoBoton: false,
-        verificacionLista: false,
+        verificacionesListas: false,
         efectoCargandoBotonAprobar: false,
         mostrarModalRechazar: false,
         efectoCargandoBotonModal: false,
         verificaciones: [
             {
-                descripcion: 'Verificación de Domicilio',
+                descripcion: 'Verificación de Domicilio del Socio',
                 modelo: 'v1'
+            },
+            {
+                descripcion: 'Verificación de Domicilio del Garante 1',
+                modelo: 'v2'
+            },
+            {
+                descripcion: 'Verificación de Domicilio del Garante 2',
+                modelo: 'v3'
             },
         ],
         datosVerificacion: {
             codSolicitud: '',
             v1: '',
+            v2: '',
+            v3: '',
         },
         datosRechazar: {
             codSolicitud: '',
@@ -275,7 +284,6 @@ export default {
 		},
         CargarDatos()
         {
-        /*
             axios.post('/api/consultarDetalleSolicitud/'+ this.$route.params.codigo)
                 .then((respuesta) => 
                 {
@@ -289,10 +297,12 @@ export default {
 
                         let verificaciones = data[2]
                         this.datosVerificacion.v1 = verificaciones.v1
+                        this.datosVerificacion.v2 = verificaciones.v2
+                        this.datosVerificacion.v3 = verificaciones.v3
 
-                        if(this.datosVerificacion.v1 == 'AP')
+                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
                         {
-                            this.verificacionLista = true
+                            this.verificacionesListas = true
                         }
                         this.efectoCargandoPagina = false
                     }
@@ -305,11 +315,9 @@ export default {
                 {
                     console.log("no hay sistema")
                 })
-        */
         },
         EnviarDatosVerificaciones()
         {
-        /*
             this.efectoCargandoBoton = true
 
             this.datosVerificacion.codSolicitud = this.datosSocio.codSolicitud
@@ -321,13 +329,13 @@ export default {
 
                     if(respuesta.status == 200 && typeof data.error === 'undefined')
                     {
-                        if(this.datosVerificacion.v1 == 'AP')
+                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
                         {
-                            this.verificacionLista = true
+                            this.verificacionesListas = true
                         }
                         else
                         {
-                            this.verificacionLista = false
+                            this.verificacionesListas = false
                         }
                     }
                     else
@@ -343,7 +351,6 @@ export default {
                 {
                     this.efectoCargandoBoton = false
                 });
-        */
         },
         ConfirmarAprobarSolicitud()
         {
@@ -364,7 +371,6 @@ export default {
         },
         AprobarSolicitud()
         {
-        /*
             this.efectoCargandoBotonAprobar = true
 
             let datos = {
@@ -405,7 +411,6 @@ export default {
                 {
                     this.efectoCargandoBotonAprobar = false
                 });
-        */
         },
         ModalRechazarSolicitud()
         {
@@ -413,7 +418,6 @@ export default {
         },
         RechazarSolicitud()
         {
-        /*
             this.efectoCargandoBotonModal = true
 
             this.datosRechazar.codSolicitud = this.datosSocio.codSolicitud
@@ -450,8 +454,7 @@ export default {
                 .finally(() =>
                 {
                     this.efectoCargandoBotonModal = false
-                });
-        */       
+                });       
         },
         LimpiarFormularioRechazar()
         {

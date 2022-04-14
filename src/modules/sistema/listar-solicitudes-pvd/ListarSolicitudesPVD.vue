@@ -50,12 +50,13 @@
 </template>
 
 <script>
-//import axios from "axios";
+import axios from "axios";
 
 export default {
     data() {
         return{
-            /*solicitudes: [
+            solicitudes: [
+                /*
                 {
                     codSolicitud: '123',
                     dni: '12345678',
@@ -64,12 +65,12 @@ export default {
                     apeMaterno: 'ape',
                     formatoFecha: '10/12/2022',
                 },
-            ],*/
+                */
+            ],
             haySolicitudes: false,
         }
     },
     created() {
-        /*
         axios.post("/api/solicitud-pendiente-verificacion-datos")
             .then((response) => 
             {
@@ -95,7 +96,6 @@ export default {
         {
             console.log("error al conectar con el servidor");
         });
-        */
     },
 }
 
