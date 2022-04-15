@@ -6,6 +6,8 @@
         <section class="seccion-datosPersonales">
           <div class="card" :aria-hidden="show ? 'true' : null">
             <h1 class="card-title titulo">Registrar Usuario</h1>
+
+          <b-form @submit.prevent="Procesar1">
             <div class="card-body">
               <h3 class="card-title subTitle">Datos Personales</h3>
               <div class="form-group">
@@ -86,7 +88,7 @@
                   v-model="$v.datosPersonales.fechaNacimiento.$model"
                   :state="ValidarDatosPersonales('fechaNacimiento')"
                   :disabled="usuarioEncontrado"
-                  ref="fechaNac"
+                  ref="fechaNacimientoDatoPersonal"
                   @blur="fechaIngresadaManual">
                 </b-form-input>
                 <div class="Div-validar" v-if="fechaIngresadaMayor">Fecha de Nacimiento no válido</div>
@@ -186,11 +188,12 @@
               </div>
               <b-button block 
                 class="boton boton-principal" 
-                @click="Procesar1"
+                type="submit"
                 :disabled="usuarioEncontrado">
                 Continuar
               </b-button>
             </div>
+          </b-form>
           </div>
         </section>
 
@@ -518,14 +521,18 @@ export default {
       }
       axios.defaults.withCredentials = false;
     },
-    fechaIngresadaManual(){
-      if(this.$refs.fechaNac.value>this.fechaMaxima){
+    fechaIngresadaManual()
+    {
+      if(this.$refs.fechaNacimientoDatoPersonal.value>this.fechaMaxima)
+      {
         this.fechaIngresadaMayor=true;
-        this.$refs.fechaNac.$el.classList.add('is-invalid')
+        this.$refs.fechaNacimientoDatoPersonal.$el.classList.add('is-invalid')
         
-      }else{
+      }
+      else
+      {
         this.fechaIngresadaMayor=false;
-        this.$refs.fechaNac.$el.classList.remove('is-invalid')
+        this.$refs.fechaNacimientoDatoPersonal.$el.classList.remove('is-invalid')
       }
     },
     FechasParaDatePicker()
@@ -697,7 +704,7 @@ export default {
     {
       this.$v.datosPersonales.$touch();
       this.$v.datosUsuario.dni.$touch();
-      if (!this.$v.datosPersonales.$anyError) 
+      if (!this.$v.datosPersonales.$anyError && !this.fechaIngresadaMayor) 
       {
         this.OcultarFormularioDatosPersonales();
         this.ActivarFormularioDatosUsuario();

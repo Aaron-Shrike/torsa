@@ -15,12 +15,17 @@
                                         type="number"
                                         class="form-control input-formulario"
                                         placeholder="DNI"
-                                        v-model="dniBuscar"
-                                        :state="ValidarDNIBuscar()">
+                                        v-model="$v.dniBuscar.$model"
+                                        :state="ValidarDNIBuscar()"
+                                        min="11111111"
+                                        max="99999999"
+                                        onkeypress="return event.charCode >=48 && event.charCode <=57">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                        <div v-if="!$v.dniBuscar.required">El DNI es requerido</div>
-                                        <div v-if="!$v.dniBuscar.maxLength || !$v.dniBuscar.minLength">El DNI no es válido</div>
+                                        <div v-if="!$v.dniBuscar.required">Debe ingresar el número de DNI</div>
+                                        <div v-if="!$v.dniBuscar.numeric">Número de DNI no válido</div>
+                                        <div v-if="!$v.dniBuscar.minLength">Número de DNI muy corto</div>
+                                        <div v-if="!$v.dniBuscar.maxLength">Número de DNI muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 <b-button block class="boton boton-principal" @click="BuscarSocio">Buscar</b-button>
@@ -30,6 +35,8 @@
                 </b-row>
             </b-container>
         </section>
+
+        
         <!-- Socio ------------------------------------------------------------- -->
         <section class="seccion-socio ocultar-informacion">
             <b-container class="contenedor-socio">
@@ -42,6 +49,8 @@
                         </div>
                         <div class="card card-formulario">
                             <h1 class="card-title titulo">{{ titulo }}</h1>
+                            
+                        <b-form @submit.prevent="ValidarSocio">
                             <div class="card-body">
                                 <h3 class="card-title subTitle">Datos del Socio</h3>
                                 <div class="form-group">
@@ -50,7 +59,7 @@
                                     type="number"
                                     class="form-control input-formulario"
                                     placeholder="DNI"
-                                    v-model="datosSocio.dni"
+                                    v-model="$v.datosSocio.dni.$model"
                                     :state="ValidarDatosSocio('dni')"
                                     disabled>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
@@ -65,13 +74,13 @@
                                     type="text"
                                     class="form-control input-formulario"
                                     placeholder="Apellido Paterno"
-                                    v-model="datosSocio.apePaterno"
+                                    v-model="$v.datosSocio.apePaterno.$model"
                                     :state="ValidarDatosSocio('apePaterno')"
                                     :disabled="disabled_input == 1">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.apePaterno.required">El Apellido Paterno es requerido</div>
-                                    <div v-if="!$v.datosSocio.apePaterno.maxLength">El Apellido Paterno no es válido</div>
+                                    <div v-if="!$v.datosSocio.apePaterno.required">Debe ingresar el Apellido Paterno</div>
+                                    <div v-if="!$v.datosSocio.apePaterno.maxLength">Apellido Paterno muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
@@ -80,13 +89,13 @@
                                     type="text"
                                     class="form-control input-formulario"
                                     placeholder="Apellido Materno"
-                                    v-model="datosSocio.apeMaterno"
+                                    v-model="$v.datosSocio.apeMaterno.$model"
                                     :state="ValidarDatosSocio('apeMaterno')"
                                     :disabled="disabled_input == 1">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.apeMaterno.required">El Apellido Materno es requerido</div>
-                                    <div v-if="!$v.datosSocio.apeMaterno.maxLength">El Apellido Materno no es válido</div>
+                                    <div v-if="!$v.datosSocio.apeMaterno.required">Debe ingresar el Apellido Materno</div>
+                                    <div v-if="!$v.datosSocio.apeMaterno.maxLength">Apellido Materno muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
@@ -95,13 +104,13 @@
                                     type="text"
                                     class="form-control input-formulario"
                                     placeholder="Nombre"
-                                    v-model="datosSocio.nombre"
+                                    v-model="$v.datosSocio.nombre.$model"
                                     :state="ValidarDatosSocio('nombre')"
                                     :disabled="disabled_input == 1">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.nombre.required">El Nombre es requerido</div>
-                                    <div v-if="!$v.datosSocio.nombre.maxLength">El Nombre no es válido</div>
+                                    <div v-if="!$v.datosSocio.nombre.required">Debe ingresar el(los) Nombre(s)</div>
+                                    <div v-if="!$v.datosSocio.nombre.maxLength">Nombre(s) muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
@@ -111,12 +120,15 @@
                                     min="1900-01-01" 
                                     :max="fechaMaxima"
                                     class="form-control input-formulario"
-                                    v-model="datosSocio.fecNacimiento"
+                                    v-model="$v.datosSocio.fecNacimiento.$model"
                                     :state="ValidarDatosSocio('fecNacimiento')"
+                                    ref="fechaNacimientoSocio"
+                                    @blur="fechaIngresadaManualSocio"
                                     :disabled="disabled_input == 1">
                                     </b-form-input>
+                                    <div class="Div-validar" v-if="fechaIngresadaMayorSocio">Fecha de Nacimiento no válido</div>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.fecNacimiento.required">La Fecha de Nacimiento es requerido</div>
+                                    <div v-if="!$v.datosSocio.fecNacimiento.required">Debe ingresar la Fecha de Nacimiento</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 <div class="form-group">
@@ -124,14 +136,18 @@
                                     <b-form-input
                                     type="number"
                                     class="form-control input-formulario"
-                                    placeholder="Teléfono"
-                                    v-model="datosSocio.telefono"
+                                    placeholder="Teléfono/Celular"
+                                    v-model="$v.datosSocio.telefono.$model"
                                     :state="ValidarDatosSocio('telefono')"
-                                    :disabled="disabled_input_NoHabilitado == 1">
+                                    :disabled="disabled_input_NoHabilitado == 1"
+                                    onkeypress="return event.charCode >=48 && event.charCode <=57"
+                                    >
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
-                                    <div v-if="!$v.datosSocio.telefono.required">El Teléfono es requerido</div>
-                                    <div v-if="!$v.datosSocio.telefono.maxLength || !$v.datosSocio.telefono.minLength">El Teléfono no es válido</div>
+                                    <div v-if="!$v.datosSocio.telefono.required">Debe ingresar el número de Teléfono</div>
+                                    <div v-if="!$v.datosSocio.telefono.numeric">Número de Teléfono no válido</div>
+                                    <div v-if="!$v.datosSocio.telefono.minLength">Número de Teléfono muy corto</div>
+                                    <div v-if="!$v.datosSocio.telefono.maxLength">Número de Teléfono muy largo</div>
                                     </b-form-invalid-feedback>
                                 </div>
                                 
@@ -141,7 +157,7 @@
                                             label-for="input-7">
                                             <b-form-select 
                                                 id="input-7"
-                                                v-model="datosSocio.departamento" 
+                                                v-model="$v.datosSocio.departamento.$model"
                                                 :options="arregloDepartamentosSocio"
                                                 class="input-formulario"
                                                 :state="ValidarDatosSocio('departamento')"
@@ -164,7 +180,7 @@
                                             label-for="input-8">
                                             <b-form-select 
                                                 id="input-8"
-                                                v-model="datosSocio.provincia" 
+                                                v-model="$v.datosSocio.provincia.$model" 
                                                 :options="arregloProvinciasSocio"
                                                 class="input-formulario"
                                                 :state="ValidarDatosSocio('provincia')"
@@ -187,7 +203,7 @@
                                             label-for="input-9">
                                             <b-form-select 
                                                 id="input-9"
-                                                v-model="datosSocio.distrito" 
+                                                v-model="$v.datosSocio.distrito.$model" 
                                                 :options="arregloDistritosSocio"
                                                 class="input-formulario"
                                                 :state="ValidarDatosSocio('distrito')">
@@ -209,7 +225,7 @@
                                     type="text"
                                     class="form-control input-formulario"
                                     placeholder="Domicilio"
-                                    v-model="datosSocio.domicilio"
+                                    v-model="$v.datosSocio.domicilio.$model"
                                     :state="ValidarDatosSocio('domicilio')"
                                     :disabled="disabled_input_NoHabilitado == 1">
                                     </b-form-input>
@@ -222,8 +238,8 @@
                                 <b-button 
                                     block 
                                     class="boton boton-principal mt-2 boton-block-icon"
-                                    @click="ValidarSocio" 
                                     v-if="socioHabilitado"
+                                    type="submit" 
                                 >
                                     Continuar 
                                     <b-icon 
@@ -234,6 +250,7 @@
                                 </b-button>
                                 <b-button block class="boton boton-principal noHabilitado" v-if="!socioHabilitado">Socio no habilitado</b-button>
                             </div>
+                        </b-form>
                         </div>
                     </b-col>
                 </b-row>
@@ -267,13 +284,14 @@
                                         >
                                             <b-form-input
                                                 id="input-1"
-                                                v-model="datosGarante1.dni"
+                                                v-model="$v.datosGarante1.dni.$model"
                                                 class="input-formulario"
                                                 min="11111111"
                                                 max="99999999"
                                                 type="number"
                                                 :state="EstadoValidacionGarante1('dni')"
                                                 placeholder="DNI"
+                                                onkeypress="return event.charCode >=48 && event.charCode <=57"
                                                 @blur="VerificarDniGarante1"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
@@ -299,7 +317,7 @@
                                         >
                                             <b-form-input
                                                 id="input-2"
-                                                v-model="datosGarante1.apePaterno"
+                                                v-model="$v.datosGarante1.apePaterno.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('apePaterno')"
@@ -323,7 +341,7 @@
                                         >
                                             <b-form-input
                                                 id="input-3"
-                                                v-model="datosGarante1.apeMaterno"
+                                                v-model="$v.datosGarante1.apeMaterno.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('apeMaterno')"
@@ -347,7 +365,7 @@
                                         >
                                             <b-form-input
                                                 id="input-4"
-                                                v-model="datosGarante1.nombre"
+                                                v-model="$v.datosGarante1.nombre.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('nombre')"
@@ -375,12 +393,15 @@
                                                 min="1900-01-01" 
                                                 :max="fechaMaxima"
                                                 class="input-formulario"
-                                                v-model="datosGarante1.fecNacimiento"
+                                                v-model="$v.datosGarante1.fecNacimiento.$model"
                                                 :state="EstadoValidacionGarante1('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
                                                 :disabled="garante1Encontrado"
+                                                ref="fechaNacimientoGarante1"
+                                                @blur="fechaIngresadaManualGarante1"
                                             >
                                             </b-form-input>
+                                            <div class="Div-validar" v-if="fechaIngresadaMayorGarante1">Fecha de Nacimiento no válido</div>
                                             <b-form-invalid-feedback
                                                 id="input-5-live-feedback"
                                             >
@@ -401,11 +422,12 @@
                                         >
                                             <b-form-input
                                                 id="input-6"
-                                                v-model="datosGarante1.telefono"
+                                                v-model="$v.datosGarante1.telefono.$model"
                                                 class="input-formulario"
                                                 type="tel"
                                                 :state="EstadoValidacionGarante1('telefono')"
                                                 placeholder="Teléfono/Celular"
+                                                onkeypress="return event.charCode >=48 && event.charCode <=57"
                                                 :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
@@ -433,7 +455,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-7"
-                                                v-model="datosGarante1.departamento" 
+                                                v-model="$v.datosGarante1.departamento.$model" 
                                                 :options="arregloDepartamentosGarante1"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante1('departamento')"
@@ -459,7 +481,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-8"
-                                                v-model="datosGarante1.provincia" 
+                                                v-model="$v.datosGarante1.provincia.$model" 
                                                 :options="arregloProvinciasGarante1"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante1('provincia')"
@@ -485,7 +507,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-9"
-                                                v-model="datosGarante1.distrito" 
+                                                v-model="$v.datosGarante1.distrito.$model" 
                                                 :options="arregloDistritosGarante1"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante1('distrito')"
@@ -508,7 +530,7 @@
                                         >
                                             <b-form-input
                                                 id="input-10"
-                                                v-model="datosGarante1.domicilio"
+                                                v-model="$v.datosGarante1.domicilio.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('domicilio')"
@@ -583,13 +605,14 @@
                                         >
                                             <b-form-input
                                                 id="input-1"
-                                                v-model="datosGarante2.dni"
+                                                v-model="$v.datosGarante2.dni.$model"
                                                 class="input-formulario"
                                                 type="number"
                                                 min="11111111"
                                                 max="99999999"
                                                 :state="EstadoValidacionGarante2('dni')"
                                                 placeholder="DNI"
+                                                onkeypress="return event.charCode >=48 && event.charCode <=57"
                                                 @blur="VerificarDniGarante2"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
@@ -615,7 +638,7 @@
                                         >
                                             <b-form-input
                                                 id="input-2"
-                                                v-model="datosGarante2.apePaterno"
+                                                v-model="$v.datosGarante2.apePaterno.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('apePaterno')"
@@ -639,7 +662,7 @@
                                         >
                                             <b-form-input
                                                 id="input-3"
-                                                v-model="datosGarante2.apeMaterno"
+                                                v-model="$v.datosGarante2.apeMaterno.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('apeMaterno')"
@@ -663,7 +686,7 @@
                                         >
                                             <b-form-input
                                                 id="input-4"
-                                                v-model="datosGarante2.nombre"
+                                                v-model="$v.datosGarante2.nombre.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('nombre')"
@@ -691,16 +714,19 @@
                                                 min="1900-01-01" 
                                                 :max="fechaMaxima"
                                                 class="input-formulario"
-                                                v-model="datosGarante2.fecNacimiento"
+                                                v-model="$v.datosGarante2.fecNacimiento.$model"
                                                 :state="EstadoValidacionGarante2('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
                                                 :disabled="garante2Encontrado"
+                                                ref="fechaNacimientoGarante2"
+                                                @blur="fechaIngresadaManualGarante2">
                                             >
                                             </b-form-input>
+                                            <div class="Div-validar" v-if="fechaIngresadaMayorGarante2">Fecha de Nacimiento no válido</div>
                                             <b-form-invalid-feedback
                                                 id="input-5-live-feedback"
                                             >
-                                                <div v-if="!$v.datosGarante1.nombre.required">
+                                                <div v-if="!$v.datosGarante2.fecNacimiento.required">
                                                     Debe ingresar la Fecha de Nacimiento
                                                 </div>
                                             </b-form-invalid-feedback>
@@ -711,11 +737,12 @@
                                         >
                                             <b-form-input
                                                 id="input-6"
-                                                v-model="datosGarante2.telefono"
+                                                v-model="$v.datosGarante2.telefono.$model"
                                                 class="input-formulario"
                                                 type="tel"
                                                 :state="EstadoValidacionGarante2('telefono')"
                                                 placeholder="Teléfono/Celular"
+                                                onkeypress="return event.charCode >=48 && event.charCode <=57"
                                                 :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
@@ -743,7 +770,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-7"
-                                                v-model="datosGarante2.departamento" 
+                                                v-model="$v.datosGarante2.departamento.$model" 
                                                 :options="arregloDepartamentosGarante2"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante2('departamento')"
@@ -769,7 +796,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-8"
-                                                v-model="datosGarante2.provincia" 
+                                                v-model="$v.datosGarante2.provincia.$model" 
                                                 :options="arregloProvinciasGarante2"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante2('provincia')"
@@ -795,7 +822,7 @@
                                         >
                                             <b-form-select 
                                                 id="input-9"
-                                                v-model="datosGarante2.distrito" 
+                                                v-model="$v.datosGarante2.distrito.$model" 
                                                 :options="arregloDistritosGarante2"
                                                 class="input-formulario"
                                                 :state="EstadoValidacionGarante2('distrito')"
@@ -818,7 +845,7 @@
                                         >
                                             <b-form-input
                                                 id="input-10"
-                                                v-model="datosGarante2.domicilio"
+                                                v-model="$v.datosGarante2.domicilio.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('domicilio')"
@@ -893,7 +920,7 @@
                                         >
                                             <b-form-input
                                                 id="input-1"
-                                                v-model="datosSolicitud.monto"
+                                                v-model="$v.datosSolicitud.monto.$model"
                                                 class="input-formulario"
                                                 type="number"
                                                 min="1"
@@ -918,7 +945,7 @@
                                         >
                                             <b-form-textarea
                                                 id="input-2"
-                                                v-model="datosSolicitud.motivo"
+                                                v-model="$v.datosSolicitud.motivo.$model"
                                                 class="input-formulario"
                                                 type="text"
                                                 :state="EstadoValidacionSolicitud('motivo')"
@@ -991,6 +1018,9 @@ export default {
         garante2Encontrado: false,
         fechaMaxima: '',
         fechaValor: '',
+        fechaIngresadaMayorSocio: false,
+        fechaIngresadaMayorGarante1: false,
+        fechaIngresadaMayorGarante2: false,
         arregloDepartamentosGarante1: [],
         arregloProvinciasGarante1: [],
         arregloDistritosGarante1: [],
@@ -1057,6 +1087,45 @@ export default {
         this.CargarDepartamentosGarante2()
     },
 	methods: {
+        fechaIngresadaManualSocio()
+        {
+            if(this.$refs.fechaNacimientoSocio.value>this.fechaMaxima)
+            {
+                this.fechaIngresadaMayorSocio=true;
+                this.$refs.fechaNacimientoSocio.$el.classList.add('is-invalid')  
+            }
+            else
+            {
+                this.fechaIngresadaMayorSocio=false;
+                this.$refs.fechaNacimientoSocio.$el.classList.remove('is-invalid')
+            }
+        },
+        fechaIngresadaManualGarante1()
+        {
+            if(this.$refs.fechaNacimientoGarante1.value>this.fechaMaxima)
+            {
+                this.fechaIngresadaMayorGarante1=true;
+                this.$refs.fechaNacimientoGarante1.$el.classList.add('is-invalid')  
+            }
+            else
+            {
+                this.fechaIngresadaMayorGarante1=false;
+                this.$refs.fechaNacimientoGarante1.$el.classList.remove('is-invalid')
+            }
+        },
+        fechaIngresadaManualGarante2()
+        {
+            if(this.$refs.fechaNacimientoGarante2.value>this.fechaMaxima)
+            {
+                this.fechaIngresadaMayorGarante2=true;
+                this.$refs.fechaNacimientoGarante2.$el.classList.add('is-invalid')  
+            }
+            else
+            {
+                this.fechaIngresadaMayorGarante2=false;
+                this.$refs.fechaNacimientoGarante2.$el.classList.remove('is-invalid')
+            }
+        },
         FechasParaDatePicker()
         {
             let hoy = new Date();
@@ -1445,7 +1514,7 @@ export default {
         ValidarSocio() 
         {
             this.$v.datosSocio.$touch();
-            if (!this.$v.datosSocio.$anyError) {  //Si es todo correcto se pasa al siguiente card
+            if (!this.$v.datosSocio.$anyError && !this.fechaIngresadaMayorSocio) {  //Si es todo correcto se pasa al siguiente card
                 this.OcultarFormularioSocio();
                 this.ActivarFormularioGarante1();
             }
@@ -1897,6 +1966,7 @@ export default {
     validations: {
         dniBuscar: {
             required,
+            numeric,
             maxLength: maxLength(8),
             minLength: minLength(8),
         },
@@ -1923,6 +1993,7 @@ export default {
             },
             telefono: {
                 required,
+                numeric,
                 maxLength: maxLength(9),
                 minLength: minLength(9),
             },
