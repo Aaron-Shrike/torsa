@@ -82,7 +82,11 @@ export default {
 
                         for (var i = 0; i < data.length; i++) 
                         {
-                            this.solicitudes.push(data[i]);
+                            for (var j = 0; j < data[i].length; j++){
+                                this.solicitudes.push(data[i][j]);
+                            }
+                            //this.solicitudes.push(data[i]);
+                            //console.log(this.solicitudes);
                         }
                     }
                 } 

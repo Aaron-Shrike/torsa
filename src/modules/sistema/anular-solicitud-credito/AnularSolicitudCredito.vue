@@ -121,14 +121,17 @@ export default {
                 {
                     botones[index].classList.add('ocultar');   //Ocultar el botón
                     // var codigo = this.solicitudes[index].codSolicitud;
-                    let motivo=result.value; //Motivo
+                    let mot=result.value; //Motivo
+                    let data = {
+                        motivo:  mot
+                    }
                     axios.defaults.baseURL = process.env.VUE_APP_API_URL;
-                    axios.post("/api/anularSolicitudPVC/"+codigo)
+                    axios.post("/api/anularSolicitudPVC/"+codigo,data)
                         .then((response) =>
                         {
                           if (response.status === 200)
                           {
-                            console.log(motivo);
+                            console.log(mot);
                             this.$swal("La solicitud fue anulada","","success");
                           }
                           else

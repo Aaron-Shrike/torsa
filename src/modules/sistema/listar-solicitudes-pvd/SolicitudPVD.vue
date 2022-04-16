@@ -356,12 +356,17 @@ export default {
         {
             this.$swal(
             {
-				title: "¿Desea aprobar la solicitud?",
-				icon: 'warning',
-				confirmButtonText: 'Aprobar',
-				cancelButtonText: 'Cancelar',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				        title: "¿Desea aprobar la solicitud?",
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				        icon: 'warning',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				        confirmButtonText: 'Aprobar',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				        cancelButtonText: 'Cancelar',
                 showCancelButton: true,
-			})
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+			      })
             .then((result) => {
                 if (result.isConfirmed) 
                 {
@@ -466,20 +471,30 @@ export default {
         },
         MensajeDeError(mensaje = 'Error al conectar al servidor.')
         {
-			this.$swal({
-				title: mensaje,
-				icon: 'error',
-				confirmButtonText: 'Aceptar',
-			})
-		},
+            this.$swal({
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      title: mensaje,
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      icon: 'error',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      confirmButtonText: 'Aceptar',
+            })
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+		    },
         MensajeDeAviso(mensaje)
         {
-			this.$swal({
-				title: mensaje,
-				icon: 'info',
-				confirmButtonText: 'Aceptar',
-			})
-		},
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+			      this.$swal({
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      title: mensaje,
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      icon: 'info',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+				      confirmButtonText: 'Aceptar',
+              // eslint-disable-next-line no-mixed-spaces-and-tabs
+			      })
+          // eslint-disable-next-line no-mixed-spaces-and-tabs
+		    },
 	},
     validations: {
 		datosRechazar: {
