@@ -31,10 +31,11 @@
 										v-model="form.dni"
 										class="input-formulario"
 										type="number"
-										min="11111111"
+										min="01000000"
 										max="99999999"
 										step="1"
 										:state="EstadoValidacion('dni')"
+										onkeypress="return event.charCode >=48 && event.charCode <=57"
 										placeholder="DNI"
 									></b-form-input>
 									<b-form-invalid-feedback
@@ -43,7 +44,7 @@
 										<div v-if="!$v.form.dni.required">
 											Debe ingresar el número de DNI
 										</div>
-										<div v-if="!$v.form.dni.numeric">
+										<div v-if="!$v.form.dni.numeric || !$v.form.dni.between">
 											Número de DNI no válido
 										</div>
 										<div v-if="!$v.form.dni.minLength">
@@ -113,10 +114,21 @@
 </template>
 
 <script>
-import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, numeric, between } from 'vuelidate/lib/validators'
 import axios from 'axios'
-
 import { mapMutations, mapState } from 'vuex'
+
+// const esImagen = (value) => {
+//     if(value != null)
+//     {
+//         return (value.name.indexOf('.jpg') >= 0 || value.name.indexOf('.jpeg') >= 0)
+//     }
+//     else
+//     {
+//         return false
+//     }
+// }
+
 export default {
 	data: () =>  ({
 		efectoCargandoBoton: false,
@@ -131,7 +143,8 @@ export default {
 				required,
 				minLength: minLength(8),
 				maxLength: maxLength(8),
-				numeric
+				numeric,
+				between: between(1000000, 99999999)
 			},
 			contrasenia: {
 				required,

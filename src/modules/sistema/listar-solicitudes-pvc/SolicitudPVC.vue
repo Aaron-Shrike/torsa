@@ -111,9 +111,9 @@
                                                             :name="'radio-sub-component-'+index"
                                                             @change="EnviarDatosVerificaciones"
                                                         >
-                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
                                                             <b-form-radio value="NR">No revisado</b-form-radio>
                                                             <b-form-radio value="AP">Aprobado</b-form-radio>
+                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
                                                         </b-form-radio-group>
                                                     </b-form-group>
                                                 </td>
@@ -431,11 +431,16 @@ export default {
                         })
                         .then((result) => 
                         {
-                            if (result.isConfirmed) {
+                            if (result.isConfirmed) 
+                            {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
-                            console.log(result)
                         })
+
+                        this.setTimeout(() => 
+                        {
+                            this.$router.push({ name: "ListarSolicitudesPVC"})
+                        }, 2000);
                     }
                     else
                     {
@@ -480,6 +485,11 @@ export default {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
                         })
+
+                        this.setTimeout(() => 
+                        {
+                            this.$router.push({ name: "ListarSolicitudesPVC"})
+                        }, 2000);
                     }
                     else
                     {

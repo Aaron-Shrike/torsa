@@ -17,13 +17,14 @@
                                         placeholder="DNI"
                                         v-model="$v.dniBuscar.$model"
                                         :state="ValidarDNIBuscar()"
-                                        min="11111111"
+                                        min="1000000"
                                         max="99999999"
+                                        step="1"
                                         onkeypress="return event.charCode >=48 && event.charCode <=57">
                                     </b-form-input>
                                     <b-form-invalid-feedback id="input-1-live-feedback">
                                         <div v-if="!$v.dniBuscar.required">Debe ingresar el número de DNI</div>
-                                        <div v-if="!$v.dniBuscar.numeric">Número de DNI no válido</div>
+                                        <div v-if="!$v.dniBuscar.numeric || !$v.dniBuscar.between">Número de DNI no válido</div>
                                         <div v-if="!$v.dniBuscar.minLength">Número de DNI muy corto</div>
                                         <div v-if="!$v.dniBuscar.maxLength">Número de DNI muy largo</div>
                                     </b-form-invalid-feedback>
@@ -35,8 +36,6 @@
                 </b-row>
             </b-container>
         </section>
-
-        
         <!-- Socio ------------------------------------------------------------- -->
         <section class="seccion-socio ocultar-informacion">
             <b-container class="contenedor-socio">
@@ -257,7 +256,7 @@
             </b-container>
         </section>
         <!-- Garante 01 -------------------------------------------------------- -->
-		<section class="seccion-garante seccion-garante-1">
+		<section class="seccion-garante seccion-garante-1 ocultar-informacion">
             <b-container class="contenedor-garante">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -286,9 +285,10 @@
                                                 id="input-1"
                                                 v-model="$v.datosGarante1.dni.$model"
                                                 class="input-formulario"
-                                                min="11111111"
-                                                max="99999999"
                                                 type="number"
+                                                min="01000000"
+                                                max="99999999"
+                                                step="1"
                                                 :state="EstadoValidacionGarante1('dni')"
                                                 placeholder="DNI"
                                                 onkeypress="return event.charCode >=48 && event.charCode <=57"
@@ -300,7 +300,7 @@
                                                 <div v-if="!$v.datosGarante1.dni.required">
                                                     Debe ingresar el número de DNI
                                                 </div>
-                                                <div v-if="!$v.datosGarante1.dni.numeric">
+                                                <div v-if="!$v.datosGarante1.dni.numeric || !$v.datosGarante1.dni.between">
                                                     Número de DNI no válido
                                                 </div>
                                                 <div v-if="!$v.datosGarante1.dni.minLength">
@@ -397,16 +397,17 @@
                                                 :state="EstadoValidacionGarante1('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
                                                 :disabled="garante1Encontrado"
-                                                ref="fechaNacimientoGarante1"
-                                                @blur="fechaIngresadaManualGarante1"
                                             >
                                             </b-form-input>
-                                            <div class="Div-validar" v-if="fechaIngresadaMayorGarante1">Fecha de Nacimiento no válido</div>
+                                            <!-- <div class="Div-validar" v-if="fechaIngresadaMayorGarante1">Fecha de Nacimiento no válido</div> -->
                                             <b-form-invalid-feedback
                                                 id="input-5-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante1.fecNacimiento.required">
                                                     Debe ingresar la Fecha de Nacimiento
+                                                </div>
+                                                <div v-if="!$v.datosGarante1.fecNacimiento.validaFechaNacimiento">
+                                                    Fecha de Nacimiento no válida
                                                 </div>
                                                 <!-- <div v-if="!$v.datosGarante1.fecNacimiento.minValue">
                                                     Fecha de Nacimiento no adminitida
@@ -578,7 +579,7 @@
             </b-container>
         </section>
         <!-- Garante 02 -------------------------------------------------------- -->
-        <section class="seccion-garante seccion-garante-2">
+        <section class="seccion-garante seccion-garante-2 ocultar-informacion">
             <b-container class="contenedor-garante">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -608,8 +609,9 @@
                                                 v-model="$v.datosGarante2.dni.$model"
                                                 class="input-formulario"
                                                 type="number"
-                                                min="11111111"
+                                                min="01000000"
                                                 max="99999999"
+                                                step="1"
                                                 :state="EstadoValidacionGarante2('dni')"
                                                 placeholder="DNI"
                                                 onkeypress="return event.charCode >=48 && event.charCode <=57"
@@ -621,7 +623,7 @@
                                                 <div v-if="!$v.datosGarante2.dni.required">
                                                     Debe ingresar el número de DNI
                                                 </div>
-                                                <div v-if="!$v.datosGarante2.dni.numeric">
+                                                <div v-if="!$v.datosGarante2.dni.numeric || !$v.datosGarante2.dni.between">
                                                     Número de DNI no válido
                                                 </div>
                                                 <div v-if="!$v.datosGarante2.dni.minLength">
@@ -718,16 +720,16 @@
                                                 :state="EstadoValidacionGarante2('fecNacimiento')"
                                                 placeholder="Fecha de Nacimiento"
                                                 :disabled="garante2Encontrado"
-                                                ref="fechaNacimientoGarante2"
-                                                @blur="fechaIngresadaManualGarante2">
                                             >
                                             </b-form-input>
-                                            <div class="Div-validar" v-if="fechaIngresadaMayorGarante2">Fecha de Nacimiento no válido</div>
                                             <b-form-invalid-feedback
                                                 id="input-5-live-feedback"
                                             >
                                                 <div v-if="!$v.datosGarante2.fecNacimiento.required">
                                                     Debe ingresar la Fecha de Nacimiento
+                                                </div>
+                                                <div v-if="!$v.datosGarante2.fecNacimiento.validaFechaNacimiento">
+                                                    Fecha de Nacimiento no válida
                                                 </div>
                                             </b-form-invalid-feedback>
                                         </b-form-group>
@@ -893,7 +895,7 @@
             </b-container>
         </section>
         <!-- Solicitud de Credito ---------------------------------------------- -->
-        <section class="seccion-solicitud">
+        <section class="seccion-solicitud ocultar-informacion">
             <b-container class="contenedor-iniciar-sesion">
                 <b-row align-v="center" align-h="center">
                     <b-col cols="12">
@@ -989,10 +991,22 @@
 	</div>
 </template>
 <script>
-import { required, minLength, maxLength, numeric, decimal } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, numeric, between, decimal } from 'vuelidate/lib/validators'
 import axios from 'axios'
-
 import { mapState } from 'vuex'
+
+var fechaMaximaValidacion = "2022-01-01"
+const validaFechaNacimiento = (value) => {
+    if(value != null)
+    {
+        return (value >= "1900-01-01" && value <= fechaMaximaValidacion)
+    }
+    else
+    {
+        return false
+    }
+}
+
 export default {
     data: () =>  ({
         socioHabilitado: true,
@@ -1100,32 +1114,6 @@ export default {
                 this.$refs.fechaNacimientoSocio.$el.classList.remove('is-invalid')
             }
         },
-        fechaIngresadaManualGarante1()
-        {
-            if(this.$refs.fechaNacimientoGarante1.value>this.fechaMaxima)
-            {
-                this.fechaIngresadaMayorGarante1=true;
-                this.$refs.fechaNacimientoGarante1.$el.classList.add('is-invalid')  
-            }
-            else
-            {
-                this.fechaIngresadaMayorGarante1=false;
-                this.$refs.fechaNacimientoGarante1.$el.classList.remove('is-invalid')
-            }
-        },
-        fechaIngresadaManualGarante2()
-        {
-            if(this.$refs.fechaNacimientoGarante2.value>this.fechaMaxima)
-            {
-                this.fechaIngresadaMayorGarante2=true;
-                this.$refs.fechaNacimientoGarante2.$el.classList.add('is-invalid')  
-            }
-            else
-            {
-                this.fechaIngresadaMayorGarante2=false;
-                this.$refs.fechaNacimientoGarante2.$el.classList.remove('is-invalid')
-            }
-        },
         FechasParaDatePicker()
         {
             let hoy = new Date();
@@ -1135,6 +1123,7 @@ export default {
             
             let fecha = `${anio}-${mes}-${dia}`
             this.fechaMaxima = fecha
+            fechaMaximaValidacion = fecha
 
             anio -= 70;
             mes = `${(hoy.getMonth()+7)}`.padStart(2,'0')
@@ -1969,12 +1958,14 @@ export default {
             numeric,
             maxLength: maxLength(8),
             minLength: minLength(8),
+            between: between(1000000, 99999999)
         },
         datosSocio: {
             dni: {
                 required,
                 maxLength: maxLength(8),
                 minLength: minLength(8),
+                numeric,
             },
             apePaterno: {
                 required,
@@ -1990,6 +1981,7 @@ export default {
             },
             fecNacimiento: {
                 required,
+                validaFechaNacimiento
             },
             telefono: {
                 required,
@@ -2026,17 +2018,19 @@ export default {
 			},
 			fecNacimiento: {
 				required,
+                validaFechaNacimiento
 			},
 			dni: {
 				required,
 				minLength: minLength(8),
 				maxLength: maxLength(8),
-                numeric
+                numeric,
+                between: between(1000000, 99999999)
 			},
 			telefono: {
 				required,
                 numeric,
-				minLength: minLength(6),
+				minLength: minLength(9),
 				maxLength: maxLength(9)
 			},
             departamento: {
@@ -2068,17 +2062,19 @@ export default {
 			},
 			fecNacimiento: {
 				required,
+                validaFechaNacimiento
 			},
 			dni: {
 				required,
 				minLength: minLength(8),
 				maxLength: maxLength(8),
-                numeric
+                numeric,
+                between: between(1000000, 99999999)
 			},
 			telefono: {
 				required,
                 numeric,
-				minLength: minLength(6),
+				minLength: minLength(9),
 				maxLength: maxLength(9)
 			},
             departamento: {
