@@ -80,7 +80,6 @@
                     </b-row>
                 </b-container>
             </section>
-
             <!-- Verificaciones ---------------------------------------------- -->
             <section class="seccion-verificaciones">
                 <b-container class="contenedor-verificaciones">
@@ -91,7 +90,7 @@
                                 class="mb-3 card-formulario card-ancho"
                             >
                                 <b-card-text>
-                                    <h2 class="titulo-formulario mb-2">Verificaciones</h2>
+                                    <h2 class="titulo-formulario mb-2">Verificaciones Crediticias</h2>
                                     <table class="table table-hover table-bordered">
                                         <thead class="thead-dark">
                                             <tr>
@@ -109,11 +108,11 @@
                                                             v-model="datosVerificacion[verificacion.modelo]"
                                                             :aria-describedby="ariaDescribedby"
                                                             :name="'radio-sub-component-'+index"
-                                                            @change="EnviarDatosVerificaciones"
+                                                            disabled
                                                         >
-                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
                                                             <b-form-radio value="NR">No revisado</b-form-radio>
                                                             <b-form-radio value="AP">Aprobado</b-form-radio>
+                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
                                                         </b-form-radio-group>
                                                     </b-form-group>
                                                 </td>
@@ -126,12 +125,56 @@
                     </b-row>
                 </b-container>
             </section>
-
+            <!-- Verificaciones 2 ---------------------------------------------- -->
+            <section class="seccion-verificaciones">
+                <b-container class="contenedor-verificaciones">
+                    <b-row align-v="center" align-h="center">
+                        <b-col>
+                            <b-card
+                                tag="div"
+                                class="mb-3 card-formulario card-ancho"
+                            >
+                                <b-card-text>
+                                    <h2 class="titulo-formulario mb-2">Verificaciones De Datos</h2>
+                                    <table class="table table-hover table-bordered">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>Verificación</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(verificacion, index) in verificaciones2" :key="index">
+                                                <td>{{verificacion.descripcion}}</td>
+                                                <td class="radio-button">
+                                                    <b-form-group v-slot="{ ariaDescribedby }">
+                                                        <b-form-radio-group
+                                                            id="radio-group-2"
+                                                            v-model="datosVerificacion2[verificacion.modelo]"
+                                                            :aria-describedby="ariaDescribedby"
+                                                            :name="'radio-sub-component-'+(5+index)"
+                                                            disabled
+                                                        >
+                                                            <b-form-radio value="NR">No revisado</b-form-radio>
+                                                            <b-form-radio value="AP">Aprobado</b-form-radio>
+                                                            <b-form-radio value="NA">No aprobado</b-form-radio>
+                                                        </b-form-radio-group>
+                                                    </b-form-group>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </b-card-text>
+                            </b-card>
+                        </b-col>
+                    </b-row>
+                </b-container>
+            </section>
             <!-- Botones Confirmacion o Rechazar -->
             <div class="seccion-confirmar">
                 <b-container class="contenedor-botones">
                     <b-row cols="1" cols-md="2" align-v="center" align-h="center">
-                        <b-col v-if="verificacionesListas" class="d-md-flex justify-content-center">
+                        <b-col class="d-md-flex justify-content-center">
                             <b-overlay
                                 :show="efectoCargandoBotonAprobar"
                                 rounded
@@ -163,7 +206,6 @@
                 </b-container>
             </div>
         </b-overlay>
-
         <!-- Modal - Rechazar Solicitud -->
         <b-modal
             id="modal-prevent-closing"
@@ -247,6 +289,20 @@ export default {
         efectoCargandoBotonModal: false,
         verificaciones: [
             {
+                descripcion: 'No tiene deudas Bancarias',
+                modelo: 'v1'
+            },
+            {
+                descripcion: 'No tiene deudas con SUNAT',
+                modelo: 'v2'
+            },
+            {
+                descripcion: 'No tiene deudas en Inforcorp',
+                modelo: 'v3'
+            },
+        ],
+        verificaciones2: [
+            {
                 descripcion: 'Verificación de Domicilio del Socio',
                 modelo: 'v1'
             },
@@ -261,9 +317,15 @@ export default {
         ],
         datosVerificacion: {
             codSolicitud: '',
-            v1: '',
-            v2: '',
-            v3: '',
+            v1: 'AP',
+            v2: 'AP',
+            v3: 'AP',
+        },
+        datosVerificacion2: {
+            codSolicitud: '',
+            v1: 'AP',
+            v2: 'AP',
+            v3: 'AP',
         },
         datosRechazar: {
             codSolicitud: '',
@@ -295,15 +357,15 @@ export default {
                         this.datosGarante1 = data[1][0]
                         this.datosGarante2 = data[1][1]
 
-                        let verificaciones = data[2]
-                        this.datosVerificacion.v1 = verificaciones.v1
-                        this.datosVerificacion.v2 = verificaciones.v2
-                        this.datosVerificacion.v3 = verificaciones.v3
+                        // let verificaciones = data[2]
+                        // this.datosVerificacion2.v1 = verificaciones.v1
+                        // this.datosVerificacion2.v2 = verificaciones.v2
+                        // this.datosVerificacion2.v3 = verificaciones.v3
 
-                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
-                        {
-                            this.verificacionesListas = true
-                        }
+                        // if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
+                        // {
+                        //     this.verificacionesListas = true
+                        // }
                         this.efectoCargandoPagina = false
                     }
                     else
@@ -316,57 +378,16 @@ export default {
                     console.log("no hay sistema")
                 })
         },
-        EnviarDatosVerificaciones()
-        {
-            this.efectoCargandoBoton = true
-
-            this.datosVerificacion.codSolicitud = this.datosSocio.codSolicitud
-            
-            axios.post('/api/verificaciones-solicitud', this.datosVerificacion)
-                .then((respuesta) => 
-                {
-                    let data = respuesta.data
-
-                    if(respuesta.status == 200 && typeof data.error === 'undefined')
-                    {
-                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
-                        {
-                            this.verificacionesListas = true
-                        }
-                        else
-                        {
-                            this.verificacionesListas = false
-                        }
-                    }
-                    else
-                    {
-                        this.MensajeDeError(data.mensaje)
-                    }
-                })
-                .catch(() => 
-                {
-                    this.MensajeDeError()
-                })
-                .finally(() =>
-                {
-                    this.efectoCargandoBoton = false
-                });
-        },
         ConfirmarAprobarSolicitud()
         {
             this.$swal(
             {
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				        title: "¿Desea aprobar la solicitud?",
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				        icon: 'warning',
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				        confirmButtonText: 'Aprobar',
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				        cancelButtonText: 'Cancelar',
+				title: "¿Desea aprobar la solicitud?",
+				icon: 'warning',
+				confirmButtonText: 'Aprobar',
+				cancelButtonText: 'Cancelar',
                 showCancelButton: true,
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-			      })
+			})
             .then((result) => {
                 if (result.isConfirmed) 
                 {
@@ -382,7 +403,7 @@ export default {
                 codSolicitud: this.datosSocio.codSolicitud
             }
             
-            axios.post('/api/aprobar-solicitud-pvd', datos)
+            axios.post('/api/aprobar-solicitud-pac', datos)
                 .then((respuesta) => 
                 {
                     let data = respuesta.data
@@ -391,17 +412,22 @@ export default {
                     {
                         this.$swal(
                         {
-                            title: "Verificación de datos aprobada.",
+                            title: "Verificación crediticia aprobada.",
                             icon: 'success',
                             confirmButtonText: 'Aceptar',
                         })
                         .then((result) => 
                         {
-                            if (result.isConfirmed) {
-                                this.$router.push({ name: "ListarSolicitudesPVD"})
+                            if (result.isConfirmed) 
+                            {
+                                this.$router.push({ name: "ListarSolicitudesPAC"})
                             }
-                            console.log(result)
                         })
+
+                        this.setTimeout(() => 
+                        {
+                            this.$router.push({ name: "ListarSolicitudesPAC"})
+                        }, 2000);
                     }
                     else
                     {
@@ -427,7 +453,7 @@ export default {
 
             this.datosRechazar.codSolicitud = this.datosSocio.codSolicitud
             
-            axios.post('/api/rechazar-solicitud-pvd', this.datosRechazar)
+            axios.post('/api/rechazar-solicitud-pac', this.datosRechazar)
                 .then((respuesta) => 
                 {
                     let data = respuesta.data
@@ -443,9 +469,14 @@ export default {
                         {
                             if (result.isConfirmed) 
                             {
-                                this.$router.push({ name: "ListarSolicitudesPVD"})
+                                this.$router.push({ name: "ListarSolicitudesPAC"})
                             }
                         })
+
+                        this.setTimeout(() => 
+                        {
+                            this.$router.push({ name: "ListarSolicitudesPAC"})
+                        }, 2000);
                     }
                     else
                     {
@@ -459,7 +490,7 @@ export default {
                 .finally(() =>
                 {
                     this.efectoCargandoBotonModal = false
-                });       
+                });
         },
         LimpiarFormularioRechazar()
         {
@@ -471,30 +502,20 @@ export default {
         },
         MensajeDeError(mensaje = 'Error al conectar al servidor.')
         {
-            this.$swal({
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      title: mensaje,
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      icon: 'error',
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      confirmButtonText: 'Aceptar',
-            })
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-		    },
+			this.$swal({
+				title: mensaje,
+				icon: 'error',
+				confirmButtonText: 'Aceptar',
+			})
+		},
         MensajeDeAviso(mensaje)
         {
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-			      this.$swal({
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      title: mensaje,
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      icon: 'info',
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-				      confirmButtonText: 'Aceptar',
-              // eslint-disable-next-line no-mixed-spaces-and-tabs
-			      })
-          // eslint-disable-next-line no-mixed-spaces-and-tabs
-		    },
+			this.$swal({
+				title: mensaje,
+				icon: 'info',
+				confirmButtonText: 'Aceptar',
+			})
+		},
 	},
     validations: {
 		datosRechazar: {
@@ -508,4 +529,14 @@ export default {
 }
 </script>
 <style>
+    .pagina-solicitud{
+        padding: 30px;
+    }
+    .card-ancho{
+        max-width: none !important; 
+        min-height: auto !important;
+    }
+    .radio-button fieldset{
+        margin-bottom: 0 !important;
+    }
 </style>

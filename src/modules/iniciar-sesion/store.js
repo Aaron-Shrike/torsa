@@ -12,7 +12,8 @@ export const IniciarSesionStore = {
         //     apePaterno: 'Rojas',
         //     apeMaterno: 'Vera',
         //     // tipoUsuario: 'Promotor',
-        //     tipoUsuario: 'Recepcionista'
+        //     // tipoUsuario: 'Recepcionista'
+        //     tipoUsuario: 'Gerente de Operaciones'
         //     // tipoUsuario: 'Administrador'
         // },
     },

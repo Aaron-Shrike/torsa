@@ -34,6 +34,10 @@
                     <b-list-group-item :to="{name: 'ListarSolicitudesPVD'}" v-if="usuario.tipoUsuario == 'Recepcionista'">
                         Listar Solicitudes Pendientes de Verificación de Datos
                     </b-list-group-item>
+
+                    <b-list-group-item :to="{name: 'ListarSolicitudesPAC'}" v-if="usuario.tipoUsuario == 'Gerente de Operaciones'">
+                        Listar Solicitudes Pre-Aprobadas
+                    </b-list-group-item>
                     
                     <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.tipoUsuario == 'Administrador'">
                         Crear Usuario

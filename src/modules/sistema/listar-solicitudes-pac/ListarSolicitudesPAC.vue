@@ -8,7 +8,7 @@
                         class="card-formulario card-ancho"
                     >
                         <b-card-text>
-                            <h1 class="text-center titulo my-3">SOLICITUDES PENDIENTES DE VERIFICACIÓN CREDITICIA</h1>
+                            <h1 class="text-center titulo my-3">SOLICITUDES PENDIENTES DE APROBACION CREDITICIA</h1>
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered">
                                     <thead class="thead-dark">
@@ -32,7 +32,7 @@
                                                 <b-button 
                                                     block 
                                                     class="boton-principal"
-                                                    :to="{name: 'SolicitudPVC', params: {codigo: solicitud.codSolicitud}}"
+                                                    :to="{name: 'SolicitudPAC', params: {codigo: solicitud.codSolicitud}}"
                                                 >
                                                     Ver Detalle
                                                 </b-button>
@@ -41,7 +41,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="mensaje-error text-center" v-if="!haySolicitudes">* No hay solicitudes pendientes de verificación crediticia *</p>
+                            <p class="mensaje-error text-center" v-if="!haySolicitudes">* No hay solicitudes pendientes de aprobación crediticia *</p>
                         </b-card-text>
                     </b-card>
                 </b-col>
@@ -70,26 +70,24 @@ export default {
         }
     },
     created() {
-        axios.post("/api/solicitud-pendiente-verificacion-crediticia")
+        axios.post("/api/solicitud-pre-aprobadas")
             .then((response) => 
             {
                 let data = response.data;
                 if (response.status === 200) 
                 {
-                    if(data.length > 0)
+                    if(data.length > 0 && data[0].length > 0)
                     {
                         this.haySolicitudes = true
 
                         for (var i = 0; i < data.length; i++) 
                         {
-                            // if(data[i].length > 0)
-                            // {
-                                for (var j = 0; j < data[i].length; j++)
-                                {
-                                    this.solicitudes.push(data[i][j]);
-                                }
-                            // }
-                            
+                            for (var j = 0; j < data[i].length; j++)
+                            {
+                                this.solicitudes.push(data[i][j]);
+                            }
+                            //this.solicitudes.push(data[i]);
+                            //console.log(this.solicitudes);
                         }
                     }
                 } 
