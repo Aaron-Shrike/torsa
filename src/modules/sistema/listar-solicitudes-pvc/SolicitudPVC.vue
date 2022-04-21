@@ -294,9 +294,9 @@ export default {
         ],
         datosVerificacion: {
             codSolicitud: '',
-            v1: '',
-            v2: '',
-            v3: '',
+            v1: 'NR',
+            v2: 'NR',
+            v3: 'NR',
         },
         datosRechazar: {
             codSolicitud: '',
@@ -328,14 +328,17 @@ export default {
                         this.datosGarante1 = data[1][0]
                         this.datosGarante2 = data[1][1]
 
-                        let verificaciones = data[2]
-                        this.datosVerificacion.v1 = verificaciones.v1
-                        this.datosVerificacion.v2 = verificaciones.v2
-                        this.datosVerificacion.v3 = verificaciones.v3
-
-                        if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
+                        if(data[2] != null)
                         {
-                            this.verificacionesListas = true
+                            let verificaciones = data[2]
+                            this.datosVerificacion.v1 = verificaciones.v1
+                            this.datosVerificacion.v2 = verificaciones.v2
+                            this.datosVerificacion.v3 = verificaciones.v3
+
+                            if(this.datosVerificacion.v1 == 'AP' && this.datosVerificacion.v2 == 'AP' && this.datosVerificacion.v3  == 'AP')
+                            {
+                                this.verificacionesListas = true
+                            }
                         }
                         this.efectoCargandoPagina = false
                     }
@@ -436,11 +439,13 @@ export default {
                                 this.$router.push({ name: "ListarSolicitudesPVC"})
                             }
                         })
+                        console.log("pre time out")
 
-                        this.setTimeout(() => 
+                        setTimeout(() => 
                         {
                             this.$router.push({ name: "ListarSolicitudesPVC"})
                         }, 2000);
+                        console.log("post time out")
                     }
                     else
                     {
@@ -486,7 +491,7 @@ export default {
                             }
                         })
 
-                        this.setTimeout(() => 
+                        setTimeout(() => 
                         {
                             this.$router.push({ name: "ListarSolicitudesPVC"})
                         }, 2000);

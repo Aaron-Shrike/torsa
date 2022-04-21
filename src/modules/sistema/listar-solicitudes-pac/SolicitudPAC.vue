@@ -424,7 +424,7 @@ export default {
                             }
                         })
 
-                        this.setTimeout(() => 
+                        setTimeout(() => 
                         {
                             this.$router.push({ name: "ListarSolicitudesPAC"})
                         }, 2000);
@@ -473,7 +473,7 @@ export default {
                             }
                         })
 
-                        this.setTimeout(() => 
+                        setTimeout(() => 
                         {
                             this.$router.push({ name: "ListarSolicitudesPAC"})
                         }, 2000);
