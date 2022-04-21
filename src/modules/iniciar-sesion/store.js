@@ -11,9 +11,9 @@ export const IniciarSesionStore = {
         //     nombre: 'Aarón',
         //     apePaterno: 'Rojas',
         //     apeMaterno: 'Vera',
-        //     // tipoUsuario: 'Promotor',
+        //     tipoUsuario: 'Promotor',
         //     // tipoUsuario: 'Recepcionista'
-        //     tipoUsuario: 'Gerente de Operaciones'
+        //     // tipoUsuario: 'Gerente de Operaciones'
         //     // tipoUsuario: 'Administrador'
         // },
     },

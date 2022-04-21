@@ -429,7 +429,6 @@
                                                 :state="EstadoValidacionGarante1('telefono')"
                                                 placeholder="Teléfono/Celular"
                                                 onkeypress="return event.charCode >=48 && event.charCode <=57"
-                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-6-live-feedback"
@@ -536,7 +535,6 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante1('domicilio')"
                                                 placeholder="Domicilio"
-                                                :disabled="garante1Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-10-live-feedback"
@@ -745,7 +743,6 @@
                                                 :state="EstadoValidacionGarante2('telefono')"
                                                 placeholder="Teléfono/Celular"
                                                 onkeypress="return event.charCode >=48 && event.charCode <=57"
-                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-6-live-feedback"
@@ -852,7 +849,6 @@
                                                 type="text"
                                                 :state="EstadoValidacionGarante2('domicilio')"
                                                 placeholder="Domicilio"
-                                                :disabled="garante2Encontrado"
                                             ></b-form-input>
                                             <b-form-invalid-feedback
                                                 id="input-10-live-feedback"
@@ -1468,13 +1464,16 @@ export default {
                                 this.disabled_input_NoHabilitado = (this.disabled_input_NoHabilitado + 1) % 2; //Inhabilita los inputs
                                 this.AgregarDatosSocio(data);
                             }
+                            //cargar provincias y distritos
+                            this.CargarProvinciasSocio()
+                            this.CargarDistritosSocio()
                         }
                         else
                         {
                             if(data.error == true)
                             {
                                 this.MensajeDeAviso(data.mensaje)
-                                this.dniBuscar = ""
+                                // this.dniBuscar = ""
                             }
                             else
                             {
@@ -1503,7 +1502,8 @@ export default {
         ValidarSocio() 
         {
             this.$v.datosSocio.$touch();
-            if (!this.$v.datosSocio.$anyError && !this.fechaIngresadaMayorSocio) {  //Si es todo correcto se pasa al siguiente card
+            if (!this.$v.datosSocio.$anyError && !this.fechaIngresadaMayorSocio) 
+            {  //Si es todo correcto se pasa al siguiente card
                 this.OcultarFormularioSocio();
                 this.ActivarFormularioGarante1();
             }
@@ -1526,6 +1526,9 @@ export default {
                             if(respuesta.status == 200 && typeof data.error === 'undefined')
                             {
                                 this.AgregarDatosGarante1(data)
+                                //cargar provincias y distritos
+                                this.CargarProvinciasGarante1()
+                                this.CargarDistritosGarante1()
                             }
                             else
                             {
@@ -1600,6 +1603,9 @@ export default {
                                 if(respuesta.status == 200 && typeof data.error === 'undefined')
                                 {
                                     this.AgregarDatosGarante2(data)
+                                    //cargar provincias y distritos
+                                    this.CargarProvinciasGarante2()
+                                    this.CargarDistritosGarante2()
                                 }
                                 else
                                 {
