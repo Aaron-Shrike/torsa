@@ -9,6 +9,7 @@ import { AnularSolicitudCreditoRoutes } from '@/modules/sistema/anular-solicitud
 import { ListarSolicitudesPVCRoutes } from '@/modules/sistema/listar-solicitudes-pvc/routes.js'
 import { ListarSolicitudesPVDRoutes } from '@/modules/sistema/listar-solicitudes-pvd/routes.js'
 import { ListarSolicitudesPACRoutes } from '@/modules/sistema/listar-solicitudes-pac/routes.js'
+import { ListarSolicitudesACERoutes } from '@/modules/sistema/listar-solicitudes-ace/routes.js'
 
 export const SistemaRoutes = [
     {
@@ -28,6 +29,7 @@ export const SistemaRoutes = [
             ...ListarSolicitudesPVCRoutes,
             ...ListarSolicitudesPVDRoutes,
             ...ListarSolicitudesPACRoutes,
+            ...ListarSolicitudesACERoutes,
         ],
         meta: {
             requiereAutenticacion: true

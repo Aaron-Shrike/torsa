@@ -38,6 +38,10 @@
                     <b-list-group-item :to="{name: 'ListarSolicitudesPAC'}" v-if="usuario.tipoUsuario == 'Gerente de Operaciones'">
                         Listar Solicitudes Pre-Aprobadas
                     </b-list-group-item>
+
+                    <b-list-group-item :to="{name: 'ListarSolicitudesACE'}" v-if="usuario.tipoUsuario == 'Registrador de crédito'">
+                        Listar Solicitudes Aprobadas
+                    </b-list-group-item>
                     
                     <b-list-group-item :to="{name: 'CrearUsuario'}" v-if="usuario.tipoUsuario == 'Administrador'">
                         Crear Usuario
